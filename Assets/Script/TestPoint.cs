@@ -2,17 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RandomMapGeneration : MonoBehaviour
+public class TestPoint : MonoBehaviour
 {
-    enum MapSelect
-    {
-        None,
-        Map1,
-        Map2,
-        Map3,
-        Num,
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -23,12 +14,5 @@ public class RandomMapGeneration : MonoBehaviour
     void Update()
     {
         
-    }
-
-    //マップを設定する。
-    void SetMap()
-    {
-        Random.Range(1, 3);
-
     }
 }
