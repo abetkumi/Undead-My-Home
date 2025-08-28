@@ -24,4 +24,11 @@ public class RandomMapGeneration : MonoBehaviour
     {
         
     }
+
+    //マップを設定する。
+    void SetMap()
+    {
+        Random.Range(1, 3);
+
+    }
 }
