@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Point : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    bool Ues = false;
+
+    public bool GetUes()
     {
-        
+        return Ues;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
