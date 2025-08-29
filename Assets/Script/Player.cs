@@ -16,10 +16,9 @@ public class Player : MonoBehaviour
     float m_walkSpeed = 500.0f;
     float m_runSpeed = 1000.0f;
     float t = 0.5f;
+    bool isGround = true;
+    public float jumpForce = 50.0f;
     PlayerState m_playerState = PlayerState.Idle;
-
-    Vector3 PlayerMove = Vector3.zero;
-    Vector3 stickL = Vector3.zero;
 
     //キャッシュ
     Rigidbody m_rigidBody;
@@ -51,9 +50,7 @@ public class Player : MonoBehaviour
 
     void Idle()
     {
-        stickL.z = Input.GetAxis("Vertical");
-        stickL.x = Input.GetAxis("Horizontal");
-        if (stickL.magnitude > 0.1f)
+        if (Input.anyKey)
         {
             m_playerState = PlayerState.Move;
         }
@@ -62,8 +59,8 @@ public class Player : MonoBehaviour
     void Move()
     {
         //カメラを考慮した移動
-        PlayerMove = Vector3.zero;
-        stickL = Vector3.zero;
+        Vector3 PlayerMove = Vector3.zero;
+        Vector3 stickL = Vector3.zero;
         stickL.z = Input.GetAxis("Vertical");
         stickL.x = Input.GetAxis("Horizontal");
         if (stickL.magnitude <= 0.1f)
@@ -92,6 +89,15 @@ public class Player : MonoBehaviour
             m_moveSpeed = m_walkSpeed;
         }
 
+        //スペースが押されたらジャンプ
+        if (isGround == true)
+        {
+            if (Input.GetButton("Jump"))
+            {
+                m_rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                isGround = false;
+            }
+        }
         //プレイヤーの速度を設定することで移動させる
         PlayerMove = (PlayerMove * m_moveSpeed * Time.deltaTime);
         PlayerMove.y = m_rigidBody.velocity.y;
@@ -109,6 +115,15 @@ public class Player : MonoBehaviour
         else if (stickL == Vector3.zero)
         {
             t = 0.0f;
+            m_playerState = PlayerState.Idle;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGround = true;
         }
     }
 
