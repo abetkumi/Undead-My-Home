@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06f221dd7385bdd4682374a4ea05ce06, type: 3}
+  m_Name: itemDataBase
+  m_EditorClassIdentifier: 
+  Items:
+  - ItemName: cube
+    ItemExplanation: "\u30C6\u30B9\u30C8\u7528\u30AD\u30E5\u30FC\u30D6"
+    ItemPrefab: {fileID: 2301245992177236958, guid: dc8dfc7aca797594ea3335f73246b738,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 0}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 0, y: 0, z: 0}
