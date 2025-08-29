@@ -24,7 +24,7 @@ public class TestCube : MonoBehaviour
         int i = 0;
         bool found = false;
 
-        for (int cubeNo = 1; cubeNo < 4; cubeNo++){
+        for(int cubeNo = 1; cubeNo < 4; cubeNo++){
             cubes[cubeNo] = GameObject.Instantiate(cubePrefab);
 
             while (!found){
