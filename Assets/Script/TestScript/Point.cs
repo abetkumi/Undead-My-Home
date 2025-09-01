@@ -11,4 +11,8 @@ public class Point : MonoBehaviour
         return Ues;
     }
 
+    public void SetUesTrue()
+    {
+        Ues = true;
+    }
 }
