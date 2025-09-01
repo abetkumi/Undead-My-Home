@@ -6577,6 +6577,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube
       objectReference: {fileID: 0}
+    - target: {fileID: 3202457717254205961, guid: 751da6707638354449be174c6cec1716,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5931029683835621266, guid: 751da6707638354449be174c6cec1716,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6639,11 +6644,18 @@ PrefabInstance:
       objectReference: {fileID: 1210352259}
     - target: {fileID: 8283787916207834600, guid: 751da6707638354449be174c6cec1716,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283787916207834600, guid: 751da6707638354449be174c6cec1716,
+        type: 3}
       propertyPath: cubePrefab
       value: 
       objectReference: {fileID: 48423185808000721, guid: 751da6707638354449be174c6cec1716,
         type: 3}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3202457717254205961, guid: 751da6707638354449be174c6cec1716, type: 3}
+    - {fileID: 8283787916207834600, guid: 751da6707638354449be174c6cec1716, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -29318,7 +29330,7 @@ Transform:
   m_GameObject: {fileID: 1162546096}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.7, y: 0, z: -10}
+  m_LocalPosition: {x: -11.2, y: 0, z: -6.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
