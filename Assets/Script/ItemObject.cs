@@ -1,5 +1,7 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,8 +18,8 @@ public class ItemObject : MonoBehaviour
     Outline m_outline;
     const float SELECT_OUTLINE_WIDTH = 16.0f;
 
-    const float ITEMDROP_POWER = 20.0f;     //アイテムを捨てる時にかける力
-    const float ITEMDROP_TORQUE = 60.0f;    //アイテムを捨てる時にかける回転量
+    //const float ITEMDROP_POWER = 20.0f;     //アイテムを捨てる時にかける力
+    //const float ITEMDROP_TORQUE = 60.0f;    //アイテムを捨てる時にかける回転量
 
     [SerializeField] bool IsCheck = false;
 
@@ -42,8 +44,8 @@ public class ItemObject : MonoBehaviour
         m_outline.OutlineWidth = SELECT_OUTLINE_WIDTH;
         m_outline.enabled = false;
         //ゲームマネージャーを取得
-        //【ヒント1】GameManagerのタグ名は「GameController」です
-        //【ヒント2】コンポーネントを取得する関数はGetComponentです。
+        //GameManagerのタグ名は「GameController」です
+        //コンポーネントを取得する関数はGetComponentです。
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
     }
 
@@ -80,7 +82,7 @@ public class ItemObject : MonoBehaviour
         else
         {
             //アイテムを取得
-            //【ヒント】ゲームマネージャーのGetItem関数を使おう
+            //ゲームマネージャーのGetItem関数を使おう
             bool isGet = m_gameManager.GetItem(ItemID);
 
             //アイテム欄に空きがあったかどうかで分岐
@@ -119,21 +121,23 @@ public class ItemObject : MonoBehaviour
     }
 
     //アイテムを捨てた時の処理
-    public void ItemDrop(Vector3 playerVelocity)
+    public async void ItemDrop(Vector3 playerVelocity)
     {
         //リジッドボディの取得
         Rigidbody rb = GetComponent<Rigidbody>();
-        //物理演算を有効にする（？？？？？）
+        //物理演算を有効にする
         rb.isKinematic = false;
-        //カメラの前方方向に飛ばす
-        rb.AddForce((Camera.main.transform.forward * ITEMDROP_POWER) + playerVelocity, ForceMode.Impulse);
-        //ランダムに回転
-        rb.AddTorque(Random.onUnitSphere * Random.Range(-ITEMDROP_TORQUE, ITEMDROP_TORQUE));
+
+        ////カメラの前方方向に飛ばす(飛ばす必要がないのでオフにしている）
+        //rb.AddForce((Camera.main.transform.forward * ITEMDROP_POWER) + playerVelocity, ForceMode.Impulse);
+        ////ランダムに回転
+        //rb.AddTorque(Random.onUnitSphere * Random.Range(-ITEMDROP_TORQUE, ITEMDROP_TORQUE));
 
         //しばらく調べられないようにする
         IsCheck = true;
         //1秒後に調べられるようにする
-        Invoke("CheckWait", 1.0f);
+        await UniTask.Delay(1000);
+        CheckWait();
     }
 
     //Involeで呼び出す関数
