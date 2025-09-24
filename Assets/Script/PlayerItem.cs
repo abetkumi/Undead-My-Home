@@ -42,7 +42,7 @@ public class PlayerItem : MonoBehaviour
 
 
                 // Œˆ’è‚Ìˆ—
-                if ((Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Return)))
+                if ((Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0)))
                 {
                     // ƒAƒCƒeƒ€‚É‰‚¶‚½ˆ—
                     itemObject.ItemCheck();

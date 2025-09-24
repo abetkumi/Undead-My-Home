@@ -10,8 +10,8 @@ public class UI_Item : MonoBehaviour
     [SerializeField]
     GameObject[] ItemCamara; //UI用カメラ
 
-    [SerializeField]
-    TextMeshProUGUI ItemNameText, ItemMessageText;
+    //[SerializeField]
+    //TextMeshProUGUI ItemNameText, ItemMessageText;
 
     [SerializeField]
     Vector3 ItemOffset; //アイテム生成座標の補正量（共通）
@@ -49,28 +49,28 @@ public class UI_Item : MonoBehaviour
                 //表示の有無
                 if (itemNo == -1)
                 {
-                    //アイテムがないため説明欄は非表示
-                    ItemNameText.enabled = false;
-                    ItemMessageText.enabled = false;
+                    ////アイテムがないため説明欄は非表示
+                    //ItemNameText.enabled = false;
+                    //ItemMessageText.enabled = false;
 
-                    //操作説明の更新
-                    m_gameManager.GetOperationUI().SetOperation
-                        (UI_Operation.Button.enButton_B, "", false);
+                    ////操作説明の更新
+                    //m_gameManager.GetOperationUI().SetOperation
+                    //    (UI_Operation.Button.enButton_B, "", false);
 
                 }
                 else
                 {
-                    //説明欄を表示
-                    ItemNameText.enabled = true;
-                    ItemMessageText.enabled = true;
+                    ////説明欄を表示
+                    //ItemNameText.enabled = true;
+                    //ItemMessageText.enabled = true;
 
-                    //テキストを更新
-                    ItemNameText.text = m_gameManager.GetItemData().Items[itemNo].ItemName;
-                    ItemMessageText.text = m_gameManager.GetItemData().Items[itemNo].ItemExplanation;
+                    ////テキストを更新
+                    //ItemNameText.text = m_gameManager.GetItemData().Items[itemNo].ItemName;
+                    //ItemMessageText.text = m_gameManager.GetItemData().Items[itemNo].ItemExplanation;
 
-                    //操作説明の更新
-                    m_gameManager.GetOperationUI().SetOperation
-                        (UI_Operation.Button.enButton_B, "捨てる", true);
+                    ////操作説明の更新
+                    //m_gameManager.GetOperationUI().SetOperation
+                    //    (UI_Operation.Button.enButton_B, "捨てる", true);
                 }
             }
 
