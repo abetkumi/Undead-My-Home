@@ -18,6 +18,6 @@ MonoBehaviour:
     ItemPrefab: {fileID: 2301245992177236958, guid: dc8dfc7aca797594ea3335f73246b738,
       type: 3}
     ItemPivot: {x: 0, y: 0, z: 0}
-    UI_Offset: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 2}
     UI_Rotation: {x: 0, y: 0, z: 0}
-    UI_Scale: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
