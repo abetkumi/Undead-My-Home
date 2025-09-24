@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Cube : MonoBehaviour
 {
@@ -12,8 +11,6 @@ public class Cube : MonoBehaviour
     //ポイントリストを指定。
     [SerializeField] GameObject PointList;
     Point[] point = new Point[100];
-
-    public List<GameObject> colorPrefabs;
 
     //キューブの個数。
     int cubeNum = 0;
@@ -66,20 +63,6 @@ public class Cube : MonoBehaviour
         }
     }
 
-    //ランダムにPrefabの見た目を変更。
-    void SetPrefab(int cubeNo)
-    {
-        if (colorPrefabs.Count == 0){
-            Debug.LogWarning("プレハブが登録されてません！");
-            return;
-        }
-
-        int index=Random.Range(0, colorPrefabs.Count);
-        GameObject obj = Instantiate(colorPrefabs[index], cubes[cubeNo].transform.position, Quaternion.identity);
-        obj.transform.localScale = new Vector3(20f, 20f, 20f);
-        cubes[cubeNo] = obj;
-    }
-
     //ポイントを選択。(引数には設置するcubeの数を代入)
     void PointSelect(int count)
     {
@@ -96,10 +79,9 @@ public class Cube : MonoBehaviour
 
                     if (obj != null)
                     {
-                        SetPrefab(i);
-                        cubes[i].transform.position = obj.transform.position;
-                        point[pointNo - 1].SetUesTrue();
-                        found = true;
+                            cubes[i].transform.position = obj.transform.position;
+                            point[pointNo - 1].SetUesTrue();
+                            found = true;
                     }
                 }
                 else{}

@@ -6685,9 +6685,6 @@ MonoBehaviour:
   cubePrefab: {fileID: 48423185808000721, guid: 751da6707638354449be174c6cec1716,
     type: 3}
   PointList: {fileID: 1981935103}
-  colorPrefabs:
-  - {fileID: 6652964456437015396, guid: 0199d8d70b468c840b77b1ce7c496e1f, type: 3}
-  - {fileID: 6694425846037771819, guid: d8bc6b2ae30e2884691df4f163a4f3d5, type: 3}
 --- !u!4 &287229716 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400008, guid: 56019a5fb2f53b044a107cf4e79053ed,
@@ -34921,18 +34918,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 919848539}
     m_Modifications:
-    - target: {fileID: 400000, guid: 971cf0f029e52874f81eb28ed29c8edf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 971cf0f029e52874f81eb28ed29c8edf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 400000, guid: 971cf0f029e52874f81eb28ed29c8edf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 971cf0f029e52874f81eb28ed29c8edf, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -49217,6 +49202,37 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56019a5fb2f53b044a107cf4e79053ed, type: 3}
+--- !u!1 &1830351021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1830351022}
+  m_Layer: 0
+  m_Name: TestPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1830351022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1830351021}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 313.7, y: 0, z: 21.8}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1831433637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56469,6 +56485,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1034068126}
+  - {fileID: 1830351022}
   - {fileID: 1711196021}
   - {fileID: 1646434435}
   - {fileID: 1981935104}
