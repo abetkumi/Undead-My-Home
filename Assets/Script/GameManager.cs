@@ -70,7 +70,7 @@ public class GameManager : MonoBehaviour
         return ItemID[no];
     }
 
-    //アイテム欄
+    //アイテム欄のUI
     [SerializeField]
     UI_Item ItemUI;
 
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
                 //効果音再生
                 //PlaySE(ItemGetSE);
                 //UIを更新
-                //ItemUI.UpdateUI();
+                ItemUI.UpdateUI();
 
                 return true;
             }
@@ -163,14 +163,14 @@ public class GameManager : MonoBehaviour
         ItemID[SelectItemNo] = -1;
 
         //UIを更新
-        //ItemUI.UpdateUI();
+        ItemUI.UpdateUI();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         //UIを更新
-        //ItemUI.UpdateUI();
+        ItemUI.UpdateUI();
         //ステートの更新（初期化）
         m_gameState = GameState.enGameState_Play;
     }
@@ -185,13 +185,13 @@ public class GameManager : MonoBehaviour
         }
 
         //Bボタンで捨てる
-        if ((Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.Alpha0)))
+        if ((Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.G)))
         {
             ItemDrop();
         }
 
         //選択アイテムの変更
-        if ((Input.GetKeyDown("joystick button 4") || Input.GetKeyDown(KeyCode.Alpha1)))
+        if ((Input.GetKeyDown("joystick button 4") || Input.GetAxis("Mouse ScrollWheel") > 0))
         {
             SelectItemNo++;
             if (SelectItemNo > ItemID.Length - 1)
@@ -199,11 +199,11 @@ public class GameManager : MonoBehaviour
                 SelectItemNo = 0;
             }
             //UIを更新
-            //ItemUI.UpdateUI();
+            ItemUI.UpdateUI();
             //効果音再生
             //PlaySE(SelectSE);
         }
-        if ((Input.GetKeyDown("joystick button 5") || Input.GetKeyDown(KeyCode.Alpha2)))
+        if ((Input.GetKeyDown("joystick button 5") || Input.GetAxis("Mouse ScrollWheel") < 0))
         {
             SelectItemNo--;
             if (SelectItemNo < 0)
@@ -211,7 +211,7 @@ public class GameManager : MonoBehaviour
                 SelectItemNo = ItemID.Length - 1;
             }
             //UIを更新
-            //ItemUI.UpdateUI();
+            ItemUI.UpdateUI();
             //効果音再生
             //PlaySE(SelectSE);
         }
