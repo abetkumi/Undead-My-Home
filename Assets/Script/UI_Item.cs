@@ -53,9 +53,9 @@ public class UI_Item : MonoBehaviour
                     //ItemNameText.enabled = false;
                     //ItemMessageText.enabled = false;
 
-                    ////操作説明の更新
-                    //m_gameManager.GetOperationUI().SetOperation
-                    //    (UI_Operation.Button.enButton_B, "", false);
+                    //操作説明の更新
+                    m_gameManager.GetOperationUI().SetOperation
+                        (UI_Operation.Button.enButton_B, "", false);
 
                 }
                 else
@@ -68,9 +68,9 @@ public class UI_Item : MonoBehaviour
                     //ItemNameText.text = m_gameManager.GetItemData().Items[itemNo].ItemName;
                     //ItemMessageText.text = m_gameManager.GetItemData().Items[itemNo].ItemExplanation;
 
-                    ////操作説明の更新
-                    //m_gameManager.GetOperationUI().SetOperation
-                    //    (UI_Operation.Button.enButton_B, "捨てる", true);
+                    //操作説明の更新
+                    m_gameManager.GetOperationUI().SetOperation
+                        (UI_Operation.Button.enButton_B, "捨てる", true);
                 }
             }
 
