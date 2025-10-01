@@ -1,9 +1,12 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
     private enum PlayerState
     {
         Idle,
@@ -11,26 +14,31 @@ public class Player : MonoBehaviour
         Dead,
     }
 
+   
     //パラメータ
-    [SerializeField] float m_moveSpeed = 500.0f;
-    float m_walkSpeed = 500.0f;
-    float m_runSpeed = 1000.0f;
-    float t = 0.5f;
-    bool isGround = true;
+    [SerializeField] private float m_hpGauge = 100.0f;
+    [SerializeField] private float m_staminaGauge = 100.0f;
+    private float m_runStamina = 10.0f;
+    private float m_idleStaminaRecovery = 7.0f;
+    private float m_moveStaminaRecovery = 5.0f;
+    private bool m_staminaRecoveryFlag = true;
+    [SerializeField] private float m_moveSpeed = 500.0f;
+    private float m_walkSpeed = 500.0f;
+    private float m_runSpeed = 1000.0f;
+    private float t = 0.5f;
+    private bool isGround = true;
     public float jumpForce = 50.0f;
-    PlayerState m_playerState = PlayerState.Idle;
+    private PlayerState m_playerState = PlayerState.Idle;
+    private Vector3 stickL = Vector3.zero;
 
     //キャッシュ
     Rigidbody m_rigidBody;
-    GameObject m_gameCameraObj;
-    GameObject m_playerObject;
 
     // Start is called before the first frame update
     void Start()
     {
         //必要な情報を取得
         m_rigidBody = GetComponent<Rigidbody>();
-        m_gameCameraObj = Camera.main.gameObject;
     }
 
     void PlayerStatus()
@@ -50,6 +58,13 @@ public class Player : MonoBehaviour
 
     void Idle()
     {
+        stickL = Vector3.zero;
+        //スタミナが減っていたら回復する
+        if (m_staminaGauge < 100.0f)
+        {
+            RecoveryStamina(m_idleStaminaRecovery);
+        }
+
         if (Input.anyKey)
         {
             m_playerState = PlayerState.Move;
@@ -60,7 +75,7 @@ public class Player : MonoBehaviour
     {
         //カメラを考慮した移動
         Vector3 PlayerMove = Vector3.zero;
-        Vector3 stickL = Vector3.zero;
+        stickL = Vector3.zero;
         stickL.z = Input.GetAxis("Vertical");
         stickL.x = Input.GetAxis("Horizontal");
         if (stickL.magnitude <= 0.1f)
@@ -79,21 +94,27 @@ public class Player : MonoBehaviour
         //移動速度に上記で計算したベクトルを加算する
         PlayerMove += right + forward;
 
+ 
+
         //Runキーが押されている場合
-        if (Input.GetButton("Run"))
+        if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
         {
+            UseStamina(m_runStamina);
+            m_staminaGauge -= m_runStamina * Time.deltaTime;
             m_moveSpeed = m_runSpeed;
         }
         else
         {
             m_moveSpeed = m_walkSpeed;
+            RecoveryStamina(m_moveStaminaRecovery);
         }
 
         //スペースが押されたらジャンプ
-        if (isGround == true)
+        if (isGround == true && m_staminaGauge > 0.0f)
         {
             if (Input.GetButton("Jump"))
             {
+                UseStamina(10.0f);
                 m_rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isGround = false;
             }
@@ -103,9 +124,11 @@ public class Player : MonoBehaviour
         PlayerMove.y = m_rigidBody.velocity.y;
         m_rigidBody.velocity = PlayerMove;
 
-
+ 
+        
         if (stickL != Vector3.zero)
         {
+            //足音用
             t += Time.deltaTime;
             if (t > 0.5f)
             {
@@ -119,11 +142,50 @@ public class Player : MonoBehaviour
         }
     }
 
+    //地面の接触判定
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGround = true;
+        }
+    }
+
+    //スタミナ使用関数
+    void UseStamina(float stamina)
+    {
+        m_staminaGauge -= stamina * Time.deltaTime;
+    }
+
+    //スタミナ回復用関数
+    async void RecoveryStamina(float stamina)
+    {
+        //スタミナが0になると回復開始を遅らせる
+        if (m_staminaGauge <= 0)
+        {
+            m_staminaRecoveryFlag = false;
+            //走っていない場合回復を開始する
+            if (stickL.magnitude < 0.1f || !Input.GetButton("Run"))
+            {
+                await UniTask.Delay(1000);
+                m_staminaRecoveryFlag = true;
+            }
+        }
+
+        if (m_staminaRecoveryFlag == false)
+        {
+            return;
+        }
+
+        //スタミナが減っていたら回復する
+        if (m_staminaGauge < 100.0f)
+        {
+            m_staminaGauge += stamina * Time.deltaTime;
+            //スタミナが上限を超えていたら上限に戻す
+            if (m_staminaGauge > 100.0f)
+            {
+                m_staminaGauge = 100.0f;
+            }
         }
     }
 
