@@ -31,14 +31,27 @@ public class Player : MonoBehaviour
     private PlayerState m_playerState = PlayerState.Idle;
     private Vector3 stickL = Vector3.zero;
 
+    //アニメーション
+    Animator m_animator;
+
     //キャッシュ
     Rigidbody m_rigidBody;
+
+    public void GetHPDamage(float damage)
+    {
+        m_hpGauge -= damage;
+        if(m_hpGauge <= 0)
+        {
+            m_playerState = PlayerState.Dead;
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         //必要な情報を取得
         m_rigidBody = GetComponent<Rigidbody>();
+        m_animator = GetComponent<Animator>();
     }
 
     void PlayerStatus()
@@ -52,6 +65,7 @@ public class Player : MonoBehaviour
                 Move();
                 break;
             case PlayerState.Dead:
+                Dead();
                 break;
         }
     }
@@ -187,6 +201,11 @@ public class Player : MonoBehaviour
                 m_staminaGauge = 100.0f;
             }
         }
+    }
+
+    void Dead()
+    {
+        m_animator.SetBool("Dead", true);
     }
 
     void FixedUpdate()
