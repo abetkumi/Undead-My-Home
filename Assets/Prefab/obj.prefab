@@ -50,7 +50,7 @@ MonoBehaviour:
   PointList: {fileID: 330395278859843856, guid: 76a0993321b25064eabcf86b0c164084,
     type: 3}
   colorPrefabs:
-  - {fileID: 6652964456437015396, guid: 0199d8d70b468c840b77b1ce7c496e1f, type: 3}
+  - {fileID: 6652964456437015396, guid: 4dea5895e6f62474f90fcad25ab77953, type: 3}
   - {fileID: 6694425846037771819, guid: d8bc6b2ae30e2884691df4f163a4f3d5, type: 3}
   - {fileID: 5960070064261004562, guid: 6f64e1fed2edffe45a312e43bf590f5f, type: 3}
   - {fileID: 8831831666521383262, guid: 9ce880be9972fdb41a38b1897fe0fe6d, type: 3}

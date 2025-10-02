@@ -21,3 +21,51 @@ MonoBehaviour:
     UI_Offset: {x: 0, y: 0, z: 2}
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
+  - ItemName: Amethyst
+    ItemExplanation: "\u30A2\u30E1\u30B8\u30B9\u30C8"
+    ItemPrefab: {fileID: 6652964456437015396, guid: 4dea5895e6f62474f90fcad25ab77953,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 2}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+  - ItemName: Crystal
+    ItemExplanation: "\u30AF\u30EA\u30B9\u30BF\u30EB"
+    ItemPrefab: {fileID: 6694425846037771819, guid: d8bc6b2ae30e2884691df4f163a4f3d5,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 2}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+  - ItemName: Emerald
+    ItemExplanation: "\u30A8\u30E1\u30E9\u30EB\u30C9"
+    ItemPrefab: {fileID: 5960070064261004562, guid: 6f64e1fed2edffe45a312e43bf590f5f,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 2}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+  - ItemName: OrangeCitrine
+    ItemExplanation: "\u30B7\u30C8\u30EA\u30F3"
+    ItemPrefab: {fileID: 8831831666521383262, guid: 9ce880be9972fdb41a38b1897fe0fe6d,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 2}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+  - ItemName: Ruby
+    ItemExplanation: "\u30EB\u30D3\u30FC"
+    ItemPrefab: {fileID: 3649227508235768757, guid: 2355fafb5e0bf0246839215562613eeb,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 2}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+  - ItemName: Saphire
+    ItemExplanation: "\u30B5\u30D5\u30A1\u30A4\u30A2"
+    ItemPrefab: {fileID: 4073738352283045466, guid: e21d287716498304899b454b3df43544,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 2}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
