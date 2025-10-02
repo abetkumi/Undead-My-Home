@@ -77,6 +77,7 @@ public class Cube : MonoBehaviour
         int index=Random.Range(0, colorPrefabs.Count);
         GameObject obj = Instantiate(colorPrefabs[index], cubes[cubeNo].transform.position, Quaternion.identity);
         obj.transform.localScale = new Vector3(20f, 20f, 20f);
+        Destroy(cubes[cubeNo]);
         cubes[cubeNo] = obj;
     }
 
