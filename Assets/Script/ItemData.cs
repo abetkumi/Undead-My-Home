@@ -23,6 +23,11 @@ public class ItemData : ScriptableObject
         public Vector3 UI_Rotation;
         public Vector3 UI_Scale;
 
+        //重さ。(単位はkg)
+        public float weight;
+        //価値。
+        public float value;
+
     }
 
     //アイテムリストの可変長配列
