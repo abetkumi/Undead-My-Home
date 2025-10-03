@@ -2438,6 +2438,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ruby001
       objectReference: {fileID: 0}
+    - target: {fileID: 8605280540809148536, guid: 6f21a909e692a554dba2623581cb1227,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9125058497208661346, guid: 6f21a909e692a554dba2623581cb1227,
         type: 3}
       propertyPath: m_LocalPosition.x

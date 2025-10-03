@@ -8,27 +8,35 @@ using UnityEngine.UI;
 
 public class Title : MonoBehaviour
 {
+    [SerializeField] GameObject m_fadeCanvas;    //フェード演出用オブジェクト
     [SerializeField] Button m_focusButton_Start;
     [SerializeField] Button m_focusButton_End;
-    bool m_startLoading = false;
+
+    bool m_sceneChange = false;
     // Start is called before the first frame update
     void Start()
     {
-        m_startLoading = false;
+
     }
 
-    async public void OnClickStartButton()
+    public void OnClickStartButton()
     {
-        if (!m_startLoading)
+        //シーン切り替え中は何もしない
+        if (m_sceneChange)
         {
-            m_startLoading = true;
-            EventSystem.current.SetSelectedGameObject(null);
-            m_focusButton_Start.Select();
-            await UniTask.Delay(3000);
-            //メインゲームシーンに移動する
-            await SceneManager.LoadSceneAsync("SampleScene").ToUniTask();
-            Debug.Log("ゲームスタート!");  // ログを出力
+            return;
         }
+
+        EventSystem.current.SetSelectedGameObject(null);
+        m_focusButton_Start.Select();
+        //フェード演出用オブジェクトを生成
+        GameObject fade = Instantiate(m_fadeCanvas);
+        //生成したオブジェクトのFadeStart関数を呼び出す
+        fade.GetComponent<FadeScene>().FadeStart(Color.black, false);
+
+        m_sceneChange = true;
+      
+        
     }
 
     public void OnClickEndButton()
