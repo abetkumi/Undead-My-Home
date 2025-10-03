@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] Player m_player;
     //効果音再生関数
     //static public OneShotAudioClip PlaySE(AudioClip clip,
     //    GameObject sauceObject = null,
@@ -116,6 +118,10 @@ public class GameManager : MonoBehaviour
             {
                 //空きがあるのでアイテムIDを格納
                 ItemID[selectID] = getItemID;
+
+                //アイテムを取得時にそのアイテムの重量分加算する。
+                m_player.ItemWeightAdd(GetItemData().Items[getItemID].weight, true);
+
                 //効果音再生
                 //PlaySE(ItemGetSE);
                 //UIを更新
@@ -158,6 +164,9 @@ public class GameManager : MonoBehaviour
             itemPos, Camera.main.transform.rotation);
         //前方に発射
         dropItem.GetComponent<ItemObject>().ItemDrop(velocity);
+
+        //アイテムを捨てる場合、そのアイテムの重量分減算する。
+        m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
 
         //アイテム欄のIDをリセット
         ItemID[SelectItemNo] = -1;
