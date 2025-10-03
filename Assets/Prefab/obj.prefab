@@ -51,11 +51,11 @@ MonoBehaviour:
     type: 3}
   colorPrefabs:
   - {fileID: 6652964456437015396, guid: 4dea5895e6f62474f90fcad25ab77953, type: 3}
-  - {fileID: 6694425846037771819, guid: d8bc6b2ae30e2884691df4f163a4f3d5, type: 3}
-  - {fileID: 5960070064261004562, guid: 6f64e1fed2edffe45a312e43bf590f5f, type: 3}
-  - {fileID: 8831831666521383262, guid: 9ce880be9972fdb41a38b1897fe0fe6d, type: 3}
-  - {fileID: 3649227508235768757, guid: 2355fafb5e0bf0246839215562613eeb, type: 3}
-  - {fileID: 4073738352283045466, guid: e21d287716498304899b454b3df43544, type: 3}
+  - {fileID: 6694425846037771819, guid: a04d96871bb7cd9449db91b524e87c5a, type: 3}
+  - {fileID: 5960070064261004562, guid: 79bf85d13f2303f4bbc2e698d731208a, type: 3}
+  - {fileID: 8831831666521383262, guid: 510d0afb888b0bd4fa1c3f4c24b4cd3c, type: 3}
+  - {fileID: 3649227508235768757, guid: 6f21a909e692a554dba2623581cb1227, type: 3}
+  - {fileID: 4073738352283045466, guid: 270af85fc49dabc4f96d903de0221871, type: 3}
 --- !u!54 &-4902948832100841372
 Rigidbody:
   m_ObjectHideFlags: 0
