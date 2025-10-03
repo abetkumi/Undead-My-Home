@@ -191,7 +191,7 @@ public class GameManager : MonoBehaviour
         }
 
         //選択アイテムの変更
-        if ((Input.GetKeyDown("joystick button 4") || Input.GetAxis("Mouse ScrollWheel") > 0))
+        if ((Input.GetKeyDown("joystick button 4") || Input.GetAxis("Mouse ScrollWheel") < 0))
         {
             SelectItemNo++;
             if (SelectItemNo > ItemID.Length - 1)
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
             //効果音再生
             //PlaySE(SelectSE);
         }
-        if ((Input.GetKeyDown("joystick button 5") || Input.GetAxis("Mouse ScrollWheel") < 0))
+        if ((Input.GetKeyDown("joystick button 5") || Input.GetAxis("Mouse ScrollWheel") > 0))
         {
             SelectItemNo--;
             if (SelectItemNo < 0)
