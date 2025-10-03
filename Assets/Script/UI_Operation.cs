@@ -27,13 +27,13 @@ public class UI_Operation : MonoBehaviour
         switch (button)
         {
             case Button.enButton_A:
-                Texts[(int)button].text = "A:" + text;
+                Texts[(int)button].text = "左クリック:" + text;
                 break;
             case Button.enButton_B:
-                Texts[(int)button].text = "B:" + text;
+                Texts[(int)button].text = "G:" + text;
                 break;
             case Button.enButton_X:
-                Texts[(int)button].text = "C:" + text;
+                Texts[(int)button].text = "X:" + text;
                 break;
         }
 
@@ -41,6 +41,12 @@ public class UI_Operation : MonoBehaviour
         if (mode)
         {
             //白&不透明
+            Texts[(int)button].color = Color.white;
+            Texts[(int)button].alpha = 1.0f;
+        }
+        else
+        {
+            //黒&半透明
             Texts[(int)button].color = Color.white;
             Texts[(int)button].alpha = NoActiveAlpha;
         }
