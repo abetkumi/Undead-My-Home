@@ -15577,6 +15577,36 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 6652964456437015396, guid: 4dea5895e6f62474f90fcad25ab77953,
         type: 3}
+    - target: {fileID: 3535434041594598346, guid: 79dcc984be703354c8121ee6e7c24df7,
+        type: 3}
+      propertyPath: colorPrefabs.Array.data[1]
+      value: 
+      objectReference: {fileID: 6694425846037771819, guid: a04d96871bb7cd9449db91b524e87c5a,
+        type: 3}
+    - target: {fileID: 3535434041594598346, guid: 79dcc984be703354c8121ee6e7c24df7,
+        type: 3}
+      propertyPath: colorPrefabs.Array.data[2]
+      value: 
+      objectReference: {fileID: 5960070064261004562, guid: 79bf85d13f2303f4bbc2e698d731208a,
+        type: 3}
+    - target: {fileID: 3535434041594598346, guid: 79dcc984be703354c8121ee6e7c24df7,
+        type: 3}
+      propertyPath: colorPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 8831831666521383262, guid: 510d0afb888b0bd4fa1c3f4c24b4cd3c,
+        type: 3}
+    - target: {fileID: 3535434041594598346, guid: 79dcc984be703354c8121ee6e7c24df7,
+        type: 3}
+      propertyPath: colorPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 3649227508235768757, guid: 6f21a909e692a554dba2623581cb1227,
+        type: 3}
+    - target: {fileID: 3535434041594598346, guid: 79dcc984be703354c8121ee6e7c24df7,
+        type: 3}
+      propertyPath: colorPrefabs.Array.data[5]
+      value: 
+      objectReference: {fileID: 4073738352283045466, guid: 270af85fc49dabc4f96d903de0221871,
+        type: 3}
     - target: {fileID: 5918323867133361130, guid: 79dcc984be703354c8121ee6e7c24df7,
         type: 3}
       propertyPath: m_LocalPosition.x
