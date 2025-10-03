@@ -59,7 +59,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea4ae34157656d41b9eea759c5c102c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemID: 4
+  ItemID: 3
   itemDataBase: {fileID: 11400000, guid: 58a89a36e579d9344acf50d0e43ceb2d, type: 2}
   Name: 
   Explanation: 
@@ -117,8 +117,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.6, y: 0.6, z: 0.6}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1001 &5714148620374636442
 PrefabInstance:
   m_ObjectHideFlags: 0
