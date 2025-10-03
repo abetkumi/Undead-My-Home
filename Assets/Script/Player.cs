@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     private PlayerState m_playerState = PlayerState.Idle;
     private Vector3 stickL = Vector3.zero;
 
+    //獲得したアイテムの総重量。
+    [SerializeField] private float m_totalWeight = 0.0f;
+    
     //アニメーション
     Animator m_animator;
 
@@ -200,6 +203,17 @@ public class Player : MonoBehaviour
             {
                 m_staminaGauge = 100.0f;
             }
+        }
+    }
+
+    //プレイヤーがアイテムを取得した時の重さの加算と減算。
+    //引数がtrueの時は取得、falseの時は捨てる。
+    public void ItemWeightAdd(float weight, bool get)
+    {
+        if (get == true){
+            m_totalWeight += weight;
+        } else {
+            m_totalWeight -= weight;
         }
     }
 
