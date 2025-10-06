@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -18,9 +19,9 @@ public class Player : MonoBehaviour
     //パラメータ
     [SerializeField] private float m_hpGauge = 100.0f;
     [SerializeField] private float m_staminaGauge = 100.0f;
-    private float m_runStamina = 10.0f;
+    private float m_runStamina = 20.0f;
     private float m_idleStaminaRecovery = 7.0f;
-    private float m_moveStaminaRecovery = 5.0f;
+    private float m_moveStaminaRecovery = 20.0f;
     private bool m_staminaRecoveryFlag = true;
     [SerializeField] private float m_moveSpeed = 500.0f;
     private float m_walkSpeed = 500.0f;
@@ -33,7 +34,11 @@ public class Player : MonoBehaviour
 
     //獲得したアイテムの総重量。
     [SerializeField] private float m_totalWeight = 0.0f;
-    
+    //重さによる倍率。
+    [SerializeField] float wightRatio = 0.0f;
+    //乗数。
+    float n = 10.0f;
+
     //アニメーション
     Animator m_animator;
 
@@ -116,14 +121,18 @@ public class Player : MonoBehaviour
         //Runキーが押されている場合
         if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
         {
-            UseStamina(m_runStamina);
-            m_staminaGauge -= m_runStamina * Time.deltaTime;
+            ////重量によってスタミナの増幅幅を変更。
+            StaminaWeightModifier(m_totalWeight, n);
+            UseStamina(m_runStamina, wightRatio);
             m_moveSpeed = m_runSpeed;
         }
         else
         {
             m_moveSpeed = m_walkSpeed;
-            RecoveryStamina(m_moveStaminaRecovery);
+
+            //重量によってスタミナの増幅幅を変更。
+            StaminaWeightModifier(m_totalWeight, n);
+            RecoveryStamina(m_moveStaminaRecovery * (1 / wightRatio));
         }
 
         //スペースが押されたらジャンプ
@@ -131,7 +140,7 @@ public class Player : MonoBehaviour
         {
             if (Input.GetButton("Jump"))
             {
-                UseStamina(10.0f);
+                UseStamina(10.0f, 1.0f);
                 m_rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
                 isGround = false;
             }
@@ -169,9 +178,9 @@ public class Player : MonoBehaviour
     }
 
     //スタミナ使用関数
-    void UseStamina(float stamina)
+    void UseStamina(float stamina, float ratio)
     {
-        m_staminaGauge -= stamina * Time.deltaTime;
+        m_staminaGauge -= stamina * Time.deltaTime * ratio;
     }
 
     //スタミナ回復用関数
@@ -204,6 +213,12 @@ public class Player : MonoBehaviour
                 m_staminaGauge = 100.0f;
             }
         }
+    }
+
+    //スタミナの増減幅をプレイヤーの重量によって変更する値を決定。
+    void StaminaWeightModifier(float weight, float root)
+    {
+        wightRatio = (weight == 0.0f ? 1.0f : Mathf.Pow(weight, 1.0f / root));
     }
 
     //プレイヤーがアイテムを取得した時の重さの加算と減算。
