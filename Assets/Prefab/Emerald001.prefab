@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2386779690073678605}
   - component: {fileID: 2564463347861399387}
   - component: {fileID: 4515719145490371008}
-  m_Layer: 6
+  m_Layer: 7
   m_Name: Emerald001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ PrefabInstance:
     - target: {fileID: -8734704173890467632, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
@@ -200,7 +200,7 @@ PrefabInstance:
     - target: {fileID: -5653794331996350259, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -2470118150392128793, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
@@ -215,7 +215,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
       propertyPath: m_Layer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4541392981352650437, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
