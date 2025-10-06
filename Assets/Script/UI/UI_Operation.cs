@@ -33,7 +33,7 @@ public class UI_Operation : MonoBehaviour
                 Texts[(int)button].text = "G:" + text;
                 break;
             case Button.enButton_X:
-                Texts[(int)button].text = "X:" + text;
+                Texts[(int)button].text = "F:" + text;
                 break;
         }
 
