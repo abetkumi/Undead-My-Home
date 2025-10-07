@@ -25,8 +25,12 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] EnemyState m_enemyState = EnemyState.enEnemyState_Search;
     [SerializeField] Vector3[] m_targetPos;
+    [SerializeField] AttackCollider m_attackCollider;
     int m_targetNum = 0;
     bool m_targetMode = false;
+
+    Collider m_SwordCollider;
+
     void TargetAdd(int add)
     {
 
@@ -39,12 +43,22 @@ public class Enemy : MonoBehaviour
         m_animator = GetComponent<Animator>();
 
         m_animator.SetBool("Move", true);
+
+        //m_SwordCollider = transform.Find("Object01").GetComponent<Collider>();
+        //m_SwordCollider.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        switch (m_enemyState){
+        if (Input.GetButton("testKye1")){
+            m_enemyState = EnemyState.enEnemyState_Attack;
+        }
+        else if (Input.GetButton("Jump")){
+            m_enemyState = EnemyState.enEnemyState_Damage;
+        }
+
+            switch (m_enemyState){
             //巡回。
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
@@ -52,6 +66,7 @@ public class Enemy : MonoBehaviour
             //追跡。
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
+                m_animator.SetBool("Search", false);
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
@@ -60,6 +75,7 @@ public class Enemy : MonoBehaviour
             //攻撃。
             case EnemyState.enEnemyState_Attack:
                 m_animator.SetTrigger("Attack");
+                StartAttack();
                 break;
             //逃げる。
             case EnemyState.enEnemyState_Escape:
@@ -81,4 +97,28 @@ public class Enemy : MonoBehaviour
                 break;
         }
     }
+
+    public void StartAttack()
+    {
+        //m_SwordCollider.enabled = true;
+        Invoke("EndAttack", 1.0f);          //1秒後に判定を消す。
+    }
+    void EndAttack()
+    {
+        //m_SwordCollider.enabled = false;
+    }
+
+    //public int damage = 10;
+
+    //void OnTriggerEnter(Collider other)
+    //{
+    //    if (other.CompareTag("Player"))
+    //    {
+    //        Player hp = other.GetComponent<Player>();
+    //        if (hp != null)
+    //        {
+    //            //hp.TakeDamage(damage);
+    //        }
+    //    }
+    //}
 }
