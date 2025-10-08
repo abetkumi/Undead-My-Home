@@ -32,7 +32,7 @@ public class Title : MonoBehaviour
         //フェード演出用オブジェクトを生成
         GameObject fade = Instantiate(m_fadeCanvas);
         //生成したオブジェクトのFadeStart関数を呼び出す
-        fade.GetComponent<FadeScene>().FadeStart(Color.black, false);
+        fade.GetComponent<FadeScene>().FadeStart("SampleScene",Color.black, false);
 
         m_sceneChange = true;
       

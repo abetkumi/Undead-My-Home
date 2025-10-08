@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 25a033253753c5c4d99373a033e899a6
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
+      type: 3}
+  - m_playerObject: {instanceID: 0}
+  - m_cameraObject: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
