@@ -29,7 +29,13 @@ public class Enemy : MonoBehaviour
     int m_targetNum = 0;
     bool m_targetMode = false;
 
-    Collider m_SwordCollider;
+    float m_hp = 0.0f;
+
+    const float CHASE_RANGE = 120.0f;
+    const float ATTACK_RANGE = 30.0f;
+
+    [SerializeField]
+    float m_searchAngle, m_searchRayRange, m_chaseRayRange;
 
     void TargetAdd(int add)
     {
@@ -51,6 +57,30 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 playerPos = m_targetPlayer.transform.position;
+        //playerPos.y = transform.position.y;
+        //if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE){
+        //    m_enemyState = EnemyState.enEnemyState_Attack;
+        //} 
+        //else if((transform.position - playerPos).sqrMagnitude <= CHASE_RANGE){
+        //    m_enemyState = EnemyState.enEnemyState_Chase;
+        //}
+        //else {
+        //    m_enemyState = EnemyState.enEnemyState_Lost;
+        //}
+
+        if (PlayerSearch(m_searchRayRange)){
+            if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE){
+                m_enemyState = EnemyState.enEnemyState_Attack;
+            }
+            else{
+                m_enemyState = EnemyState.enEnemyState_Chase;
+            }
+        }
+        else{
+            m_enemyState = EnemyState.enEnemyState_Lost;
+        }
+        
         if (Input.GetButton("testKye1")){
             m_enemyState = EnemyState.enEnemyState_Attack;
         }
@@ -58,7 +88,7 @@ public class Enemy : MonoBehaviour
             m_enemyState = EnemyState.enEnemyState_Damage;
         }
 
-            switch (m_enemyState){
+        switch (m_enemyState){
             //巡回。
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
@@ -98,27 +128,55 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void StartAttack()
+    // プレイヤーを探す 見つけたらtrueを返す
+    bool PlayerSearch(float rayRange)
     {
-        //m_SwordCollider.enabled = true;
-        Invoke("EndAttack", 1.0f);          //1秒後に判定を消す。
+        // レイの始点を計算
+        Vector3 startPos = transform.position;
+        startPos.y += 10.0f;
+        // プレイヤーへ伸びるベクトルを計算
+        Vector3 diff = m_targetPlayer.transform.position - startPos;
+
+        // レイを描画
+        Debug.DrawRay(startPos, diff.normalized * rayRange, Color.red, 0.1f);
+
+        // レイを発射
+        RaycastHit hit;
+        if (Physics.Raycast(startPos, diff.normalized, out hit, rayRange))
+        {
+            // プレイヤーが視野角内かつレイが最初にヒットしたのがプレイヤーだったら…
+            if (Vector3.Angle(transform.forward, diff) <= m_searchRayRange
+                && hit.collider.CompareTag("Player"))
+            {
+                // プレイヤー発見
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void StartAttack()
+    {
+        m_attackCollider.SwitchWnabled(true);
+        Invoke("EndAttack", 3.0f);          //3秒後に判定を消す。
     }
     void EndAttack()
     {
-        //m_SwordCollider.enabled = false;
+        m_attackCollider.SwitchWnabled(false);
     }
 
-    //public int damage = 10;
+    public void TakeDamage(float damage,int damageLevel)
+    {
+        m_hp -= damage;
+        if (damageLevel == 0){
+            m_enemyState = EnemyState.enEnemyState_Damage;
+        }
+        else if (damageLevel == 1){
+            m_enemyState = EnemyState.enEnemyState_Stun;
+        }
 
-    //void OnTriggerEnter(Collider other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        Player hp = other.GetComponent<Player>();
-    //        if (hp != null)
-    //        {
-    //            //hp.TakeDamage(damage);
-    //        }
-    //    }
-    //}
+        if (m_hp <= 0){
+            m_enemyState=EnemyState.enEnemyState_Death; 
+        }
+    }
 }

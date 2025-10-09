@@ -232,6 +232,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void TakeDamage(float damage)
+    {
+        m_hpGauge -= damage;
+    }
+
     void Dead()
     {
         m_animator.SetBool("Dead", true);
