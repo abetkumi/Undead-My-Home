@@ -62,6 +62,7 @@ public class GameOver : MonoBehaviour
         {
             GameObject fadeObject = Instantiate(m_fadeCanvas);
             fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
+            Destroy(gameObject);
         }
     }
 }
