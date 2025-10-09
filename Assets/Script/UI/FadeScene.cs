@@ -14,16 +14,19 @@ public class FadeScene : MonoBehaviour
     [SerializeField]
     float FadeSpeed = 1.0f; //フェードの速度
 
+    // 遷移先のシーン名を保存
+    string m_sceneName;
     //自身が使用するImageを保存
     Image m_image;
     //falseならマテリアルを使用trueならImageを使用
     bool m_mode = false;
 
     //フェード開始
-    public void FadeStart(Color color, bool mode)
+    public void FadeStart(string sceneName, Color color, bool mode)
     {
         //フェード開始の準備をする
         m_fadeStart = true;
+        m_sceneName = sceneName;
         m_mode = mode;
 
         //自分の子オブジェクトにアタッチされているImageを取得する
@@ -71,7 +74,7 @@ public class FadeScene : MonoBehaviour
             if (m_alpha >= 1.0f)
             {
                 //メインゲームシーンに移動する
-                await SceneManager.LoadSceneAsync("SampleScene").ToUniTask();
+                await SceneManager.LoadSceneAsync(m_sceneName).ToUniTask();
                 Debug.Log("ゲームスタート!");  // ログを出力
                 //明るくするモードに変更
                 m_fadeMode = true;
