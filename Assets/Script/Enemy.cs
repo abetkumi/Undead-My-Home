@@ -49,26 +49,12 @@ public class Enemy : MonoBehaviour
         m_animator = GetComponent<Animator>();
 
         m_animator.SetBool("Move", true);
-
-        //m_SwordCollider = transform.Find("Object01").GetComponent<Collider>();
-        //m_SwordCollider.enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector3 playerPos = m_targetPlayer.transform.position;
-        //playerPos.y = transform.position.y;
-        //if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE){
-        //    m_enemyState = EnemyState.enEnemyState_Attack;
-        //} 
-        //else if((transform.position - playerPos).sqrMagnitude <= CHASE_RANGE){
-        //    m_enemyState = EnemyState.enEnemyState_Chase;
-        //}
-        //else {
-        //    m_enemyState = EnemyState.enEnemyState_Lost;
-        //}
-
         if (PlayerSearch(m_searchRayRange)){
             if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE){
                 m_enemyState = EnemyState.enEnemyState_Attack;
@@ -97,6 +83,7 @@ public class Enemy : MonoBehaviour
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
                 m_animator.SetBool("Search", false);
+                m_animator.ResetTrigger("Attack");
                 break;
             //Œ©Ž¸‚¤B
             case EnemyState.enEnemyState_Lost:
