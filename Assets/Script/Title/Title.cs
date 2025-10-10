@@ -52,6 +52,8 @@ public class Title : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Cursor.visible = true;  //マウスカーソルを表示
+        Cursor.lockState = CursorLockMode.None; //マウスカーソルの移動を制限しない
         if (Input.GetKeyDown(KeyCode.Return))
         {
             
