@@ -50,9 +50,9 @@ public class FadeScene : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    async void Fade()
+    void Fade()
     {
-        //フェードが開始していないなた中断
+        //フェードが開始していないため中断
         if (m_fadeStart == false)
         {
             return;
@@ -74,7 +74,7 @@ public class FadeScene : MonoBehaviour
             if (m_alpha >= 1.0f)
             {
                 //メインゲームシーンに移動する
-                await SceneManager.LoadSceneAsync(m_sceneName).ToUniTask();
+                SceneManager.LoadSceneAsync(m_sceneName);
                 Debug.Log("ゲームスタート!");  // ログを出力
                 //明るくするモードに変更
                 m_fadeMode = true;
@@ -91,7 +91,7 @@ public class FadeScene : MonoBehaviour
             }
         }
 
-        //最後に不透明度をせてチスル
+        //最後に不透明度を設定する
         if (m_mode)
         {
             Color nowColor = m_image.color;
