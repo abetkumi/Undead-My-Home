@@ -36,8 +36,9 @@ public class Title : MonoBehaviour
         fade.GetComponent<FadeScene>().FadeStart("SampleScene",Color.black, false);
 
         m_sceneChange = true;
-      
-        
+
+        Cursor.visible = false;  //マウスカーソルを表示
+        Cursor.lockState = CursorLockMode.Locked; //マウスカーソルの移動を制限しない
     }
 
     public void OnClickEndButton()
@@ -56,7 +57,18 @@ public class Title : MonoBehaviour
         Cursor.lockState = CursorLockMode.None; //マウスカーソルの移動を制限しない
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            
+            // 現在選択されているオブジェクトを取得
+            GameObject selected = EventSystem.current.currentSelectedGameObject;
+
+            if (selected != null)
+            {
+                // Button コンポーネントがある場合、onClickを呼び出す
+                Button button = selected.GetComponent<Button>();
+                if (button != null)
+                {
+                    button.onClick.Invoke();
+                }
+            }
         }
     }
 }
