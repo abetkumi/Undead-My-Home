@@ -500,6 +500,7 @@ MonoBehaviour:
   m_enemyState: 0
   m_targetPos: []
   m_attackCollider: {fileID: 1962093821971469807}
+  m_hp: 100
   m_searchAngle: 100
   m_searchRayRange: 150
   m_chaseRayRange: 200

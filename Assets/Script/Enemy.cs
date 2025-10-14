@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -29,13 +30,17 @@ public class Enemy : MonoBehaviour
     int m_targetNum = 0;
     bool m_targetMode = false;
 
-    float m_hp = 0.0f;
+    [SerializeField] float m_hp;
 
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
 
     [SerializeField]
     float m_searchAngle, m_searchRayRange, m_chaseRayRange;
+
+    //デバック用変数。
+    //死亡時に全ての処理を停止させる
+    bool DebugStop = false;
 
     void TargetAdd(int add)
     {
@@ -54,6 +59,10 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DebugStop == true){
+            return;
+        }
+
         Vector3 playerPos = m_targetPlayer.transform.position;
         if (PlayerSearch(m_searchRayRange)){
             if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE){
@@ -71,7 +80,7 @@ public class Enemy : MonoBehaviour
             m_enemyState = EnemyState.enEnemyState_Attack;
         }
         else if (Input.GetButton("Jump")){
-            m_enemyState = EnemyState.enEnemyState_Damage;
+            TakeDamage(10.0f, 0);
         }
 
         switch (m_enemyState){
@@ -88,6 +97,7 @@ public class Enemy : MonoBehaviour
             //見失う。
             case EnemyState.enEnemyState_Lost:
                 m_animator.SetTrigger("Lost");
+                m_animator.SetBool("Chaes", false);
                 break;
             //攻撃。
             case EnemyState.enEnemyState_Attack:
@@ -107,6 +117,7 @@ public class Enemy : MonoBehaviour
                 break;
             //死。
             case EnemyState.enEnemyState_Death:
+                m_animator.SetBool("Move", false);
                 m_animator.SetTrigger("Death");
                 break;
             //それ以外。
@@ -132,7 +143,7 @@ public class Enemy : MonoBehaviour
         if (Physics.Raycast(startPos, diff.normalized, out hit, rayRange))
         {
             // プレイヤーが視野角内かつレイが最初にヒットしたのがプレイヤーだったら…
-            if (Vector3.Angle(transform.forward, diff) <= m_searchRayRange
+            if (Vector3.Angle(transform.forward, diff) <= m_searchAngle
                 && hit.collider.CompareTag("Player"))
             {
                 // プレイヤー発見
@@ -163,7 +174,8 @@ public class Enemy : MonoBehaviour
         }
 
         if (m_hp <= 0){
-            m_enemyState=EnemyState.enEnemyState_Death; 
+            m_enemyState=EnemyState.enEnemyState_Death;
+            DebugStop = true;
         }
     }
 }
