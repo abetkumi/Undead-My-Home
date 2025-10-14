@@ -19,8 +19,11 @@ public class GameOver : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        SetGameOver();
-        Debug.Log("Dead");
+        if (other.CompareTag("Player"))
+        {
+            SetGameOver();
+            Debug.Log("Dead");
+        }
     }
 
     //ゲームオーバー処理
