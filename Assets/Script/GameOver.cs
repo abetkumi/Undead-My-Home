@@ -9,6 +9,7 @@ public class GameOver : MonoBehaviour
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] GameObject m_playerObject;
     [SerializeField] GameObject m_cameraObject;
+    [SerializeField] GameObject m_timerObject;
     bool m_isGameOver = false;
 
     // Start is called before the first frame update
@@ -27,12 +28,14 @@ public class GameOver : MonoBehaviour
     }
 
     //ゲームオーバー処理
-    async void SetGameOver()
+    public async void SetGameOver()
     {
         //ゲームマネージャーを取得
         GameManager m_gameManager = 
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameOver);
+
+        Destroy(m_timerObject);
 
         Vector3 m_camaraPos = m_playerObject.transform.position;
         m_camaraPos.y += 4.0f;
