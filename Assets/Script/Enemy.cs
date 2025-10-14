@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour
 
     NavMeshAgent m_agent;
     Animator m_animator;
+    private Rigidbody rb;
 
     enum EnemyState{
         enEnemyState_Search,    //巡回。
@@ -31,6 +32,7 @@ public class Enemy : MonoBehaviour
     bool m_targetMode = false;
 
     [SerializeField] float m_hp;
+    [SerializeField] float m_speed,m_dashSpeed;
 
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
@@ -52,6 +54,7 @@ public class Enemy : MonoBehaviour
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
 
         m_animator.SetBool("Move", true);
     }
@@ -87,12 +90,14 @@ public class Enemy : MonoBehaviour
             //巡回。
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
+                Move(m_speed);
                 break;
             //追跡。
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
                 m_animator.SetBool("Search", false);
                 m_animator.ResetTrigger("Attack");
+                Move(m_dashSpeed);
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
@@ -177,5 +182,16 @@ public class Enemy : MonoBehaviour
             m_enemyState=EnemyState.enEnemyState_Death;
             DebugStop = true;
         }
+    }
+
+    void Move(float inSpeed)
+    {
+        float speed = inSpeed;
+
+        Vector3 direction = (m_targetPlayer.transform.position - transform.position).normalized;
+        rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
+
+        // 向きをターゲットに合わせる
+        transform.LookAt(new Vector3(m_targetPlayer.transform.position.x, transform.position.y, m_targetPlayer.transform.position.z));
     }
 }
