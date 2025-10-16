@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2386779690073678605}
   - component: {fileID: 2564463347861399387}
   - component: {fileID: 4515719145490371008}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Emerald001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -117,8 +117,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.6, y: 0.6, z: 0.6}
+  m_Center: {x: 0, y: 0.25, z: 0}
 --- !u!1001 &5714148620374636442
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -127,6 +127,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5408613040730364673}
     m_Modifications:
+    - target: {fileID: -8734704173890467632, guid: 2ff944e62000d1c46acd7a87ac5baeca,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -192,6 +197,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5653794331996350259, guid: 2ff944e62000d1c46acd7a87ac5baeca,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: -2470118150392128793, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -201,6 +211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Crystal Rock Cluster A
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 2ff944e62000d1c46acd7a87ac5baeca,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4541392981352650437, guid: 2ff944e62000d1c46acd7a87ac5baeca,
         type: 3}

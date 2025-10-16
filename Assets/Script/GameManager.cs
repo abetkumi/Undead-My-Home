@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     {
         enGameState_Play,
         enGameState_Clear,
+        enGameState_GameOver,
     }
     static GameState m_gameState = GameState.enGameState_Play;
 
