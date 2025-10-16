@@ -309,7 +309,7 @@ public class Water : MonoBehaviour
 	
 	private WaterMode FindHardwareWaterSupport()
 	{
-		if( !SystemInfo.supportsRenderTextures || !GetComponent<Renderer>() )
+        if (!SystemInfo.supportsRenderTextures || !GetComponent<Renderer>())
 			return WaterMode.Simple;
 			
 		Material mat = GetComponent<Renderer>().sharedMaterial;
