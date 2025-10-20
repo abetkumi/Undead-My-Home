@@ -7,6 +7,7 @@ using static UnityEditor.Progress;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] Player m_player;
+    [SerializeField] RectTransform m_canvasRect;
     //効果音再生関数
     //static public OneShotAudioClip PlaySE(AudioClip clip,
     //    GameObject sauceObject = null,
@@ -163,6 +164,10 @@ public class GameManager : MonoBehaviour
         Vector3 itemPos = Camera.main.transform.position;
         GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
             itemPos, Camera.main.transform.rotation);
+
+        //テキスト生成
+        dropItem.GetComponent<UI_SearchCreater>().m_canvasRect = m_canvasRect;
+
         //前方に発射
         dropItem.GetComponent<ItemObject>().ItemDrop(velocity);
 
