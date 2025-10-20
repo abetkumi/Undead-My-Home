@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 7773045586799890892}
   - component: {fileID: 2578088733590522816}
   - component: {fileID: 1696713783889440392}
-  - component: {fileID: 3185817415813380805}
   - component: {fileID: -7286278919965930825}
+  - component: {fileID: -8509042565617818979}
+  - component: {fileID: 1850312121891084416}
   m_Layer: 6
   m_Name: ItemReferenceCube
   m_TagString: Item
@@ -122,10 +123,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ItemID: 0
   itemDataBase: {fileID: 11400000, guid: 58a89a36e579d9344acf50d0e43ceb2d, type: 2}
-  Name: 
-  Explanation: 
+  Name: cube
+  Explanation: test cube
   IsCheck: 0
---- !u!54 &3185817415813380805
+--- !u!114 &-7286278919965930825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301245992177236958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!114 &-8509042565617818979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301245992177236958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd178b2736e32f4d8fdd78fdcb888cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canvasRect: {fileID: 0}
+  m_UI_SearchPrefab: {fileID: 4646721660341747245, guid: bf97332eaff8ef7469041ec59bee0f05,
+    type: 3}
+  m_UI_Search: {fileID: 4646721660341747245, guid: bf97332eaff8ef7469041ec59bee0f05,
+    type: 3}
+--- !u!54 &1850312121891084416
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,21 +188,3 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-7286278919965930825
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2301245992177236958}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 1, b: 1, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
