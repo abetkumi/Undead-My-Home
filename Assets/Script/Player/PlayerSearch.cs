@@ -8,7 +8,7 @@ public class PlayerSearch : MonoBehaviour
 {
     GameManager m_gameManager;
     UI_SearchCreater m_UIsearchCreater;
-    [SerializeField] Collider m_searchCollider;
+    [SerializeField] SphereCollider m_searchCollider;
 
     //範囲内に収集アイテムがある場合
     private void OnTriggerEnter(Collider other)
