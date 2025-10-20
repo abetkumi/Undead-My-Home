@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
     //重さによる倍率。
     [SerializeField] float wightRatio = 0.0f;
     //乗数。
-    float n = 10.0f;
+    float n = 2.0f;
 
     //アニメーション
     Animator m_animator;
@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
 
             //重量によってスタミナの増幅幅を変更。
             StaminaWeightModifier(m_totalWeight, n);
-            RecoveryStamina(m_moveStaminaRecovery * (1 / wightRatio));
+            RecoveryStamina(m_moveStaminaRecovery / wightRatio);
         }
 
         //スペースが押されたらジャンプ
