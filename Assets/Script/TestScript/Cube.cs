@@ -59,8 +59,17 @@ public class Cube : MonoBehaviour
             Transform obj = parent.Find(name);
             if (obj != null)
             {
-                point[pointNum] = new Point();
-                pointNum++;
+                Point p = obj.GetComponent<Point>();
+                if (p != null)
+                {
+                    point[pointNum] = p;
+                    pointNum++;
+                }
+                else
+                {
+                    Debug.LogWarning($"{name} に Point コンポーネントがありません");
+                    found = true; // 終了するか、スキップするかは要検討。
+                }
             }
             else found = true;
         }
@@ -75,6 +84,13 @@ public class Cube : MonoBehaviour
         }
 
         int index=Random.Range(0, colorPrefabs.Count);
+
+        if (colorPrefabs[index] == null)
+        {
+            Debug.LogError($"colorPrefabs[{index}] が null です！");
+            return;
+        }
+
         GameObject obj = Instantiate(colorPrefabs[index], cubes[cubeNo].transform.position, Quaternion.identity);
         obj.transform.localScale = new Vector3(20f, 20f, 20f);
         Destroy(cubes[cubeNo]);
