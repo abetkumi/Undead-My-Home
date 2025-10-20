@@ -13,6 +13,10 @@ public class Enemy : MonoBehaviour
     Animator m_animator;
     private Rigidbody rb;
 
+    Transform[] m_navPoints = new Transform[9];
+    int m_currentTarget = -1;
+    bool m_navActive = false;
+
     enum EnemyState{
         enEnemyState_Search,    //巡回。
         enEnemyState_Chase,     //追跡。
@@ -54,6 +58,7 @@ public class Enemy : MonoBehaviour
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_animator = GetComponent<Animator>();
+        m_agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 
         m_animator.SetBool("Move", true);
@@ -131,6 +136,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //ナビメッシュ用のポイントの座標を登録。(一回のみ実行)
+    void SetNavMeshPos()
+    {
+        for(int i = 0; i < 9; i++)
+        {
+            string pointName = "Point" + (i + 1).ToString("D3");
+            GameObject pointObj = GameObject.Find(pointName);
+            if (pointObj != null){
+                m_navPoints[i] = pointObj.transform;
+            }
+            else{
+                Debug.LogWarning($"{pointName} が見つかりませんでした");
+            }
+        }
+    }
+
     // プレイヤーを探す 見つけたらtrueを返す
     bool PlayerSearch(float rayRange)
     {
@@ -193,5 +214,19 @@ public class Enemy : MonoBehaviour
 
         // 向きをターゲットに合わせる
         transform.LookAt(new Vector3(m_targetPlayer.transform.position.x, transform.position.y, m_targetPlayer.transform.position.z));
+    }
+
+    //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
+    void SetNavMovePos()
+    {
+        if (m_navPoints.Length == 0) return;
+
+        int nextTarget;
+        do
+        {
+            nextTarget = Random.Range(0, m_navPoints.Length);
+        } while (nextTarget == m_currentTarget); // 同じ場所を避ける
+
+        m_currentTarget = nextTarget;
     }
 }

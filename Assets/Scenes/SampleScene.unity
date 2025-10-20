@@ -2352,13 +2352,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2842978131820608979, guid: 672efc755635f11468a4d0bbf494ec7f,
         type: 3}
+      propertyPath: m_hp
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2842978131820608979, guid: 672efc755635f11468a4d0bbf494ec7f,
+        type: 3}
       propertyPath: m_speed
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2842978131820608979, guid: 672efc755635f11468a4d0bbf494ec7f,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2842978131820608979, guid: 672efc755635f11468a4d0bbf494ec7f,
         type: 3}
@@ -2373,12 +2378,12 @@ PrefabInstance:
     - target: {fileID: 2842978131820608979, guid: 672efc755635f11468a4d0bbf494ec7f,
         type: 3}
       propertyPath: m_chaseRayRange
-      value: 120
+      value: 150
       objectReference: {fileID: 0}
     - target: {fileID: 2842978131820608979, guid: 672efc755635f11468a4d0bbf494ec7f,
         type: 3}
       propertyPath: m_searchRayRange
-      value: 90
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6133152142320913938, guid: 672efc755635f11468a4d0bbf494ec7f,
         type: 3}
@@ -2388,7 +2393,7 @@ PrefabInstance:
     - target: {fileID: 6133152142320913938, guid: 672efc755635f11468a4d0bbf494ec7f,
         type: 3}
       propertyPath: m_IsKinematic
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
