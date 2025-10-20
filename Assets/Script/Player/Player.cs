@@ -12,10 +12,11 @@ public class Player : MonoBehaviour
     {
         Idle,
         Move,
+        Avoid,
         Dead,
     }
 
-   
+    
     //パラメータ
     [SerializeField] private float m_hpGauge = 100.0f;
     [SerializeField] private float m_staminaGauge = 100.0f;
@@ -27,10 +28,15 @@ public class Player : MonoBehaviour
     private float m_walkSpeed = 500.0f;
     private float m_runSpeed = 1000.0f;
     private float t = 0.5f;
-    private bool isGround = true;
-    public float jumpForce = 50.0f;
+    private bool m_isGround = true;
+    public float m_jumpForce = 5.0f;
+    //プレイヤーステート
     private PlayerState m_playerState = PlayerState.Idle;
+    //移動スティックの入力
     private Vector3 stickL = Vector3.zero;
+
+    //回避アクション用変数
+    PlayerAvoid m_playerAvoid;
 
     //獲得したアイテムの総重量。
     [SerializeField] private float m_totalWeight = 0.0f;
@@ -58,6 +64,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         //必要な情報を取得
+        m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
     }
@@ -71,6 +78,9 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.Move:
                 Move();
+                break;
+            case PlayerState.Avoid:
+                Avoid();
                 break;
             case PlayerState.Dead:
                 Dead();
@@ -126,6 +136,10 @@ public class Player : MonoBehaviour
             UseStamina(m_runStamina, wightRatio);
             m_moveSpeed = m_runSpeed;
         }
+        else if (Input.GetButtonDown("Avoid") && m_staminaGauge > 10.0f && stickL.magnitude > 0.1f)
+        {
+            m_playerState = PlayerState.Avoid;
+        }
         else
         {
             m_moveSpeed = m_walkSpeed;
@@ -136,21 +150,19 @@ public class Player : MonoBehaviour
         }
 
         //スペースが押されたらジャンプ
-        if (isGround == true && m_staminaGauge > 0.0f)
+        if (m_isGround == true && m_staminaGauge > 0.0f)
         {
             if (Input.GetButton("Jump"))
             {
-                UseStamina(10.0f, 1.0f);
-                m_rigidBody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                isGround = false;
+                UseStamina(100.0f, 1.0f);
+                m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
+                m_isGround = false;
             }
         }
         //プレイヤーの速度を設定することで移動させる
         PlayerMove = (PlayerMove * m_moveSpeed * Time.deltaTime);
         PlayerMove.y = m_rigidBody.velocity.y;
         m_rigidBody.velocity = PlayerMove;
-
- 
         
         if (stickL != Vector3.zero)
         {
@@ -173,7 +185,7 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isGround = true;
+            m_isGround = true;
         }
     }
 
@@ -230,6 +242,11 @@ public class Player : MonoBehaviour
         } else {
             m_totalWeight -= weight;
         }
+    }
+
+    void Avoid()
+    {
+
     }
 
     public void TakeDamage(float damage)
