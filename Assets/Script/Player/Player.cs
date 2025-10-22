@@ -24,9 +24,9 @@ public class Player : MonoBehaviour
     private float m_idleStaminaRecovery = 7.0f;
     private float m_moveStaminaRecovery = 20.0f;
     private bool m_staminaRecoveryFlag = true;
-    [SerializeField] private float m_moveSpeed = 500.0f;
-    private float m_walkSpeed = 500.0f;
-    private float m_runSpeed = 1000.0f;
+    [SerializeField] private float m_moveSpeed = 5.0f;
+    private float m_walkSpeed = 5.0f;
+    private float m_runSpeed = 10.0f;
     private float t = 0.5f;
     private bool m_isGround = true;
     public float m_jumpForce = 5.0f;
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
         {
             RecoveryStamina(m_idleStaminaRecovery);
         }
-
+      
         if (Input.anyKey)
         {
             m_playerState = PlayerState.Move;
@@ -159,8 +159,15 @@ public class Player : MonoBehaviour
                 m_isGround = false;
             }
         }
+
+        //回避ボタンが押されたら回避
+        if (Input.GetButtonDown("Avoid"))
+        {
+            m_playerState = PlayerState.Avoid;
+        }
+
         //プレイヤーの速度を設定することで移動させる
-        PlayerMove = (PlayerMove * m_moveSpeed * Time.deltaTime);
+        PlayerMove = (PlayerMove * m_moveSpeed);
         PlayerMove.y = m_rigidBody.velocity.y;
         m_rigidBody.velocity = PlayerMove;
         
@@ -246,7 +253,8 @@ public class Player : MonoBehaviour
 
     void Avoid()
     {
-
+        m_playerAvoid.Avoid();
+        m_playerState = PlayerState.Idle;
     }
 
     public void TakeDamage(float damage)
@@ -259,7 +267,7 @@ public class Player : MonoBehaviour
         m_animator.SetBool("Dead", true);
     }
 
-    void FixedUpdate()
+    void Update()
     {
         //プレイ中でないなら中断
         if (GameManager.GetGameState() != GameManager.GameState.enGameState_Play)
