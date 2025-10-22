@@ -15,7 +15,9 @@ public class Enemy : MonoBehaviour
 
     Transform[] m_navPoints = new Transform[9];
     int m_currentTarget = -1;
-    bool m_navActive = false;
+    [SerializeField] private bool m_navActive = false;
+
+    [SerializeField] private Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
 
     enum EnemyState{
         enEnemyState_Search,    //巡回。
@@ -32,8 +34,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] EnemyState m_enemyState = EnemyState.enEnemyState_Search;
     [SerializeField] Vector3[] m_targetPos;
     [SerializeField] AttackCollider m_attackCollider;
-    int m_targetNum = 0;
-    bool m_targetMode = false;
+    //int m_targetNum = 0;
+    //bool m_targetMode = false;
 
     [SerializeField] float m_hp;
     [SerializeField] float m_speed,m_dashSpeed;
@@ -58,11 +60,22 @@ public class Enemy : MonoBehaviour
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_animator = GetComponent<Animator>();
-        m_agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 
+        m_agent.updateRotation = true;
+
+        // Rigidbody を無効化（NavMeshAgent に任せる）
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
+
+        SetNavMeshPos();
         m_animator.SetBool("Move", true);
     }
+
+    Vector3 lastTargetPos;
+    float updateThreshold = 1.0f;
 
     // Update is called once per frame
     void Update()
@@ -72,24 +85,37 @@ public class Enemy : MonoBehaviour
         }
 
         Vector3 playerPos = m_targetPlayer.transform.position;
-        if (PlayerSearch(m_searchRayRange)){
-            if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE){
+        if (PlayerSearch(m_searchRayRange))
+        {
+            float sqrDist = (playerPos - lastTargetPos).sqrMagnitude;
+            if (sqrDist > updateThreshold * updateThreshold)
+            {
+                m_NextMovePos = playerPos;
+                lastTargetPos = playerPos;
+            }
+
+            if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE)
+            {
                 m_enemyState = EnemyState.enEnemyState_Attack;
             }
-            else{
+            else
+            {
                 m_enemyState = EnemyState.enEnemyState_Chase;
             }
         }
-        else{
-            m_enemyState = EnemyState.enEnemyState_Lost;
+        else
+        {
+            //m_enemyState = EnemyState.enEnemyState_Lost;
         }
-        
+
         if (Input.GetButton("testKye1")){
-            m_enemyState = EnemyState.enEnemyState_Attack;
+            m_navActive = true;
         }
         else if (Input.GetButton("Jump")){
             TakeDamage(10.0f, 0);
         }
+
+        if (m_navActive) { SetNavMovePos(); }
 
         switch (m_enemyState){
             //巡回。
@@ -172,6 +198,7 @@ public class Enemy : MonoBehaviour
             if (Vector3.Angle(transform.forward, diff) <= m_searchAngle
                 && hit.collider.CompareTag("Player"))
             {
+                m_NextMovePos = m_targetPlayer.transform.position;
                 // プレイヤー発見
                 return true;
             }
@@ -205,6 +232,23 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    //ナビメッシュ用の移動処理。なんかグルグルしてるから修正待ってね。
+    //void Move(float inSpeed)
+    //{
+    //    m_agent.speed = inSpeed;
+
+    //    // 目的地が十分に離れている場合のみ移動
+    //    if ((m_NextMovePos - transform.position).sqrMagnitude > 1.0f)
+    //    {
+    //        m_agent.SetDestination(m_NextMovePos);
+    //        m_agent.isStopped = false;
+    //    }
+    //    else
+    //    {
+    //        m_agent.isStopped = true;
+    //    }
+    //}
+
     void Move(float inSpeed)
     {
         float speed = inSpeed;
@@ -228,5 +272,9 @@ public class Enemy : MonoBehaviour
         } while (nextTarget == m_currentTarget); // 同じ場所を避ける
 
         m_currentTarget = nextTarget;
+        m_NextMovePos = m_navPoints[nextTarget].position;
+
+        m_enemyState = EnemyState.enEnemyState_Search;
+        m_navActive = false;
     }
 }
