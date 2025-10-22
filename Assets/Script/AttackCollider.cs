@@ -29,12 +29,21 @@ public class AttackCollider : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        PlayerAvoid player = other.GetComponent<PlayerAvoid>();
+        if (player != null)
         {
-            Player hp = other.GetComponent<Player>();
-            if (hp != null)
+            if (player.IsInvincible())
             {
-                hp.TakeDamage(damage);
+                return;
+            }
+
+            if (other.CompareTag("Player"))
+            {
+                Player hp = other.GetComponent<Player>();
+                if (hp != null)
+                {
+                    hp.TakeDamage(damage);
+                }
             }
         }
     }
