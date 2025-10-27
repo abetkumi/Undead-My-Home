@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Enemy : MonoBehaviour
 {
@@ -121,14 +122,14 @@ public class Enemy : MonoBehaviour
             //巡回。
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
-                Move(m_speed);
+                Move();
                 break;
             //追跡。
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
                 m_animator.SetBool("Search", false);
                 m_animator.ResetTrigger("Attack");
-                Move(m_dashSpeed);
+                Move();
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
@@ -237,27 +238,47 @@ public class Enemy : MonoBehaviour
     //{
     //    m_agent.speed = inSpeed;
 
-    //    // 目的地が十分に離れている場合のみ移動
-    //    if ((m_NextMovePos - transform.position).sqrMagnitude > 1.0f)
+    //    Vector3 direction = m_NextMovePos - transform.position;
+    //    float distance = direction.magnitude;
+
+    //    // Raycastで障害物があるかチェック
+    //    bool hasObstacle = Physics.Raycast(transform.position, direction.normalized, distance);
+
+    //    if (!hasObstacle)
     //    {
-    //        m_agent.SetDestination(m_NextMovePos);
-    //        m_agent.isStopped = false;
+    //        // 障害物がない → Rigidbodyで直進
+    //        rb.MovePosition(transform.position + direction.normalized * m_agent.speed * Time.deltaTime);
+    //        transform.LookAt(new Vector3(m_NextMovePos.x, transform.position.y, m_NextMovePos.z));
     //    }
     //    else
     //    {
-    //        m_agent.isStopped = true;
+    //        // 障害物がある → NavMeshAgentで経路移動
+    //        if (direction.sqrMagnitude > 1.0f)
+    //        {
+    //            m_agent.SetDestination(m_NextMovePos);
+    //            m_agent.isStopped = false;
+    //        }
+    //        else
+    //        {
+    //            m_agent.isStopped = true;
+    //        }
     //    }
     //}
 
-    void Move(float inSpeed)
+    void Move()
     {
-        float speed = inSpeed;
+        Vector3 direction = m_NextMovePos - transform.position;
+        float distance = direction.magnitude;
 
-        Vector3 direction = (m_targetPlayer.transform.position - transform.position).normalized;
-        rb.MovePosition(transform.position + direction * speed * Time.deltaTime);
-
-        // 向きをターゲットに合わせる
-        transform.LookAt(new Vector3(m_targetPlayer.transform.position.x, transform.position.y, m_targetPlayer.transform.position.z));
+        if (direction.sqrMagnitude > 1.0f)
+        {
+            m_agent.SetDestination(m_NextMovePos);
+            m_agent.isStopped = false;
+        }
+        else
+        {
+            m_agent.isStopped = true;
+        }
     }
 
     //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
