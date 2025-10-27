@@ -8,7 +8,8 @@ public class PlayerSearch : MonoBehaviour
 {
     GameManager m_gameManager;
     UI_SearchCreater m_UIsearchCreater;
-    [SerializeField] SphereCollider m_searchCollider;
+    [SerializeField] GameObject m_searchCollider;
+    [SerializeField] GameObject m_searchImageObject;
 
     //範囲内に収集アイテムがある場合
     private void OnTriggerEnter(Collider other)
@@ -23,20 +24,28 @@ public class PlayerSearch : MonoBehaviour
     //サーチ用コリジョン
     async void CollisionONOFF()
     {
-        m_searchCollider.enabled = true;
+        m_searchCollider.SetActive(true);
 
-        await UniTask.Delay(10);
+        await UniTask.Delay(2200);
 
-        m_searchCollider.enabled = false;
+        m_searchCollider.SetActive(false);
+
+        m_searchImageObject.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (m_searchCollider.gameObject.activeSelf == true)
+        {
+            return;
+        }
+
         //サーチボタンが押されると
         if (Input.GetButtonDown("Search"))
         {
             CollisionONOFF();
+            m_searchImageObject.SetActive(true);
         }
     }
 }
