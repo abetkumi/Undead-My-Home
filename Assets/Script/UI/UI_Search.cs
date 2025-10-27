@@ -11,7 +11,7 @@ public class UI_Search : MonoBehaviour
     //テキストを変更する
     public void ShowText(string text)
     {
-        GetComponent<TextMeshProUGUI>().text = text;
+        GetComponent<TextMeshProUGUI>().text = '$' + text;
     }
 
     private void Update()
