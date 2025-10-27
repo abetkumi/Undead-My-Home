@@ -20,16 +20,21 @@ public class Player : MonoBehaviour
     //パラメータ
     [SerializeField] private float m_hpGauge = 100.0f;
     [SerializeField] private float m_staminaGauge = 100.0f;
+    //スタミナ
     private float m_runStamina = 20.0f;
     private float m_idleStaminaRecovery = 7.0f;
     private float m_moveStaminaRecovery = 20.0f;
     private bool m_staminaRecoveryFlag = true;
+    //移動速度
     [SerializeField] private float m_moveSpeed = 5.0f;
     private float m_walkSpeed = 5.0f;
     private float m_runSpeed = 10.0f;
-    private float t = 0.5f;
-    private bool m_isGround = true;
+    //ジャンプ力
     public float m_jumpForce = 5.0f;
+    //足音タイミングの変数
+    private float t = 0.5f;
+    //地面の接触判定
+    private bool m_isGround = true;
     //プレイヤーステート
     private PlayerState m_playerState = PlayerState.Idle;
     //移動スティックの入力
@@ -37,6 +42,9 @@ public class Player : MonoBehaviour
 
     //回避アクション用変数
     PlayerAvoid m_playerAvoid;
+
+    //ゲームオーバー変数
+    GameOver m_gameOver;
 
     //獲得したアイテムの総重量。
     [SerializeField] private float m_totalWeight = 0.0f;
@@ -51,14 +59,14 @@ public class Player : MonoBehaviour
     //キャッシュ
     Rigidbody m_rigidBody;
 
-    public void GetHPDamage(float damage)
-    {
-        m_hpGauge -= damage;
-        if(m_hpGauge <= 0)
-        {
-            m_playerState = PlayerState.Dead;
-        }
-    }
+    //public void GetHPDamage(float damage)
+    //{
+    //    m_hpGauge -= damage;
+    //    if(m_hpGauge <= 0)
+    //    {
+    //        m_playerState = PlayerState.Dead;
+    //    }
+    //}
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +75,7 @@ public class Player : MonoBehaviour
         m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
+        m_gameOver = GetComponent<GameOver>();
     }
 
     void PlayerStatus()
@@ -90,6 +99,11 @@ public class Player : MonoBehaviour
 
     void Idle()
     {
+        if (m_playerState == PlayerState.Dead)
+        {
+            return;
+        }
+
         stickL = Vector3.zero;
         //スタミナが減っていたら回復する
         if (m_staminaGauge < 100.0f)
@@ -105,6 +119,11 @@ public class Player : MonoBehaviour
 
     void Move()
     {
+        if (m_playerState == PlayerState.Dead)
+        {
+            return;
+        }
+
         //カメラを考慮した移動
         Vector3 PlayerMove = Vector3.zero;
         stickL = Vector3.zero;
@@ -264,6 +283,7 @@ public class Player : MonoBehaviour
 
     void Dead()
     {
+        m_gameOver.SetGameOver();
         m_animator.SetBool("Dead", true);
     }
 
