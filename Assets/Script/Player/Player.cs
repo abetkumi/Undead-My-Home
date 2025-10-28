@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
         Idle,
         Move,
         Avoid,
+        Attack,
         Dead,
     }
 
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour
     PlayerAvoid m_playerAvoid;
 
     //ゲームオーバー変数
+    [SerializeField] GameObject m_gameOverObject;
     GameOver m_gameOver;
 
     //獲得したアイテムの総重量。
@@ -75,7 +77,7 @@ public class Player : MonoBehaviour
         m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_animator = GetComponent<Animator>();
-        m_gameOver = GetComponent<GameOver>();
+        m_gameOver = m_gameOverObject.GetComponent<GameOver>();
     }
 
     void PlayerStatus()
@@ -90,6 +92,9 @@ public class Player : MonoBehaviour
                 break;
             case PlayerState.Avoid:
                 Avoid();
+                break;
+            case PlayerState.Attack:
+                Attack();
                 break;
             case PlayerState.Dead:
                 Dead();
@@ -110,8 +115,12 @@ public class Player : MonoBehaviour
         {
             RecoveryStamina(m_idleStaminaRecovery);
         }
-      
-        if (Input.anyKey)
+
+        if (Input.GetButtonDown("Attack"))
+        {
+            m_playerState = PlayerState.Attack;
+        }
+        else if (Input.anyKey)
         {
             m_playerState = PlayerState.Move;
         }
@@ -270,17 +279,32 @@ public class Player : MonoBehaviour
         }
     }
 
+    //プレイヤーが回避する
     void Avoid()
     {
         m_playerAvoid.Avoid();
         m_playerState = PlayerState.Idle;
     }
 
+    //プレイヤーがアタックする
+    void Attack()
+    {
+        //m_animator.SetTrigger("Attack");
+        m_playerState = PlayerState.Idle;
+    }
+
+    //プレイヤーがダメージを受けた時
     public void TakeDamage(float damage)
     {
         m_hpGauge -= damage;
+        if(m_hpGauge <= 0.0f)
+        {
+            m_hpGauge = 0.0f;
+            m_playerState = PlayerState.Dead;
+        }
     }
 
+    //プレイヤーが4んだ時
     void Dead()
     {
         m_gameOver.SetGameOver();
