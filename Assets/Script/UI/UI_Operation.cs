@@ -47,7 +47,7 @@ public class UI_Operation : MonoBehaviour
                 }
                 else
                 {
-                    Texts[(int)button].text = "G:" + text;
+                    Texts[(int)button].text = "Q:" + text;
                 }
                 break;
             case Button.enButton_X:
@@ -67,7 +67,7 @@ public class UI_Operation : MonoBehaviour
                 }
                 else
                 {
-                    Texts[(int)button].text = "E:" + text;
+                    Texts[(int)button].text = "G:" + text;
                 }
                 break;
         }
