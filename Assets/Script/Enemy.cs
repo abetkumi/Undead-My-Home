@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     Animator m_animator;
     private Rigidbody rb;
 
-    Transform[] m_navPoints = new Transform[9];
+    [SerializeField] NavPointList m_navPoint;
     int m_currentTarget = -1;
     [SerializeField] private bool m_navActive = false;
 
@@ -71,7 +71,6 @@ public class Enemy : MonoBehaviour
             rb.isKinematic = true;
         }
 
-        SetNavMeshPos();
         m_animator.SetBool("Move", true);
     }
 
@@ -106,7 +105,7 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            //m_enemyState = EnemyState.enEnemyState_Lost;
+            m_enemyState = EnemyState.enEnemyState_Lost;
         }
 
         if (Input.GetButton("testKye1")){
@@ -118,7 +117,13 @@ public class Enemy : MonoBehaviour
 
         if (m_navActive) { SetNavMovePos(); }
 
-        switch (m_enemyState){
+        UpdateState();
+    }
+
+    void UpdateState()
+    {
+        switch (m_enemyState)
+        {
             //巡回。
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
@@ -160,22 +165,6 @@ public class Enemy : MonoBehaviour
             //それ以外。
             default:
                 break;
-        }
-    }
-
-    //ナビメッシュ用のポイントの座標を登録。(一回のみ実行)
-    void SetNavMeshPos()
-    {
-        for(int i = 0; i < 9; i++)
-        {
-            string pointName = "Point" + (i + 1).ToString("D3");
-            GameObject pointObj = GameObject.Find(pointName);
-            if (pointObj != null){
-                m_navPoints[i] = pointObj.transform;
-            }
-            else{
-                Debug.LogWarning($"{pointName} が見つかりませんでした");
-            }
         }
     }
 
@@ -233,38 +222,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    //ナビメッシュ用の移動処理。なんかグルグルしてるから修正待ってね。
-    //void Move(float inSpeed)
-    //{
-    //    m_agent.speed = inSpeed;
-
-    //    Vector3 direction = m_NextMovePos - transform.position;
-    //    float distance = direction.magnitude;
-
-    //    // Raycastで障害物があるかチェック
-    //    bool hasObstacle = Physics.Raycast(transform.position, direction.normalized, distance);
-
-    //    if (!hasObstacle)
-    //    {
-    //        // 障害物がない → Rigidbodyで直進
-    //        rb.MovePosition(transform.position + direction.normalized * m_agent.speed * Time.deltaTime);
-    //        transform.LookAt(new Vector3(m_NextMovePos.x, transform.position.y, m_NextMovePos.z));
-    //    }
-    //    else
-    //    {
-    //        // 障害物がある → NavMeshAgentで経路移動
-    //        if (direction.sqrMagnitude > 1.0f)
-    //        {
-    //            m_agent.SetDestination(m_NextMovePos);
-    //            m_agent.isStopped = false;
-    //        }
-    //        else
-    //        {
-    //            m_agent.isStopped = true;
-    //        }
-    //    }
-    //}
-
     void Move()
     {
         Vector3 direction = m_NextMovePos - transform.position;
@@ -284,16 +241,16 @@ public class Enemy : MonoBehaviour
     //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
     void SetNavMovePos()
     {
-        if (m_navPoints.Length == 0) return;
+        if (m_navPoint.GetPointNum() == 0) return;
 
         int nextTarget;
         do
         {
-            nextTarget = Random.Range(0, m_navPoints.Length);
+            nextTarget = Random.Range(0, m_navPoint.GetPointNum());
         } while (nextTarget == m_currentTarget); // 同じ場所を避ける
 
         m_currentTarget = nextTarget;
-        m_NextMovePos = m_navPoints[nextTarget].position;
+        m_NextMovePos = m_navPoint.GetPointPos(nextTarget);
 
         m_enemyState = EnemyState.enEnemyState_Search;
         m_navActive = false;
