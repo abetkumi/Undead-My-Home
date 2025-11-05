@@ -7,6 +7,7 @@ public class LightONOFF : MonoBehaviour
 {
     GameManager m_gameManager;
     bool m_isLightON = true;
+    public bool m_isActionFlag = false;
     [SerializeField] GameObject m_spotlight;
 
     // Start is called before the first frame update
@@ -42,9 +43,15 @@ public class LightONOFF : MonoBehaviour
             }
         }
     }
+
     // Update is called once per frame
     void Update()
     {
+        if(m_isActionFlag == true)
+        {
+            return;
+        }
+
         LightON();
     }
 }

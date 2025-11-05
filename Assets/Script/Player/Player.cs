@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
         Avoid,
         Attack,
         Dead,
+
     }
 
     
