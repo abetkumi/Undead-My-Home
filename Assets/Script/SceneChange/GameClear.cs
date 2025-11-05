@@ -9,31 +9,37 @@ public class GameClear : MonoBehaviour
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] GameObject m_timerObject;
     bool m_isGameClaer = false;
-    int m_normaCount = 0;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    int m_clearCount = 0;
 
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player") && Input.GetButtonDown("Action"))
         {
-            if(m_normaCount == 3)
+            if(m_clearCount == 3)
             {
                 SetGameClear();
+                m_clearCount++;
                 Debug.Log("Clear");
             }
             else
             {
-                
+                SetStoreScene();
                 Debug.Log("ショップへ");
             }
         }
     }
 
+    void SetStoreScene()
+    {
+        // シーン切替
+        // フェード演出用オブジェクトを生成
+        GameObject fadeObject = Instantiate(m_fadeCanvas);
+        // 生成したオブジェクトのFadeStart関数を呼び出す
+        fadeObject.GetComponent<FadeScene>().FadeStart("StoreScene", Color.black, true);
+
+        //自身はシーンをまたいでも削除されないようにする
+        DontDestroyOnLoad(gameObject);
+    }
     async public void SetGameClear()
     {
         //ゲームマネージャーを取得
