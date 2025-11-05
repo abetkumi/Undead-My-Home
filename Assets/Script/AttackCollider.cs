@@ -36,13 +36,24 @@ public class AttackCollider : MonoBehaviour
             {
                 return;
             }
-
+            //プレイヤー側の処理
             if (other.CompareTag("Player"))
             {
                 Player hp = other.GetComponent<Player>();
                 if (hp != null)
                 {
                     hp.TakeDamage(damage);
+                    return;
+                }
+            }
+            //エネミー側の処理
+            else if (other.CompareTag("Enemy"))
+            {
+                Enemy enemy = other.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.TakeDamage(damage, 1);
+                    return;
                 }
             }
         }

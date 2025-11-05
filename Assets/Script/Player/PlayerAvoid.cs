@@ -4,12 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//プレイヤー回避アクション用スクリプト
 public class PlayerAvoid : MonoBehaviour
 {
     [Header("回避設定")]
     public float m_avoidDistance = 5.0f;    // 回避距離
     public float m_avoidDuration = 0.2f;  // 回避時間
-    public int m_avoidCooldown = 2;  // クールタイム（回避後の待ち時間）
+    public int m_avoidCooldown = 3;  // クールタイム（回避後の待ち時間）
 
     [Header("無敵設定")]
     public int m_invincibleTime = 1; // 無敵時間（回避開始からの秒数）
