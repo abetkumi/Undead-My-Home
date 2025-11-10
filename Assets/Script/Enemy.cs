@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class Enemy : MonoBehaviour
 {
@@ -10,6 +12,13 @@ public class Enemy : MonoBehaviour
 
     NavMeshAgent m_agent;
     Animator m_animator;
+    private Rigidbody rb;
+
+    [SerializeField] NavPointList m_navPoint;
+    int m_currentTarget = -1;
+    [SerializeField] private bool m_navActive = false;
+
+    [SerializeField] private Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
 
     enum EnemyState{
         enEnemyState_Search,    //巡回。
@@ -26,16 +35,21 @@ public class Enemy : MonoBehaviour
     [SerializeField] EnemyState m_enemyState = EnemyState.enEnemyState_Search;
     [SerializeField] Vector3[] m_targetPos;
     [SerializeField] AttackCollider m_attackCollider;
-    int m_targetNum = 0;
-    bool m_targetMode = false;
+    //int m_targetNum = 0;
+    //bool m_targetMode = false;
 
-    float m_hp = 0.0f;
+    [SerializeField] float m_hp;
+    [SerializeField] float m_speed,m_dashSpeed;
 
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
 
     [SerializeField]
     float m_searchAngle, m_searchRayRange, m_chaseRayRange;
+
+    //デバック用変数。
+    //死亡時に全ての処理を停止させる
+    bool DebugStop = false;
 
     void TargetAdd(int add)
     {
@@ -47,47 +61,85 @@ public class Enemy : MonoBehaviour
     {
         m_agent = GetComponent<NavMeshAgent>();
         m_animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody>();
+
+        m_agent.updateRotation = true;
+
+        // Rigidbody を無効化（NavMeshAgent に任せる）
+        if (rb != null)
+        {
+            rb.isKinematic = true;
+        }
 
         m_animator.SetBool("Move", true);
     }
 
+    Vector3 lastTargetPos;
+    float updateThreshold = 1.0f;
+
     // Update is called once per frame
     void Update()
     {
+        if (DebugStop == true){
+            return;
+        }
+
         Vector3 playerPos = m_targetPlayer.transform.position;
-        if (PlayerSearch(m_searchRayRange)){
-            if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE){
+        if (PlayerSearch(m_searchRayRange))
+        {
+            float sqrDist = (playerPos - lastTargetPos).sqrMagnitude;
+            if (sqrDist > updateThreshold * updateThreshold)
+            {
+                m_NextMovePos = playerPos;
+                lastTargetPos = playerPos;
+            }
+
+            if ((transform.position - playerPos).sqrMagnitude <= ATTACK_RANGE)
+            {
                 m_enemyState = EnemyState.enEnemyState_Attack;
             }
-            else{
+            else
+            {
                 m_enemyState = EnemyState.enEnemyState_Chase;
             }
         }
-        else{
+        else
+        {
             m_enemyState = EnemyState.enEnemyState_Lost;
         }
-        
+
         if (Input.GetButton("testKye1")){
-            m_enemyState = EnemyState.enEnemyState_Attack;
+            m_navActive = true;
         }
         else if (Input.GetButton("Jump")){
-            m_enemyState = EnemyState.enEnemyState_Damage;
+            TakeDamage(10.0f, 0);
         }
 
-        switch (m_enemyState){
+        if (m_navActive) { SetNavMovePos(); }
+
+        UpdateState();
+    }
+
+    void UpdateState()
+    {
+        switch (m_enemyState)
+        {
             //巡回。
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
+                Move();
                 break;
             //追跡。
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
                 m_animator.SetBool("Search", false);
                 m_animator.ResetTrigger("Attack");
+                Move();
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
                 m_animator.SetTrigger("Lost");
+                m_animator.SetBool("Chaes", false);
                 break;
             //攻撃。
             case EnemyState.enEnemyState_Attack:
@@ -107,6 +159,7 @@ public class Enemy : MonoBehaviour
                 break;
             //死。
             case EnemyState.enEnemyState_Death:
+                m_animator.SetBool("Move", false);
                 m_animator.SetTrigger("Death");
                 break;
             //それ以外。
@@ -132,9 +185,10 @@ public class Enemy : MonoBehaviour
         if (Physics.Raycast(startPos, diff.normalized, out hit, rayRange))
         {
             // プレイヤーが視野角内かつレイが最初にヒットしたのがプレイヤーだったら…
-            if (Vector3.Angle(transform.forward, diff) <= m_searchRayRange
+            if (Vector3.Angle(transform.forward, diff) <= m_searchAngle
                 && hit.collider.CompareTag("Player"))
             {
+                m_NextMovePos = m_targetPlayer.transform.position;
                 // プレイヤー発見
                 return true;
             }
@@ -163,7 +217,42 @@ public class Enemy : MonoBehaviour
         }
 
         if (m_hp <= 0){
-            m_enemyState=EnemyState.enEnemyState_Death; 
+            m_enemyState=EnemyState.enEnemyState_Death;
+            DebugStop = true;
         }
+    }
+
+    void Move()
+    {
+        Vector3 direction = m_NextMovePos - transform.position;
+        float distance = direction.magnitude;
+
+        if (direction.sqrMagnitude > 1.0f)
+        {
+            m_agent.SetDestination(m_NextMovePos);
+            m_agent.isStopped = false;
+        }
+        else
+        {
+            m_agent.isStopped = true;
+        }
+    }
+
+    //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
+    void SetNavMovePos()
+    {
+        if (m_navPoint.GetPointNum() == 0) return;
+
+        int nextTarget;
+        do
+        {
+            nextTarget = Random.Range(0, m_navPoint.GetPointNum());
+        } while (nextTarget == m_currentTarget); // 同じ場所を避ける
+
+        m_currentTarget = nextTarget;
+        m_NextMovePos = m_navPoint.GetPointPos(nextTarget);
+
+        m_enemyState = EnemyState.enEnemyState_Search;
+        m_navActive = false;
     }
 }

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Item
+  - GameOver
+  - UI
+  - GameManager
   layers:
   - Default
   - TransparentFX

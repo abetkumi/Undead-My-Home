@@ -7,6 +7,7 @@ using static UnityEditor.Progress;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] Player m_player;
+    [SerializeField] RectTransform m_canvasRect;
     //効果音再生関数
     //static public OneShotAudioClip PlaySE(AudioClip clip,
     //    GameObject sauceObject = null,
@@ -38,6 +39,8 @@ public class GameManager : MonoBehaviour
         enGameState_Play,
         enGameState_Clear,
         enGameState_GameOver,
+        enGameState_GameClear,
+        enGameState_Shopping,
     }
     static GameState m_gameState = GameState.enGameState_Play;
 
@@ -92,6 +95,18 @@ public class GameManager : MonoBehaviour
     public UI_Operation GetOperationUI()
     {
         return OperationUI;
+    }
+
+    //所持金額
+    int m_money;
+    public int GetMoney()
+    {
+        return m_money;
+    }
+    public int SetMoney(int money)
+    {
+        m_money += money;
+        return m_money;
     }
 
     //効果音
@@ -163,6 +178,10 @@ public class GameManager : MonoBehaviour
         Vector3 itemPos = Camera.main.transform.position;
         GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
             itemPos, Camera.main.transform.rotation);
+
+        //テキスト生成
+        dropItem.GetComponent<UI_SearchCreater>().m_canvasRect = m_canvasRect;
+
         //前方に発射
         dropItem.GetComponent<ItemObject>().ItemDrop(velocity);
 
