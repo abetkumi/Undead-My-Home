@@ -11,12 +11,16 @@ public class UI_Operation : MonoBehaviour
     [SerializeField, Header("押せない時の不透明度")]
     float NoActiveAlpha = 0.4f;
 
+    private bool m_usingGamepad = false; // 現在どちらの入力を使っているか
+    private float lastInputTime = 0f;
+
     //ボタンの種類
     public enum Button
     {
         enButton_A,
         enButton_B,
         enButton_X,
+        enButton_Y,
     }
 
     //説明欄の変更
@@ -27,13 +31,44 @@ public class UI_Operation : MonoBehaviour
         switch (button)
         {
             case Button.enButton_A:
-                Texts[(int)button].text = "左クリック:" + text;
+                if (m_usingGamepad == true)
+                {
+                    Texts[(int)button].text = "A:" + text;
+                }
+                else
+                {
+                    Texts[(int)button].text = "左クリック:" + text;
+                }
                 break;
             case Button.enButton_B:
-                Texts[(int)button].text = "G:" + text;
+                if (m_usingGamepad == true)
+                {
+                    Texts[(int)button].text = "B:" + text;
+                }
+                else
+                {
+                    Texts[(int)button].text = "Q:" + text;
+                }
                 break;
             case Button.enButton_X:
-                Texts[(int)button].text = "F:" + text;
+                if (m_usingGamepad == true)
+                {
+                    Texts[(int)button].text = "X:" + text;
+                }
+                else
+                {
+                    Texts[(int)button].text = "F:" + text;
+                }
+                break;
+            case Button.enButton_Y:
+                if (m_usingGamepad == true)
+                {
+                    Texts[(int)button].text = "Y:" + text;
+                }
+                else
+                {
+                    Texts[(int)button].text = "G:" + text;
+                }
                 break;
         }
 
@@ -59,6 +94,42 @@ public class UI_Operation : MonoBehaviour
         for (int i = 0; i < Texts.Length; i++)
         {
             SetOperation((Button)i, "", false);
+        }
+    }
+
+    private bool CheckKeyboardMouseInput()
+    {
+        // キーボードまたはマウスが押されたら true
+        return Input.anyKeyDown;
+    }
+
+    private bool CheckGamepadInput()
+    {
+        // 代表的なゲームパッドの入力を検出
+        return Input.GetButtonDown("Action") ||
+               Input.GetButtonDown("Jump");
+    }
+
+    private void Update()
+    {
+        //ゲームパッドの入力検知
+        if (CheckGamepadInput())
+        {
+            if (!m_usingGamepad)
+            {
+                m_usingGamepad = true;
+            }
+            lastInputTime = Time.time;
+        }
+
+        //キーボード・マウスの入力検知
+        if (CheckKeyboardMouseInput())
+        {
+            if (m_usingGamepad)
+            {
+                m_usingGamepad = false;
+            }
+            lastInputTime = Time.time;
         }
     }
 }

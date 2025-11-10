@@ -31,7 +31,10 @@ public class ItemObject : MonoBehaviour
         IsCheck = flag;
     }
 
-
+    public float GetItemValue()
+    {
+        return itemDataBase.Items[ItemID].value;
+    }
 
     //GameObject m_platformObj = null;  //自分が置かれている
 
@@ -73,8 +76,8 @@ public class ItemObject : MonoBehaviour
             //Debug/Log("アイテム名:"+Name+"\n説明文:"+Explanation);
 
             //獲得できないアイテムなので説明を表示
-            m_gameManager.GetSearchUI().SearchUI_On(Explanation, true);
-            m_gameManager.GetSearchUI().AutoOff();
+            //m_gameManager.GetSearchUI().SearchUI_On(Explanation, true);
+            //m_gameManager.GetSearchUI().AutoOff();
 
             //効果音を再生
             //GameManager.PlaySE(m_gameManager.GetEnterSE());

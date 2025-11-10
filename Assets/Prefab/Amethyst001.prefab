@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -4895118071052649146}
   - component: {fileID: 6091506461316696029}
   - component: {fileID: 6591745874805005739}
+  - component: {fileID: 3908540884782822575}
   m_Layer: 7
   m_Name: Amethyst001
   m_TagString: Untagged
@@ -75,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea4ae34157656d41b9eea759c5c102c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemID: 1
+  ItemID: 2
   itemDataBase: {fileID: 11400000, guid: 58a89a36e579d9344acf50d0e43ceb2d, type: 2}
   Name: 
   Explanation: 
@@ -119,6 +120,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.6, y: 0.6, z: 0.6}
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &3908540884782822575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6652964456437015396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bd178b2736e32f4d8fdd78fdcb888cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_canvasRect: {fileID: 0}
+  m_UI_SearchPrefab: {fileID: 4646721660341747245, guid: bf97332eaff8ef7469041ec59bee0f05,
+    type: 3}
 --- !u!1001 &5788494073441073680
 PrefabInstance:
   m_ObjectHideFlags: 0
