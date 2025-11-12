@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class Skeleton : EnemyBase
+public class Golem : EnemyBase
 {
     [SerializeField]
     float m_searchRayRange, m_chaseRayRange;
@@ -11,17 +10,17 @@ public class Skeleton : EnemyBase
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
 
+    float m_speed = 1.0f;
+
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
         m_animator = GetComponent<Animator>();
-
-        m_animator.SetBool("Move", true);
     }
 
     // Update is called once per frame
-    new void Update() 
+    new void Update()
     {
         if (DebugStop == true)
         {
@@ -71,34 +70,31 @@ public class Skeleton : EnemyBase
 
     public override void UpdateState()
     {
-        ResetAllAnimatorParameters();
-        m_animator.SetBool("Move", true);
+        //ResetAllAnimatorParameters();
 
         switch (m_enemyState)
         {
             //巡回。
             case EnemyState.enEnemyState_Search:
-                m_animator.SetBool("Search", true);
+                m_animator.SetFloat("Walk", 1.0f);
                 Move();
                 break;
             //追跡。
             case EnemyState.enEnemyState_Chase:
-                m_animator.SetBool("Chaes", true);
-                m_animator.SetBool("Search", false);
-                m_animator.ResetTrigger("Attack");
-                m_animator.SetTrigger("ChaesStart");
+                ChaseSpeedSet();
+                m_animator.SetFloat("Walk", m_speed);
                 Move();
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
-                m_animator.SetTrigger("Lost");
-                m_animator.SetBool("Search", false);
-                m_animator.SetBool("Chaes", false);
+                m_animator.SetFloat("Walk", 0.0f);
+                m_animator.SetTrigger("IdelAction");
+                m_speed = 1.0f;
                 break;
             //攻撃。
             case EnemyState.enEnemyState_Attack:
-                m_animator.SetBool("Chaes", false);
-                m_animator.SetTrigger("Attack");
+                m_animator.SetFloat("Walk", 0.0f);
+                m_animator.SetTrigger("Hit");
                 StartAttack();
                 Move();
                 break;
@@ -111,17 +107,37 @@ public class Skeleton : EnemyBase
                 break;
             //気絶。
             case EnemyState.enEnemyState_Stun:
-                m_animator.SetTrigger("Knockback");
+                break;
+            //眠る。
+            case EnemyState.enEnemyState_Sleep:
+                m_animator.SetTrigger("SleepStart");
+                Sleep();
                 break;
             //死。
             case EnemyState.enEnemyState_Death:
-                m_animator.SetBool("Move", false);
-                m_animator.SetTrigger("Death");
+                m_animator.SetTrigger("Die");
                 DebugStop = true;
                 break;
             //それ以外。
             default:
                 break;
+        }
+    }
+
+    void ChaseSpeedSet(){
+        m_speed += Time.deltaTime * 1.0f;
+    }
+
+    void Sleep()
+    {
+        float time = 0.0f;
+        time += Time.deltaTime;
+        m_stateLook = true;
+
+        if (time >= 3.0f)
+        {
+            m_stateLook = false;
+            m_animator.SetTrigger("SleepEnd");
         }
     }
 
@@ -131,7 +147,7 @@ public class Skeleton : EnemyBase
         m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
 
-        if (AnimationEndCheak("Attack") == true)
+        if (AnimationEndCheak("Hit") == true)
         {
             EndAttack();
         }
@@ -141,7 +157,5 @@ public class Skeleton : EnemyBase
     {
         m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
-        m_animator.SetBool("Chaes", true);
-        m_animator.SetTrigger("ChaesStart");
     }
 }
