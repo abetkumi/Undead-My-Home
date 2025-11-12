@@ -8,7 +8,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    private enum PlayerState
+    public enum PlayerState
     {
         Idle,
         Move,
@@ -57,19 +57,16 @@ public class Player : MonoBehaviour
     float n = 2.0f;
 
     //アニメーション
-    Animator m_animator;
+    [SerializeField] Animator m_animator;
+    [SerializeField] GameObject m_playerAnimObject;
 
     //キャッシュ
     Rigidbody m_rigidBody;
 
-    //public void GetHPDamage(float damage)
-    //{
-    //    m_hpGauge -= damage;
-    //    if(m_hpGauge <= 0)
-    //    {
-    //        m_playerState = PlayerState.Dead;
-    //    }
-    //}
+    public void SetPlayerState(PlayerState state)
+    {
+        m_playerState = state;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -77,7 +74,7 @@ public class Player : MonoBehaviour
         //必要な情報を取得
         m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
-        m_animator = GetComponent<Animator>();
+        m_animator = m_playerAnimObject.GetComponent<Animator>();
         m_gameOver = m_gameOverObject.GetComponent<GameOver>();
     }
 
@@ -110,6 +107,8 @@ public class Player : MonoBehaviour
             return;
         }
 
+        m_animator.SetBool("Idle", true);
+
         stickL = Vector3.zero;
         //スタミナが減っていたら回復する
         if (m_staminaGauge < 100.0f)
@@ -120,6 +119,7 @@ public class Player : MonoBehaviour
         if (Input.GetButtonDown("Attack"))
         {
             m_playerState = PlayerState.Attack;
+            m_animator.SetTrigger("Attack");
         }
         else if (Input.anyKey)
         {
@@ -155,11 +155,18 @@ public class Player : MonoBehaviour
         //移動速度に上記で計算したベクトルを加算する
         PlayerMove += right + forward;
 
- 
 
-        //Runキーが押されている場合
-        if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
+        if (Input.GetButtonDown("Attack"))
         {
+            m_playerState = PlayerState.Attack;
+            m_animator.SetTrigger("Attack");
+        }
+        //Runキーが押されている場合
+        else if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
+        {
+            m_animator.SetBool("Run", true);
+            m_animator.SetBool("Walk",false);
+            m_animator.SetBool("Idle", false);
             ////重量によってスタミナの増幅幅を変更。
             StaminaWeightModifier(m_totalWeight, n);
             UseStamina(m_runStamina, wightRatio);
@@ -171,6 +178,9 @@ public class Player : MonoBehaviour
         }
         else
         {
+            m_animator.SetBool("Walk", true);
+            m_animator.SetBool("Run", false);
+            m_animator.SetBool("Idle", false);
             m_moveSpeed = m_walkSpeed;
 
             //重量によってスタミナの増幅幅を変更。
@@ -183,6 +193,10 @@ public class Player : MonoBehaviour
         {
             if (Input.GetButton("Jump"))
             {
+                m_animator.SetBool("Walk", false);
+                m_animator.SetBool("Run", false);
+                m_animator.SetTrigger("Jump");
+
                 UseStamina(100.0f, 1.0f);
                 m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
                 m_isGround = false;
@@ -290,8 +304,8 @@ public class Player : MonoBehaviour
     //プレイヤーがアタックする
     void Attack()
     {
-        //m_animator.SetTrigger("Attack");
-        m_playerState = PlayerState.Idle;
+        
+        //m_playerState = PlayerState.Idle;
     }
 
     //プレイヤーがダメージを受けた時
@@ -309,7 +323,10 @@ public class Player : MonoBehaviour
     void Dead()
     {
         m_gameOver.SetGameOver();
-        m_animator.SetBool("Dead", true);
+        if(m_animator.GetBool("Dead") == false)
+        {
+            m_animator.SetBool("Dead", true);
+        }
     }
 
     void Update()
