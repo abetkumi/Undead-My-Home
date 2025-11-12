@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
 using UnityEngine;
 
-public class Skeleton : EnemyBase
+public class Ghoul : EnemyBase
 {
     [SerializeField]
     float m_searchRayRange, m_chaseRayRange;
@@ -21,7 +20,7 @@ public class Skeleton : EnemyBase
     }
 
     // Update is called once per frame
-    new void Update() 
+    new void Update()
     {
         if (DebugStop == true)
         {
@@ -59,20 +58,20 @@ public class Skeleton : EnemyBase
         }
         else if (Input.GetButton("Jump"))
         {
-            PlaySound();
+            TakeDamage(10.0f, 0);
         }
 
         if (m_navActive) { SetNavMovePos(); }
 
         UpdateState();
-
         base.Update();
     }
 
     public override void UpdateState()
     {
-        ResetAllAnimatorParameters();
-        m_animator.SetBool("Move", true);
+        m_animator.ResetTrigger("Attack");
+        m_animator.ResetTrigger("ChaesStart");
+        m_animator.ResetTrigger("Lost");
 
         switch (m_enemyState)
         {
