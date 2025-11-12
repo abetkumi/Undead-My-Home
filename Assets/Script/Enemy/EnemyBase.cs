@@ -6,7 +6,13 @@ using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyBase : MonoBehaviour
 {
+    [SerializeField] protected AttackCollider m_attackCollider;
+    [SerializeField] protected Animator m_animator;
+
     [SerializeField] protected GameObject m_targetPlayer;
+
+    [SerializeField] protected AudioClip m_soundClip;
+    private AudioSource m_audioSource;
 
     NavMeshAgent m_agent;
     protected Rigidbody rb;
@@ -29,11 +35,12 @@ public class EnemyBase : MonoBehaviour
         enEnemyState_Damage,    //ダメージ。
         enEnemyState_Stun,      //気絶。
         enEnemyState_Death,     //死。
+        enEnemyState_Sleep,     //眠る。
         enEnemyState_Num,       //ステートの数。
     }
 
     [SerializeField]  protected EnemyState m_enemyState = EnemyState.enEnemyState_Search;
-    public bool m_stateLook = false;
+    [SerializeField]  public bool m_stateLook = false;
 
     [SerializeField] float m_hp;
 
@@ -46,6 +53,10 @@ public class EnemyBase : MonoBehaviour
     {
         m_agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+        m_audioSource = gameObject.AddComponent<AudioSource>();
+
+        m_audioSource.clip = m_soundClip;
+        m_audioSource.playOnAwake = false; // 自動再生しない
 
         m_agent.updateRotation = true;
 
@@ -62,6 +73,17 @@ public class EnemyBase : MonoBehaviour
         if (DebugStop == true)
         {
             return;
+        }
+
+        if (!m_agent.pathPending) // 経路計算が完了していて
+        {
+            if (m_agent.remainingDistance <= m_agent.stoppingDistance) // 残り距離が停止距離以下
+            {
+                if (!m_agent.hasPath || m_agent.velocity.sqrMagnitude == 0f) // 経路がなく、停止している
+                {
+                    m_enemyState = EnemyState.enEnemyState_Lost;
+                }
+            }
         }
     }
 
@@ -146,6 +168,34 @@ public class EnemyBase : MonoBehaviour
         m_navActive = false;
     }
 
+    public void PlaySound()
+    {
+        m_audioSource.Play();
+    }
+
+    //宣言でアニメーション内のすべての変数のリセット。
+    public void ResetAllAnimatorParameters()
+    {
+        foreach (AnimatorControllerParameter param in m_animator.parameters)
+        {
+            switch (param.type)
+            {
+                case AnimatorControllerParameterType.Bool:
+                    m_animator.SetBool(param.name, false);
+                    break;
+                case AnimatorControllerParameterType.Trigger:
+                    m_animator.ResetTrigger(param.name);
+                    break;
+                case AnimatorControllerParameterType.Float:
+                    m_animator.SetFloat(param.name, 0f);
+                    break;
+                case AnimatorControllerParameterType.Int:
+                    m_animator.SetInteger(param.name, 0);
+                    break;
+            }
+        }
+    }
+
 
     //固有処理。
     public virtual void UpdateState() { }
@@ -153,4 +203,15 @@ public class EnemyBase : MonoBehaviour
     public virtual void StartAttack() { }
 
     public virtual void EndAttack() { }
+
+    //アニメーションが終わったかを判定。
+    public bool AnimationEndCheak(string animeName)
+    {
+        AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.IsName(animeName) && stateInfo.normalizedTime >= 1f)
+        {
+            return true;
+        }
+        return false;
+    }
 }
