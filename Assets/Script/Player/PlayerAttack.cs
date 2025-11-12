@@ -24,7 +24,7 @@ public class PlayerAttack : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             EnemyBase enemy = other.GetComponent<EnemyBase>();
-            enemy.TakeDamage(1, 1);
+            enemy.TakeDamage(1, 0);
         }
     }
 }
