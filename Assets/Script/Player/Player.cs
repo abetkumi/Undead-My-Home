@@ -108,7 +108,8 @@ public class Player : MonoBehaviour
         }
 
         m_animator.SetBool("Idle", true);
-
+        m_animator.SetBool("Walk", false);
+        m_animator.SetBool("Run", false);
         stickL = Vector3.zero;
         //スタミナが減っていたら回復する
         if (m_staminaGauge < 100.0f)
@@ -121,7 +122,12 @@ public class Player : MonoBehaviour
             m_playerState = PlayerState.Attack;
             m_animator.SetTrigger("Attack");
         }
-        else if (Input.anyKey)
+        else if (Input.GetButton("Run") || Input.GetButton("Jump"))
+        {
+            m_playerState = PlayerState.Move;
+        }
+        else if (Input.GetAxis("Horizontal") > 0.1f || Input.GetAxis("Horizontal") < -0.1f || 
+            Input.GetAxis("Vertical") > 0.1f || Input.GetAxis("Vertical") < -0.1f)
         {
             m_playerState = PlayerState.Move;
         }
