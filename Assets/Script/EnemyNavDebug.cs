@@ -13,7 +13,7 @@ public class EnemyNavDebug : MonoBehaviour
 
     Transform[] m_navPoints = new Transform[9];
     int m_currentTarget = -1;
-    [SerializeField] private bool m_navActive = false;
+    //[SerializeField] private bool m_navActive = false;
 
     [SerializeField] private Vector3 m_NextMovePos = Vector3.zero;
 
@@ -95,6 +95,6 @@ public class EnemyNavDebug : MonoBehaviour
         m_currentTarget = nextTarget;
         m_NextMovePos = m_navPoints[nextTarget].position;
 
-        m_navActive = false;
+        //m_navActive = false;
     }
 }
