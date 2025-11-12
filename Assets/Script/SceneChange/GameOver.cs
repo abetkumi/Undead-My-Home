@@ -8,15 +8,14 @@ public class GameOver : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] GameObject m_playerObject;
-    [SerializeField] GameObject m_cameraObject;
     [SerializeField] GameObject m_timerObject;
+    [SerializeField] GameObject m_cameraObject;
+    CameraCulling m_cameraCulling;
+    [SerializeField] GameObject m_weaponObject;
+    PlayerAttack m_playerAttack;
     bool m_isGameOver = false;
 
     // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -34,6 +33,12 @@ public class GameOver : MonoBehaviour
         GameManager m_gameManager = 
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameOver);
+
+        m_cameraCulling = m_cameraObject.GetComponent<CameraCulling>();
+        m_cameraCulling.ShowPlayerBody();
+
+        m_playerAttack = m_weaponObject.GetComponent<PlayerAttack>();
+        m_playerAttack.NormalScale();
 
         Destroy(m_timerObject);
 
@@ -54,6 +59,11 @@ public class GameOver : MonoBehaviour
         m_isGameOver = true;
         //é©êgÇÕÉVÅ[ÉìÇÇ‹ÇΩÇ¢Ç≈Ç‡çÌèúÇ≥ÇÍÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
         DontDestroyOnLoad(gameObject);
+
+        await UniTask.Delay(1050);
+        GameObject m_gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
+        Destroy(m_playerObject);
+        Destroy(m_gameManagerObject);
     }
 
     // Update is called once per frame
