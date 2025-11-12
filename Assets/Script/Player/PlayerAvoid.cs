@@ -4,12 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//プレイヤー回避アクション用スクリプト
 public class PlayerAvoid : MonoBehaviour
 {
+    [SerializeField] GameManager m_gameManager;
     [Header("回避設定")]
     public float m_avoidDistance = 5.0f;    // 回避距離
     public float m_avoidDuration = 0.2f;  // 回避時間
-    public int m_avoidCooldown = 2;  // クールタイム（回避後の待ち時間）
+    public int m_avoidCooldown = 3;  // クールタイム（回避後の待ち時間）
 
     [Header("無敵設定")]
     public int m_invincibleTime = 1; // 無敵時間（回避開始からの秒数）
@@ -29,33 +31,45 @@ public class PlayerAvoid : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         m_playerCollider = GetComponent<CapsuleCollider>();
+        m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        //UIに回避可能時表示
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_RB,
+                "回避", true);
     }
 
     public void Avoid()
     {
         // 回避入力受付
-        if (m_canAvoid && !m_isAvoiding)
+        if (!m_canAvoid)
         {
-            int m_direction = 0;
-
-            // ゲームパッド操作（左スティック）
-            float horizontal = Input.GetAxis("Horizontal"); // -1:左, +1:右
-
-            if (horizontal > 0.5f)
-            {
-                m_direction = 1;
-            }
-            else if (horizontal < -0.5f)
-            {
-                m_direction = -1;
-            }
-
-            // 回避開始
-            if (m_direction != 0)
-            {
-                Avoid(m_direction);
-            }
+            return;
         }
+
+        if(m_isAvoiding)
+        {
+            return;
+        }
+
+        int m_direction = 0;
+
+        // ゲームパッド操作（左スティック）
+        float horizontal = Input.GetAxis("Horizontal"); // -1:左, +1:右
+
+        if (horizontal > 0.5f)
+        {
+            m_direction = 1;
+        }
+        else if (horizontal < -0.5f) 
+        {
+            m_direction = -1;
+        }
+
+        // 回避開始
+        if (m_direction != 0)
+        {
+            Avoid(m_direction);
+        }
+        
     }
 
     private async void Avoid(int direction)
@@ -66,6 +80,10 @@ public class PlayerAvoid : MonoBehaviour
         m_avoidStartPos = rb.position;
         m_avoidEndPos = rb.position + transform.right * direction * m_avoidDistance;
         m_avoidTimer = 0f;
+
+        //UIに回避可能時表示
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_RB,
+                "回避", false);
 
         // 無敵開始
         Invincible();
@@ -87,6 +105,11 @@ public class PlayerAvoid : MonoBehaviour
         // クールタイム待機
         await UniTask.Delay(TimeSpan.FromSeconds(m_avoidCooldown));
         m_canAvoid = true;
+
+        //UIに回避可能時表示
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_RB,
+                "回避", true);
+
         Debug.Log("回避クールタイム終了");
     }
 

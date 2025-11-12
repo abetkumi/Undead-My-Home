@@ -21,6 +21,7 @@ public class UI_Operation : MonoBehaviour
         enButton_B,
         enButton_X,
         enButton_Y,
+        enButton_RB,
     }
 
     //ê‡ñæóìÇÃïœçX
@@ -47,7 +48,7 @@ public class UI_Operation : MonoBehaviour
                 }
                 else
                 {
-                    Texts[(int)button].text = "G:" + text;
+                    Texts[(int)button].text = "Q:" + text;
                 }
                 break;
             case Button.enButton_X:
@@ -64,6 +65,16 @@ public class UI_Operation : MonoBehaviour
                 if (m_usingGamepad == true)
                 {
                     Texts[(int)button].text = "Y:" + text;
+                }
+                else
+                {
+                    Texts[(int)button].text = "G:" + text;
+                }
+                break;
+            case Button.enButton_RB:
+                if (m_usingGamepad == true)
+                {
+                    Texts[(int)button].text = "RB:" + text;
                 }
                 else
                 {

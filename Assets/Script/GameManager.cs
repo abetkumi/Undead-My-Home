@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
         enGameState_Clear,
         enGameState_GameOver,
         enGameState_GameClear,
+        enGameState_Shopping,
     }
     static GameState m_gameState = GameState.enGameState_Play;
 
@@ -94,6 +95,18 @@ public class GameManager : MonoBehaviour
     public UI_Operation GetOperationUI()
     {
         return OperationUI;
+    }
+
+    //Š‹àŠz
+    int m_money;
+    public int GetMoney()
+    {
+        return m_money;
+    }
+    public int SetMoney(int money)
+    {
+        m_money += money;
+        return m_money;
     }
 
     //Œø‰Ê‰¹
