@@ -10308,7 +10308,7 @@ GameObject:
   - component: {fileID: 2927374542052127228}
   m_Layer: 0
   m_Name: Ghoul-Blue (Mobile)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10367,6 +10367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_targetPlayer: {fileID: 0}
   StepSE: {fileID: 0}
+  m_navPoint: {fileID: 0}
   m_navActive: 0
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
