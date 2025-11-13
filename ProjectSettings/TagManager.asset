@@ -9,6 +9,7 @@ TagManager:
   - GameOver
   - UI
   - GameManager
+  - Enemy
   layers:
   - Default
   - TransparentFX
