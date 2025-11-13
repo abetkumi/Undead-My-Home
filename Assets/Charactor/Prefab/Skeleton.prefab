@@ -296,6 +296,7 @@ MonoBehaviour:
   m_animator: {fileID: 9042442487243357835}
   m_targetPlayer: {fileID: 1761586419762834877, guid: dfe64299f24d8f54da22375d4ff7af1d,
     type: 3}
+  m_soundClip: {fileID: 0}
   m_searchAngle: 100
   m_navPoint: {fileID: 0}
   m_NextMovePos: {x: 0, y: 0, z: 0}

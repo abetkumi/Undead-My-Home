@@ -20,7 +20,7 @@ public class UI_Item : MonoBehaviour
     GameObject[] m_itemObject;
 
     //親オブジェクト
-    [SerializeField] GameObject m_UIObject;
+    [SerializeField] GameObject m_gameManagerParent;
 
     //表示内容を更新する　アイテムインベントリを更新したタイミングで呼ぶ
     public void UpdateUI()
@@ -98,7 +98,7 @@ public class UI_Item : MonoBehaviour
             //生成
             GameObject item = Instantiate(m_gameManager.GetItemData().Items[itemNo].ItemPrefab,
                 itemPos, Quaternion.identity);
-            item.transform.parent = m_UIObject.transform;
+            item.transform.parent = m_gameManagerParent.transform;
 
             //アイテムを覚えておく
             m_itemObject[i] = item;
