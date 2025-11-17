@@ -21,6 +21,12 @@ public class Player : MonoBehaviour
     
     //パラメータ
     [SerializeField] private float m_hpGauge = 100.0f;
+
+    public float GetPlayerHP()
+    {
+        return m_hpGauge;
+    }
+
     [SerializeField] private float m_staminaGauge = 100.0f;
     //スタミナ
     private float m_runStamina = 20.0f;
@@ -63,6 +69,17 @@ public class Player : MonoBehaviour
     //キャッシュ
     Rigidbody m_rigidBody;
 
+    //効果音
+    public float m_stepSEVolume = 1.0f;
+    public float m_stepSEPitch = 1.0f;
+    float m_stepSEInterval = 0.5f;
+    float m_stepSEWalkInterval = 0.5f;
+    float m_stepSERunInterval = 0.35f;
+    [SerializeField]
+    AudioClip m_attackSE, m_stepSE, m_jumpSE, m_recoverySE;
+    
+
+    //ステート変更用関数
     public void SetPlayerState(PlayerState state)
     {
         m_playerState = state;
@@ -92,7 +109,6 @@ public class Player : MonoBehaviour
                 Avoid();
                 break;
             case PlayerState.Attack:
-                Attack();
                 break;
             case PlayerState.Dead:
                 Dead();
@@ -117,12 +133,8 @@ public class Player : MonoBehaviour
             RecoveryStamina(m_idleStaminaRecovery);
         }
 
-        if (Input.GetButtonDown("Attack"))
-        {
-            m_playerState = PlayerState.Attack;
-            m_animator.SetTrigger("Attack");
-        }
-        else if (Input.GetButton("Run") || Input.GetButton("Jump"))
+        //他のステートに移行する
+        if (Input.GetButton("Run") || Input.GetButton("Jump"))
         {
             m_playerState = PlayerState.Move;
         }
@@ -161,14 +173,16 @@ public class Player : MonoBehaviour
         //移動速度に上記で計算したベクトルを加算する
         PlayerMove += right + forward;
 
-
-        if (Input.GetButtonDown("Attack"))
-        {
-            m_playerState = PlayerState.Attack;
-            m_animator.SetTrigger("Attack");
-        }
+        //他のステートに移行
+        //UseItemキーが押されている場合
+        //if (Input.GetButtonDown("UseItem"))
+        //{
+        //    m_playerState = PlayerState.Attack;
+        //    m_animator.SetTrigger("Attack");
+        //    GameManager.PlaySE(m_attackSE);
+        //}
         //Runキーが押されている場合
-        else if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
+        if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
         {
             m_animator.SetBool("Run", true);
             m_animator.SetBool("Walk",false);
@@ -177,11 +191,17 @@ public class Player : MonoBehaviour
             StaminaWeightModifier(m_totalWeight, n);
             UseStamina(m_runStamina, wightRatio);
             m_moveSpeed = m_runSpeed;
+
+            //足音のピッチ変更
+            m_stepSEPitch = 2.0f;
+            m_stepSEInterval = m_stepSERunInterval;
         }
+        //Avoid(回避)キーが押されている場合
         else if (Input.GetButtonDown("Avoid") && m_staminaGauge > 10.0f && stickL.magnitude > 0.1f)
         {
             m_playerState = PlayerState.Avoid;
         }
+        //移動キーのみの場合(歩き)
         else
         {
             m_animator.SetBool("Walk", true);
@@ -192,6 +212,10 @@ public class Player : MonoBehaviour
             //重量によってスタミナの増幅幅を変更。
             StaminaWeightModifier(m_totalWeight, n);
             RecoveryStamina(m_moveStaminaRecovery / wightRatio);
+
+            //足音のピッチ変更
+            m_stepSEPitch = 1.0f;
+            m_stepSEInterval = m_stepSEWalkInterval;
         }
 
         //スペースが押されたらジャンプ
@@ -206,6 +230,8 @@ public class Player : MonoBehaviour
                 UseStamina(100.0f, 1.0f);
                 m_rigidBody.AddForce(Vector3.up * m_jumpForce, ForceMode.Impulse);
                 m_isGround = false;
+                m_stepSEPitch = 1.5f;
+                GameManager.PlaySE(m_jumpSE,m_stepSEVolume, m_stepSEPitch);
             }
         }
 
@@ -220,12 +246,13 @@ public class Player : MonoBehaviour
         PlayerMove.y = m_rigidBody.velocity.y;
         m_rigidBody.velocity = PlayerMove;
         
-        if (stickL != Vector3.zero)
+        if (stickL != Vector3.zero && m_isGround == true)
         {
             //足音用
             t += Time.deltaTime;
-            if (t > 0.5f)
+            if (t > m_stepSEInterval)
             {
+                GameManager.PlaySE(m_stepSE,m_stepSEVolume,m_stepSEPitch);
                 t = 0.0f;
             }
         }
@@ -308,10 +335,22 @@ public class Player : MonoBehaviour
     }
 
     //プレイヤーがアタックする
-    void Attack()
+    public void Attack()
     {
-        
-        //m_playerState = PlayerState.Idle;
+        m_playerState = PlayerState.Attack;
+        m_animator.SetTrigger("Attack");
+        GameManager.PlaySE(m_attackSE);
+    }
+
+    //プレイヤーが回復する処理
+    public void RecoveryHP(float hp)
+    {
+        m_hpGauge += hp;
+        GameManager.PlaySE(m_recoverySE);
+        if (m_hpGauge > 100.0f)
+        {
+            m_hpGauge = 100.0f;
+        }
     }
 
     //プレイヤーがダメージを受けた時

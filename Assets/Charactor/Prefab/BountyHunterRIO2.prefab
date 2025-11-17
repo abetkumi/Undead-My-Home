@@ -2414,6 +2414,12 @@ MonoBehaviour:
   wightRatio: 0
   m_animator: {fileID: 1023810077231793920}
   m_playerAnimObject: {fileID: 8113204104020221758}
+  m_stepSEVolume: 1
+  m_stepSEPitch: 1
+  m_attackSE: {fileID: 8300000, guid: 8044848826611d546bac6eb5705685f4, type: 3}
+  m_stepSE: {fileID: 8300000, guid: 06fba4d29ae75234184d23909359fb1f, type: 3}
+  m_jumpSE: {fileID: 8300000, guid: 7bf600f8a471c23468721207f8a6cb3d, type: 3}
+  m_recoverySE: {fileID: 8300000, guid: e5f4bfdf7b372d8489f2b43be2696510, type: 3}
 --- !u!114 &6887668182252928126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4752,3 +4758,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_playerAnimationObject: {fileID: 1206984606176850629}
   m_attackCollider: {fileID: 3854766931911634667}
+  m_hitSE: {fileID: 8300000, guid: 30751f56e865c0e48b308f3b796ed8cd, type: 3}

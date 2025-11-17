@@ -7,6 +7,8 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] GameObject m_playerAnimationObject;
     [SerializeField] BoxCollider m_attackCollider;
+    [SerializeField] AudioClip m_hitSE;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +27,8 @@ public class PlayerAttack : MonoBehaviour
         {
             EnemyBase enemy = other.GetComponent<EnemyBase>();
             enemy.TakeDamage(1, 1);
+            m_attackCollider.enabled = false;
+            GameManager.PlaySE(m_hitSE);
             Debug.Log("“G‚Éƒqƒbƒg");
         }
     }
