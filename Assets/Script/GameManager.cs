@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using static UnityEditor.Progress;
@@ -8,30 +9,32 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] Player m_player;
     [SerializeField] RectTransform m_canvasRect;
+
     //効果音再生関数
-    //static public OneShotAudioClip PlaySE(AudioClip clip,
-    //    GameObject sauceObject = null,
-    //    float volume = 1.0f,
-    //    float spatialBlend = 0.0f,
-    //    float minDistance = 0.0f,
-    //    float maxDistance = 0.0f)
-    //{
-    //    //効果音オブジェクトを設定
-    //    GameObject oneShotObj = Instantiate((GameObject)Resources.Load("OneShotSE"));
+    static public OneShotAudioClip PlaySE(AudioClip clip,
+        float volume = 1.0f,
+        float pitch = 1.0f,
+        float spatialBlend = 0.0f,
+        float minDistance = 0.0f,
+        float maxDistance = 0.0f,
+        GameObject sauceObject = null)
+    {
+        //効果音オブジェクトを設定
+        GameObject oneShotObj = Instantiate((GameObject)Resources.Load("OneShotSE"));
 
-    //    //座標を設定
-    //    if (sauceObject != null)
-    //    {
-    //        oneShotObj.transform.position = sauceObject.transform.position;
-    //    }
+        //座標を設定
+        if (sauceObject != null)
+        {
+            oneShotObj.transform.position = sauceObject.transform.position;
+        }
 
-    //    //オーディオクリップを設定
-    //    OneShotAudioClip oneShotAudio = oneShotObj.GetComponent<OneShotAudioClip>();
-    //    oneShotAudio.PlaySE(clip, volume,
-    //        spatialBlend, minDistance, maxDistance);
+        //オーディオクリップを設定
+        OneShotAudioClip oneShotAudio = oneShotObj.GetComponent<OneShotAudioClip>();
+        oneShotAudio.PlaySE(clip, volume,pitch,
+            spatialBlend, minDistance, maxDistance);
 
-    //    return oneShotAudio;
-    //}
+        return oneShotAudio;
+    }
 
     //ゲームの状態
     public enum GameState
@@ -59,6 +62,14 @@ public class GameManager : MonoBehaviour
     public ItemData GetItemData()
     {
         return Item_Data;
+    }
+
+    //アイテム
+    enum UseItemState
+    {
+        Machete = 7,
+        FireCracker = 8,
+        Recovery = 9,
     }
 
     //選択中のアイテム番号（アイテム欄配列の番号）
@@ -139,7 +150,7 @@ public class GameManager : MonoBehaviour
                 m_player.ItemWeightAdd(GetItemData().Items[getItemID].weight, true);
 
                 //効果音再生
-                //PlaySE(ItemGetSE);
+                PlaySE(ItemGetSE);
                 //UIを更新
                 ItemUI.UpdateUI();
 
@@ -158,6 +169,7 @@ public class GameManager : MonoBehaviour
         //空きがなかった
         return false;
     }
+
 
     //引数番スロットのアイテムを捨てる
     void ItemDrop()
@@ -219,6 +231,61 @@ public class GameManager : MonoBehaviour
             ItemDrop();
         }
 
+        //選択されたアイテムを使用する
+        if(Input.GetButtonDown("UseItem"))
+        {
+            int selectID = GetItemID(GetSelectItemNo());
+            switch (selectID)
+            {
+                case (int)UseItemState.Machete:
+                    m_player.Attack();
+
+                    //アイテムの重量分減算する。
+                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+                    //アイテム欄のIDをリセット
+                    ItemID[SelectItemNo] = -1;
+                    //UIを更新
+                    ItemUI.UpdateUI();
+                    Debug.Log("アタック");
+                    return;
+                case (int)UseItemState.FireCracker:
+                    //使うアイテムを生成
+                    Vector3 itemPos = Camera.main.transform.position;
+                    itemPos.y -= 0.7f;
+                    GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
+                        itemPos, Camera.main.transform.rotation);
+                    //前方に発射
+                    dropItem.GetComponent<ItemObject>().ItemDrop(m_player.transform.position);
+
+                    ItemFireCracker fireCracker = dropItem.GetComponent<ItemFireCracker>();
+                    fireCracker.Fire();
+                    //アイテムの重量分減算する。
+                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+                    //アイテム欄のIDをリセット
+                    ItemID[SelectItemNo] = -1;
+                    //UIを更新
+                    ItemUI.UpdateUI();
+                    return;
+                case (int)UseItemState.Recovery:
+                    if(m_player.GetPlayerHP() >= 100.0f)
+                    {
+                        return;
+                    }
+                    m_player.RecoveryHP(40.0f);
+
+                    //アイテムの重量分減算する。
+                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+                    //アイテム欄のIDをリセット
+                    ItemID[SelectItemNo] = -1;
+                    //UIを更新
+                    ItemUI.UpdateUI();
+                    return;
+                default:
+                    Debug.Log("使えるアイテムではない");
+                    return;
+            }
+        }
+
         //選択アイテムの変更
         if ((Input.GetKeyDown("joystick button 4") || Input.GetAxis("Mouse ScrollWheel") < 0))
         {
@@ -230,7 +297,7 @@ public class GameManager : MonoBehaviour
             //UIを更新
             ItemUI.UpdateUI();
             //効果音再生
-            //PlaySE(SelectSE);
+            PlaySE(SelectSE);
         }
         if ((Input.GetKeyDown("joystick button 5") || Input.GetAxis("Mouse ScrollWheel") > 0))
         {
@@ -242,7 +309,7 @@ public class GameManager : MonoBehaviour
             //UIを更新
             ItemUI.UpdateUI();
             //効果音再生
-            //PlaySE(SelectSE);
+            PlaySE(SelectSE);
         }
     }
 }

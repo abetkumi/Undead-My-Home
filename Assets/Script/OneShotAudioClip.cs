@@ -15,6 +15,7 @@ public class OneShotAudioClip : MonoBehaviour
 
     public void PlaySE(AudioClip audioClip,
         float volume = 1.0f,
+        float pitch = 1.0f,
         float spatialBlend = 0.0f,
         float minDistance = float.MinValue,
         float maxDistance = float.MaxValue)
@@ -26,6 +27,7 @@ public class OneShotAudioClip : MonoBehaviour
         m_audioSource.clip = audioClip;
         m_audioSource.volume = volume;
         m_audioSource.spatialBlend = spatialBlend;
+        m_audioSource.pitch = pitch;
 
         //ãóó£Çê›íË
         if (minDistance != float.MinValue)

@@ -9,6 +9,8 @@ TagManager:
   - GameOver
   - UI
   - GameManager
+  - Enemy
+  - FireCracker
   layers:
   - Default
   - TransparentFX
