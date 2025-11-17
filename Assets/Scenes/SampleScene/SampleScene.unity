@@ -130,26 +130,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1723055123455708008, guid: bda9e4ce8e756f3419400eff184f9b4c,
-        type: 3}
-      propertyPath: m_hitCollider
-      value: 
-      objectReference: {fileID: 74848433}
     - target: {fileID: 2752967025193662862, guid: bda9e4ce8e756f3419400eff184f9b4c,
         type: 3}
       propertyPath: m_gameManagerParent
       value: 
       objectReference: {fileID: 63146400}
-    - target: {fileID: 5432117643913226176, guid: bda9e4ce8e756f3419400eff184f9b4c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5432117643913226176, guid: bda9e4ce8e756f3419400eff184f9b4c,
-        type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 7730726034393421204, guid: bda9e4ce8e756f3419400eff184f9b4c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -248,12 +233,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5382832184217399020, guid: c1f1afd86b07b6b46979142cf6a1e834,
     type: 3}
   m_PrefabInstance: {fileID: 2534318719801099404}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &74848433 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5432117643913226176, guid: bda9e4ce8e756f3419400eff184f9b4c,
-    type: 3}
-  m_PrefabInstance: {fileID: 7621799}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &102740043
 GameObject:
@@ -2161,11 +2140,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u56DE\u5FA9\uFF01\uFF08\u4EEE\uFF09"
       objectReference: {fileID: 0}
-    - target: {fileID: 6387932759853707015, guid: 9f92bd116531056479c33205b41fd82e,
-        type: 3}
-      propertyPath: m_TagString
-      value: Item
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2397,11 +2371,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 5382832184217399020, guid: c1f1afd86b07b6b46979142cf6a1e834,
-        type: 3}
-      propertyPath: m_TagString
-      value: GameManager
-      objectReference: {fileID: 0}
     - target: {fileID: 6894957711493221020, guid: c1f1afd86b07b6b46979142cf6a1e834,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2477,26 +2446,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2159057424047117714, guid: 01c5722bcb259e54cae224aaeb199c4c,
-        type: 3}
-      propertyPath: m_jumpSE
-      value: 
-      objectReference: {fileID: 8300000, guid: 7bf600f8a471c23468721207f8a6cb3d, type: 3}
-    - target: {fileID: 2159057424047117714, guid: 01c5722bcb259e54cae224aaeb199c4c,
-        type: 3}
-      propertyPath: m_stepSE
-      value: 
-      objectReference: {fileID: 8300000, guid: 06fba4d29ae75234184d23909359fb1f, type: 3}
-    - target: {fileID: 2159057424047117714, guid: 01c5722bcb259e54cae224aaeb199c4c,
-        type: 3}
-      propertyPath: m_attackSE
-      value: 
-      objectReference: {fileID: 8300000, guid: 8044848826611d546bac6eb5705685f4, type: 3}
-    - target: {fileID: 2159057424047117714, guid: 01c5722bcb259e54cae224aaeb199c4c,
-        type: 3}
-      propertyPath: m_recoverySE
-      value: 
-      objectReference: {fileID: 8300000, guid: e5f4bfdf7b372d8489f2b43be2696510, type: 3}
     - target: {fileID: 2159057424047117714, guid: 01c5722bcb259e54cae224aaeb199c4c,
         type: 3}
       propertyPath: m_gameOverObject
@@ -2587,11 +2536,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BountyHunterRIO2
       objectReference: {fileID: 0}
-    - target: {fileID: 5273812294850610603, guid: 01c5722bcb259e54cae224aaeb199c4c,
-        type: 3}
-      propertyPath: m_hitSE
-      value: 
-      objectReference: {fileID: 8300000, guid: 30751f56e865c0e48b308f3b796ed8cd, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
