@@ -302,6 +302,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_player: {fileID: 0}
   m_canvasRect: {fileID: 0}
+  m_machete: {fileID: 0}
   Item_Data: {fileID: 11400000, guid: 58a89a36e579d9344acf50d0e43ceb2d, type: 2}
   SelectItemNo: 0
   ItemID: ffffffffffffffffffffffffffffffff
