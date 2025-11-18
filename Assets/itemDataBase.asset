@@ -85,12 +85,12 @@ MonoBehaviour:
     value: 50
   - ItemName: Machete
     ItemExplanation: "\u30DE\u30C1\u30A7\u30FC\u30C6"
-    ItemPrefab: {fileID: 8588740026680714012, guid: fc8a769ff8527cd4e844f525606d782e,
+    ItemPrefab: {fileID: 4953936116830592579, guid: 26950a37b651074408927a6382f65595,
       type: 3}
     ItemPivot: {x: 0, y: 0, z: 0}
-    UI_Offset: {x: 0, y: -0.2, z: 1}
+    UI_Offset: {x: -0.2, y: -0.2, z: 1}
     UI_Rotation: {x: 0, y: 0, z: 0}
-    UI_Scale: {x: 1, y: 1, z: 1}
+    UI_Scale: {x: 1.5, y: 1.5, z: 1.5}
     weight: 10
     value: 10
   - ItemName: Firecracker

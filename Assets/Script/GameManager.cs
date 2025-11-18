@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] Player m_player;
     [SerializeField] RectTransform m_canvasRect;
+    [SerializeField] GameObject m_machete;
 
     //効果音再生関数
     static public OneShotAudioClip PlaySE(AudioClip clip,
@@ -188,6 +190,7 @@ public class GameManager : MonoBehaviour
 
         //捨てるアイテムを生成
         Vector3 itemPos = Camera.main.transform.position;
+        itemPos.y -= 1.0f;
         GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
             itemPos, Camera.main.transform.rotation);
 
@@ -217,7 +220,7 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    async void Update()
     {
         //プレイ中でないなら中断
         if (m_gameState != GameState.enGameState_Play)
@@ -231,10 +234,22 @@ public class GameManager : MonoBehaviour
             ItemDrop();
         }
 
-        //選択されたアイテムを使用する
-        if(Input.GetButtonDown("UseItem"))
+        //選択されたアイテムを手に持つ
+        int selectID = GetItemID(GetSelectItemNo());
+
+        if (selectID == (int)UseItemState.Machete)
         {
-            int selectID = GetItemID(GetSelectItemNo());
+            m_machete.SetActive(true);
+        }
+        else
+        {
+            m_machete.SetActive(false);
+        }
+
+        //選択されたアイテムを使用する
+        if (Input.GetButtonDown("UseItem"))
+        {
+
             switch (selectID)
             {
                 case (int)UseItemState.Machete:
@@ -242,6 +257,8 @@ public class GameManager : MonoBehaviour
 
                     //アイテムの重量分減算する。
                     m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+
+                    await UniTask.Delay(1000);
                     //アイテム欄のIDをリセット
                     ItemID[SelectItemNo] = -1;
                     //UIを更新
@@ -267,7 +284,7 @@ public class GameManager : MonoBehaviour
                     ItemUI.UpdateUI();
                     return;
                 case (int)UseItemState.Recovery:
-                    if(m_player.GetPlayerHP() >= 100.0f)
+                    if (m_player.GetPlayerHP() >= 100.0f)
                     {
                         return;
                     }

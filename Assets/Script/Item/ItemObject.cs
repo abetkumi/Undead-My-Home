@@ -126,11 +126,14 @@ public class ItemObject : MonoBehaviour
     //アイテムを捨てた時の処理
     public async void ItemDrop(Vector3 playerVelocity)
     {
-        //リジッドボディの取得
-        Rigidbody rb = GetComponent<Rigidbody>();
-        //物理演算を有効にする
-        rb.isKinematic = false;
-
+        if (m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) > 7 &&
+            m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) < 10)
+        {
+            //リジッドボディの取得
+            Rigidbody rb = GetComponent<Rigidbody>();
+            //物理演算を有効にする
+            rb.isKinematic = false;
+        }
         ////カメラの前方方向に飛ばす(飛ばす必要がないのでオフにしている）
         //rb.AddForce((Camera.main.transform.forward * ITEMDROP_POWER) + playerVelocity, ForceMode.Impulse);
         ////ランダムに回転

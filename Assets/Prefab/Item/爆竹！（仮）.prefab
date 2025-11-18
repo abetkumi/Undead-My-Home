@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 180300073752951592}
   - component: {fileID: 3882944455476773253}
   - component: {fileID: 1723055123455708008}
+  - component: {fileID: 670780916275801100}
   m_Layer: 0
   m_Name: "\u7206\u7AF9\uFF01\uFF08\u4EEE\uFF09"
   m_TagString: FireCracker
@@ -284,3 +285,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fireCrackerSE: {fileID: 8300000, guid: 8839158253f03814f88038ee9aedb37a, type: 3}
   m_hitCollider: {fileID: 5432117643913226176}
+--- !u!114 &670780916275801100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588740026680714012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fcdf0a968af9c94e93f27b5d88546a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
