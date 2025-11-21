@@ -7,7 +7,6 @@ public class UI_Item : MonoBehaviour
 {
     GameManager m_gameManager;
 
-    [SerializeField]
     GameObject[] ItemCamara; //UI用カメラ
 
     //[SerializeField]
@@ -29,6 +28,8 @@ public class UI_Item : MonoBehaviour
         if (m_gameManager == null)
         {
             m_gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+            m_gameManagerParent = GameObject.FindGameObjectWithTag("GameController");
+            ItemCamara = GameObject.FindGameObjectsWithTag("UICamera");
             //要素数はカメラの数と同じ
             m_itemObject = new GameObject[ItemCamara.Length];
         }

@@ -13,6 +13,7 @@ TagManager:
   - FireCracker
   - Weapon
   - Timer
+  - UICamera
   layers:
   - Default
   - TransparentFX
