@@ -2281,19 +2281,9 @@ PrefabInstance:
       objectReference: {fileID: 3788345910158216934}
     - target: {fileID: 2698178920906586411, guid: c1f1afd86b07b6b46979142cf6a1e834,
         type: 3}
-      propertyPath: SelectSE
-      value: 
-      objectReference: {fileID: 8300000, guid: 2ba18d40ad534b547a91be29e7d6a569, type: 3}
-    - target: {fileID: 2698178920906586411, guid: c1f1afd86b07b6b46979142cf6a1e834,
-        type: 3}
       propertyPath: m_player
       value: 
       objectReference: {fileID: 490006940204604716}
-    - target: {fileID: 2698178920906586411, guid: c1f1afd86b07b6b46979142cf6a1e834,
-        type: 3}
-      propertyPath: ItemGetSE
-      value: 
-      objectReference: {fileID: 8300000, guid: a681bc80f64850745ada094dfca1ba56, type: 3}
     - target: {fileID: 2698178920906586411, guid: c1f1afd86b07b6b46979142cf6a1e834,
         type: 3}
       propertyPath: m_machete

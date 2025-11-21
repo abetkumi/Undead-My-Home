@@ -11,6 +11,8 @@ TagManager:
   - GameManager
   - Enemy
   - FireCracker
+  - Weapon
+  - Timer
   layers:
   - Default
   - TransparentFX
