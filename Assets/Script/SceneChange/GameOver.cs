@@ -7,11 +7,7 @@ using UnityEngine;
 public class GameOver : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
-    [SerializeField] GameObject m_playerObject;
-    [SerializeField] GameObject m_timerObject;
-    [SerializeField] GameObject m_cameraObject;
     CameraCulling m_cameraCulling;
-    [SerializeField] GameObject m_weaponObject;
     PlayerAttack m_playerAttack;
     bool m_isGameOver = false;
 
@@ -24,6 +20,10 @@ public class GameOver : MonoBehaviour
             SetGameOver();
             Debug.Log("Dead");
         }
+        else
+        {
+            Destroy(other.gameObject);
+        }
     }
 
     //ゲームオーバー処理
@@ -34,18 +34,27 @@ public class GameOver : MonoBehaviour
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameOver);
 
-        m_cameraCulling = m_cameraObject.GetComponent<CameraCulling>();
+        //プレイヤーをカメラに映るようにする
+        m_cameraCulling = Camera.main.GetComponent<CameraCulling>();
         m_cameraCulling.ShowPlayerBody();
 
-        m_playerAttack = m_weaponObject.GetComponent<PlayerAttack>();
-        m_playerAttack.NormalScale();
+        //武器の縮尺をもとに戻す
 
+        GameObject m_attackObject = GameObject.FindWithTag("Weapon");
+        if(m_attackObject != null)
+        {
+            m_playerAttack = m_attackObject.GetComponent<PlayerAttack>();
+            m_playerAttack.NormalScale();
+        }
+
+        GameObject m_timerObject = GameObject.FindWithTag("Timer");
         Destroy(m_timerObject);
 
+        GameObject m_playerObject = GameObject.FindWithTag("Player");
         Vector3 m_camaraPos = m_playerObject.transform.position;
         m_camaraPos.y += 4.0f;
         m_camaraPos += m_playerObject.transform.forward * 3.0f;
-        m_cameraObject.transform.position = m_camaraPos;
+        Camera.main.transform.position = m_camaraPos;
         Camera.main.GetComponent<GameCamera>().FocusStart(m_playerObject.transform.position, 3.0f, 5.0f);
         m_playerObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 

@@ -219,8 +219,61 @@ public class GameManager : MonoBehaviour
         m_gameState = GameState.enGameState_Play;
     }
 
+    //マチェーテを使った
+    async void UseMachete()
+    {
+        m_player.Attack();
+
+        //アイテムの重量分減算する。
+        m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+
+        await UniTask.Delay(1000);
+        //アイテム欄のIDをリセット
+        ItemID[SelectItemNo] = -1;
+        //UIを更新
+        ItemUI.UpdateUI();
+    }
+
+    //爆竹を使った
+    void UseFireCracker()
+    {
+        //使うアイテムを生成
+        Vector3 itemPos = Camera.main.transform.position;
+        itemPos.y -= 0.7f;
+        GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
+            itemPos, Camera.main.transform.rotation);
+        //前方に発射
+        dropItem.GetComponent<ItemObject>().ItemDrop(m_player.transform.position);
+
+        ItemFireCracker fireCracker = dropItem.GetComponent<ItemFireCracker>();
+        fireCracker.Fire();
+        //アイテムの重量分減算する。
+        m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+        //アイテム欄のIDをリセット
+        ItemID[SelectItemNo] = -1;
+        //UIを更新
+        ItemUI.UpdateUI();
+    }
+
+    //回復アイテムを使った
+    void UseRecovery()
+    {
+        if (m_player.GetPlayerHP() >= 100.0f)
+        {
+            return;
+        }
+        m_player.RecoveryHP(40.0f);
+
+        //アイテムの重量分減算する。
+        m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+        //アイテム欄のIDをリセット
+        ItemID[SelectItemNo] = -1;
+        //UIを更新
+        ItemUI.UpdateUI();
+    }
+
     // Update is called once per frame
-    async void Update()
+    void Update()
     {
         //プレイ中でないなら中断
         if (m_gameState != GameState.enGameState_Play)
@@ -253,52 +306,17 @@ public class GameManager : MonoBehaviour
             switch (selectID)
             {
                 case (int)UseItemState.Machete:
-                    m_player.Attack();
-
-                    //アイテムの重量分減算する。
-                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
-
-                    await UniTask.Delay(1000);
-                    //アイテム欄のIDをリセット
-                    ItemID[SelectItemNo] = -1;
-                    //UIを更新
-                    ItemUI.UpdateUI();
+                    UseMachete();
                     Debug.Log("アタック");
                     return;
                 case (int)UseItemState.FireCracker:
-                    //使うアイテムを生成
-                    Vector3 itemPos = Camera.main.transform.position;
-                    itemPos.y -= 0.7f;
-                    GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
-                        itemPos, Camera.main.transform.rotation);
-                    //前方に発射
-                    dropItem.GetComponent<ItemObject>().ItemDrop(m_player.transform.position);
-
-                    ItemFireCracker fireCracker = dropItem.GetComponent<ItemFireCracker>();
-                    fireCracker.Fire();
-                    //アイテムの重量分減算する。
-                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
-                    //アイテム欄のIDをリセット
-                    ItemID[SelectItemNo] = -1;
-                    //UIを更新
-                    ItemUI.UpdateUI();
+                    UseFireCracker();
                     return;
                 case (int)UseItemState.Recovery:
-                    if (m_player.GetPlayerHP() >= 100.0f)
-                    {
-                        return;
-                    }
-                    m_player.RecoveryHP(40.0f);
-
-                    //アイテムの重量分減算する。
-                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
-                    //アイテム欄のIDをリセット
-                    ItemID[SelectItemNo] = -1;
-                    //UIを更新
-                    ItemUI.UpdateUI();
+                    UseRecovery();
                     return;
                 default:
-                    Debug.Log("使えるアイテムではない");
+                    Debug.Log("使えるアイテムはない");
                     return;
             }
         }
