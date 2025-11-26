@@ -2409,7 +2409,6 @@ MonoBehaviour:
   m_staminaGauge: 100
   m_moveSpeed: 5
   m_jumpForce: 5
-  m_gameOverObject: {fileID: 0}
   m_totalWeight: 0
   wightRatio: 0
   m_animator: {fileID: 1023810077231793920}
@@ -4436,7 +4435,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &330842125351925752
 Transform:
   m_ObjectHideFlags: 0

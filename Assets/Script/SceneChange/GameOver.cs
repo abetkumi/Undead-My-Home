@@ -17,10 +17,11 @@ public class GameOver : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SetGameOver();
+            Player player = other.GetComponent<Player>();
+            player.Dead();
             Debug.Log("Dead");
         }
-        else
+        else if(other.CompareTag("Item"))
         {
             Destroy(other.gameObject);
         }
@@ -67,12 +68,7 @@ public class GameOver : MonoBehaviour
 
         m_isGameOver = true;
         //é©êgÇÕÉVÅ[ÉìÇÇ‹ÇΩÇ¢Ç≈Ç‡çÌèúÇ≥ÇÍÇ»Ç¢ÇÊÇ§Ç…Ç∑ÇÈ
-        DontDestroyOnLoad(gameObject);
-
-        await UniTask.Delay(1050);
-        GameObject m_gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
-        Destroy(m_playerObject);
-        Destroy(m_gameManagerObject);
+        DontDestroyOnLoad(gameObject);        
     }
 
     // Update is called once per frame

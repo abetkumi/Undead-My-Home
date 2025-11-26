@@ -17,6 +17,7 @@ public class UI_SearchCreater : MonoBehaviour
 
     private void Start()
     {
+        m_canvasRect = GameObject.FindWithTag("UI").GetComponent<RectTransform>();
         //テキストをCanvasに生成する
         m_UI_Search = Instantiate(m_UI_SearchPrefab, m_canvasRect);
         //オブジェクトの少し上に見えるように移動

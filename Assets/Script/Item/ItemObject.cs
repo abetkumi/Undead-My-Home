@@ -22,21 +22,19 @@ public class ItemObject : MonoBehaviour
     //const float ITEMDROP_TORQUE = 60.0f;    //アイテムを捨てる時にかける回転量
 
     [SerializeField] bool IsCheck = false;
-
-    //ゲームマネージャー
-    protected GameManager m_gameManager;
-
     public void SetIsCheck(bool flag)
     {
         IsCheck = flag;
     }
+
+    //ゲームマネージャー
+    protected GameManager m_gameManager;
 
     public float GetItemValue()
     {
         return itemDataBase.Items[ItemID].value;
     }
 
-    //GameObject m_platformObj = null;  //自分が置かれている
 
     private void Awake()
     {
@@ -47,8 +45,6 @@ public class ItemObject : MonoBehaviour
         m_outline.OutlineWidth = SELECT_OUTLINE_WIDTH;
         m_outline.enabled = false;
         //ゲームマネージャーを取得
-        //GameManagerのタグ名は「GameController」です
-        //コンポーネントを取得する関数はGetComponentです。
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
     }
 
@@ -126,21 +122,26 @@ public class ItemObject : MonoBehaviour
     //アイテムを捨てた時の処理
     public async void ItemDrop(Vector3 playerVelocity)
     {
-        if (m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) > 7 &&
+        //リジッドボディの取得
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) >= 7 &&
             m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) < 10)
         {
-            //リジッドボディの取得
-            Rigidbody rb = GetComponent<Rigidbody>();
+            //物理演算を無効にする
+            rb.isKinematic = true;
+        }
+        else
+        {
             //物理演算を有効にする
             rb.isKinematic = false;
         }
-        ////カメラの前方方向に飛ばす(飛ばす必要がないのでオフにしている）
-        //rb.AddForce((Camera.main.transform.forward * ITEMDROP_POWER) + playerVelocity, ForceMode.Impulse);
-        ////ランダムに回転
-        //rb.AddTorque(Random.onUnitSphere * Random.Range(-ITEMDROP_TORQUE, ITEMDROP_TORQUE));
+            ////カメラの前方方向に飛ばす(飛ばす必要がないのでオフにしている）
+            //rb.AddForce((Camera.main.transform.forward * ITEMDROP_POWER) + playerVelocity, ForceMode.Impulse);
+            ////ランダムに回転
+            //rb.AddTorque(Random.onUnitSphere * Random.Range(-ITEMDROP_TORQUE, ITEMDROP_TORQUE));
 
-        //しばらく調べられないようにする
-        IsCheck = true;
+            //しばらく調べられないようにする
+            IsCheck = true;
         //1秒後に調べられるようにする
         await UniTask.Delay(1000);
         CheckWait();
