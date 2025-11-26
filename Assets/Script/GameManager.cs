@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         enGameState_Play,
-        enGameState_Clear,
         enGameState_GameOver,
         enGameState_GameClear,
         enGameState_Shopping,
@@ -120,6 +119,17 @@ public class GameManager : MonoBehaviour
     {
         m_money += money;
         return m_money;
+    }
+
+    //クリアカウントが3つ貯まるとクリア
+    int m_clearCount = 0;
+    public int GetClearCount()
+    {
+        return m_clearCount;
+    }
+    public void SetClearCount(int clearCount)
+    {
+        m_clearCount = clearCount;
     }
 
     //効果音
