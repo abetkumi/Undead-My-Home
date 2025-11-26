@@ -29,7 +29,7 @@ public class UI_Item : MonoBehaviour
         if (m_gameManager == null)
         {
             m_gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-            m_gameManagerParent = GameObject.FindGameObjectWithTag("GameController");
+            m_gameManagerParent = GameObject.FindGameObjectWithTag("GameManager");
             
             //—v‘f”‚ÍƒJƒƒ‰‚Ì”‚Æ“¯‚¶
             m_itemObject = new GameObject[ItemCamara.Length];

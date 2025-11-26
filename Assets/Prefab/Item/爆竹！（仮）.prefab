@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 3882944455476773253}
   - component: {fileID: 1723055123455708008}
   - component: {fileID: 670780916275801100}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: "\u7206\u7AF9\uFF01\uFF08\u4EEE\uFF09"
   m_TagString: FireCracker
   m_Icon: {fileID: 0}
