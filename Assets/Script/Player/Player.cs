@@ -364,7 +364,7 @@ public class Player : MonoBehaviour
     }
 
     //ƒvƒŒƒCƒ„[‚ª4‚ñ‚¾
-    void Dead()
+    public void Dead()
     {
         m_gameOver = GameObject.FindWithTag("GameOver").GetComponent<GameOver>();
         m_gameOver.SetGameOver();

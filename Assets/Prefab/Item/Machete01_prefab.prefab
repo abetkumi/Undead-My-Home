@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1056733955436810318}
   - component: {fileID: 2089612904939471994}
   - component: {fileID: 3707113049589224008}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Machete01_prefab
   m_TagString: Item
   m_Icon: {fileID: 0}

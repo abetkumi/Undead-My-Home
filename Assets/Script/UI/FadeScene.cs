@@ -78,6 +78,15 @@ public class FadeScene : MonoBehaviour
                 Debug.Log("ゲームスタート!");  // ログを出力
                 //明るくするモードに変更
                 m_fadeMode = true;
+                
+                if(GameManager.GetGameState() == GameManager.GameState.enGameState_GameClear || 
+                    GameManager.GetGameState() == GameManager.GameState.enGameState_GameOver)
+                {
+                    GameObject m_gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
+                    GameObject m_playerObject = GameObject.FindGameObjectWithTag("Player");
+                    Destroy(m_playerObject);
+                    Destroy(m_gameManagerObject);
+                }
             }
         }
         else

@@ -699,7 +699,7 @@ GameObject:
   - component: {fileID: 6894957711493221020}
   - component: {fileID: 7429254755221084357}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameManagerParent
   m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

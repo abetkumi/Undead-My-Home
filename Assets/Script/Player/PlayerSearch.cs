@@ -13,6 +13,12 @@ public class PlayerSearch : MonoBehaviour
     //サーチする際のエフェクト
     [SerializeField] GameObject m_searchImageObject;
 
+    private void Awake()
+    {
+        m_searchCollider.SetActive(false);
+        m_searchImageObject.SetActive(false);
+    }
+
     //範囲内に収集アイテムがある場合
     private void OnTriggerEnter(Collider other)
     {
@@ -47,7 +53,7 @@ public class PlayerSearch : MonoBehaviour
         }
 
         //サーチボタンが押されると
-        if (Input.GetButtonDown("Search"))
+        if (Input.GetButtonUp("Search"))
         {
             //コリジョンをONにする
             CollisionONOFF();
