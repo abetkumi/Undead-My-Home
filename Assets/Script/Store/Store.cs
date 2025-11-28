@@ -10,7 +10,7 @@ public class Store : MonoBehaviour
     [SerializeField] GameObject m_storeOwner;
     [SerializeField] GameObject m_playerObject;
 
-    //”„‚è•¨ƒ{ƒ^ƒ“
+    //ï¿½ï¿½ï¿½è•¨ï¿½{ï¿½^ï¿½ï¿½
     [SerializeField] GameObject m_storePanel;
     [SerializeField] GameObject m_storeShoppingPanel;
     
@@ -33,7 +33,7 @@ public class Store : MonoBehaviour
     {
        // m_lightScript.m_isActionFlag = true;
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
-                "“Xå‚Æ˜b‚·", true);
+                "ï¿½Xï¿½ï¿½Æ˜bï¿½ï¿½", true);
         if (other.CompareTag("Player") && m_storeNow == false)
         {
             if (Input.GetButton("Action"))
@@ -43,37 +43,37 @@ public class Store : MonoBehaviour
                 m_storeCanvas.SetActive(true);
                 rb.transform.LookAt(m_storeOwner.transform);
                 m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
-                Debug.Log("”ƒ‚¢•¨ŠJn");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½n");
             }
         }
     }
 
-    //ƒvƒŒƒCƒ„[‚ª‰ï˜b”ÍˆÍ‚©‚ço‚é‚Æ
+    //ï¿½vï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½bï¿½ÍˆÍ‚ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½
     private void OnTriggerExit(Collider other)
     {
-        //ActuonƒL[‚ÌUI‚ğƒ‰ƒCƒgONOFFƒeƒLƒXƒg‚É–ß‚·
+        //Actuonï¿½Lï¿½[ï¿½ï¿½UIï¿½ï¿½ï¿½ï¿½Cï¿½gONOFFï¿½eï¿½Lï¿½Xï¿½gï¿½É–ß‚ï¿½
         if (other.CompareTag("Player"))
         {
-            m_lightScript.m_isActionFlag = false;
+            m_lightScript.m_isActionFlag = true;
         }
     }
 
-    //”ƒ‚¢•¨‚ğ‚·‚éƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½ˆ—
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½
     public void OpenStore()
     {
         m_storeShoppingPanel.SetActive(true);
         m_storePanel.SetActive(false);
     }
 
-    //”ƒ‚¢•¨‚ğI‚í‚éƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½ˆ—
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½
     public void CloseStore()
     {
         m_storeNow = false;
         m_UICanvas.SetActive(true);
         m_storeCanvas.SetActive(false);
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
-        Cursor.visible = false;  //ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ•\¦
-        Cursor.lockState = CursorLockMode.Confined; //ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌˆÚ“®‚ğ§ŒÀ‚µ‚È‚¢
+        Cursor.visible = false;  //ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½
+        Cursor.lockState = CursorLockMode.Confined; //ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ÌˆÚ“ï¿½ï¿½ğ§Œï¿½ï¿½ï¿½ï¿½È‚ï¿½
     }
 
     void Shopping()
@@ -94,8 +94,8 @@ public class Store : MonoBehaviour
             return;
         }
 
-        Cursor.visible = true;  //ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ğ•\¦
-        Cursor.lockState = CursorLockMode.None; //ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚ÌˆÚ“®‚ğ§ŒÀ‚µ‚È‚¢
+        Cursor.visible = true;  //ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½\ï¿½ï¿½
+        Cursor.lockState = CursorLockMode.None; //ï¿½}ï¿½Eï¿½Xï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ÌˆÚ“ï¿½ï¿½ğ§Œï¿½ï¿½ï¿½ï¿½È‚ï¿½
 
         Shopping();
     }

@@ -7,11 +7,7 @@ using UnityEngine;
 public class GameOver : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
-    [SerializeField] GameObject m_playerObject;
-    [SerializeField] GameObject m_timerObject;
-    [SerializeField] GameObject m_cameraObject;
     CameraCulling m_cameraCulling;
-    [SerializeField] GameObject m_weaponObject;
     PlayerAttack m_playerAttack;
     bool m_isGameOver = false;
 
@@ -21,8 +17,19 @@ public class GameOver : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            SetGameOver();
+            Player player = other.GetComponent<Player>();
+            player.Dead();
+
+            GameObject machete = GameObject.FindWithTag("Weapon");
+            if (machete != null)
+            {
+                machete.transform.localScale = Vector3.one;
+            }
             Debug.Log("Dead");
+        }
+        else if(other.CompareTag("Item"))
+        {
+            Destroy(other.gameObject);
         }
     }
 
@@ -34,18 +41,27 @@ public class GameOver : MonoBehaviour
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameOver);
 
-        m_cameraCulling = m_cameraObject.GetComponent<CameraCulling>();
+        //プレイヤーをカメラに映るようにする
+        m_cameraCulling = Camera.main.GetComponent<CameraCulling>();
         m_cameraCulling.ShowPlayerBody();
 
-        m_playerAttack = m_weaponObject.GetComponent<PlayerAttack>();
-        m_playerAttack.NormalScale();
+        //武器の縮尺をもとに戻す
 
+        GameObject m_attackObject = GameObject.FindWithTag("Weapon");
+        if(m_attackObject != null)
+        {
+            m_playerAttack = m_attackObject.GetComponent<PlayerAttack>();
+            m_playerAttack.NormalScale();
+        }
+
+        GameObject m_timerObject = GameObject.FindWithTag("Timer");
         Destroy(m_timerObject);
 
+        GameObject m_playerObject = GameObject.FindWithTag("Player");
         Vector3 m_camaraPos = m_playerObject.transform.position;
         m_camaraPos.y += 4.0f;
         m_camaraPos += m_playerObject.transform.forward * 3.0f;
-        m_cameraObject.transform.position = m_camaraPos;
+        Camera.main.transform.position = m_camaraPos;
         Camera.main.GetComponent<GameCamera>().FocusStart(m_playerObject.transform.position, 3.0f, 5.0f);
         m_playerObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
@@ -58,12 +74,7 @@ public class GameOver : MonoBehaviour
 
         m_isGameOver = true;
         //自身はシーンをまたいでも削除されないようにする
-        DontDestroyOnLoad(gameObject);
-
-        await UniTask.Delay(1050);
-        GameObject m_gameManagerObject = GameObject.FindGameObjectWithTag("GameManager");
-        Destroy(m_playerObject);
-        Destroy(m_gameManagerObject);
+        DontDestroyOnLoad(gameObject);        
     }
 
     // Update is called once per frame
