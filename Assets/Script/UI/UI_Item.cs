@@ -64,6 +64,10 @@ public class UI_Item : MonoBehaviour
                         (UI_Operation.Button.enButton_Y, "", false);
 
                 }
+                else if(m_gameManager.GetItemDrop() == false)
+                {
+
+                }
                 else
                 {
                     ////à–¾—“‚ğ•\¦

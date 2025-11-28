@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
         //オーディオクリップを設定
         OneShotAudioClip oneShotAudio = oneShotObj.GetComponent<OneShotAudioClip>();
-        oneShotAudio.PlaySE(clip, volume,pitch,
+        oneShotAudio.PlaySE(clip, volume, pitch,
             spatialBlend, minDistance, maxDistance);
 
         return oneShotAudio;
@@ -87,7 +87,10 @@ public class GameManager : MonoBehaviour
     {
         return ItemID[no];
     }
-
+    public void SetItemID(int no, int setno)
+    {
+        ItemID[no] = setno;
+    }
     //アイテム欄のUI
     [SerializeField]
     UI_Item ItemUI;
@@ -107,6 +110,17 @@ public class GameManager : MonoBehaviour
     public UI_Operation GetOperationUI()
     {
         return OperationUI;
+    }
+
+    //アイテムドロップできるか
+    bool m_isItemDrop = true;
+    public bool GetItemDrop()
+    {
+        return m_isItemDrop;
+    }
+    public void SetItemDrop(bool drop)
+    {
+        m_isItemDrop = drop;
     }
 
     //所持金額
@@ -187,7 +201,7 @@ public class GameManager : MonoBehaviour
     void ItemDrop()
     {
         //アイテムがあるか確認
-        if (ItemID[SelectItemNo] == -1)
+        if (ItemID[SelectItemNo] == -1 || m_isItemDrop == false)
         {
             Debug.Log("【エラー】" + SelectItemNo + "番にアイテムがありません！");
             return;
