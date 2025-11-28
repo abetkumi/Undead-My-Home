@@ -18,7 +18,7 @@ public class DoorOpen : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        m_lightScript.m_isActionFlag = true;
+        m_lightScript.m_isActionFlag = false;
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
                 "ƒhƒA‚ðŠJ‚¯‚é", true);
         if (other.CompareTag("Player"))
@@ -34,7 +34,7 @@ public class DoorOpen : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            m_lightScript.m_isActionFlag = false;
+            m_lightScript.m_isActionFlag = true;
             m_animator.SetBool("Open",false);
         }  
     }

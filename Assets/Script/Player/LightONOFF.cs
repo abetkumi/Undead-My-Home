@@ -7,7 +7,7 @@ public class LightONOFF : MonoBehaviour
 {
     GameManager m_gameManager;
     bool m_isLightON = true;
-    public bool m_isActionFlag = false;
+    public bool m_isActionFlag = true;
     [SerializeField] GameObject m_spotlight;
 
     // Start is called before the first frame update
@@ -15,6 +15,7 @@ public class LightONOFF : MonoBehaviour
     {
         //コンポーネントを取得する関数はGetComponentです。
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        m_isActionFlag = true;
     }
 
     void LightON()
@@ -33,21 +34,14 @@ public class LightONOFF : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if ((m_isLightON == true))
-            {
-                m_isLightON = false;
-            }
-            else
-            {
-                m_isLightON = true;
-            }
+            m_isLightON = !m_isLightON;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(m_isActionFlag == true)
+        if(m_isActionFlag == false)
         {
             return;
         }

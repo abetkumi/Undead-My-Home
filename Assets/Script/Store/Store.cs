@@ -31,7 +31,7 @@ public class Store : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        m_lightScript.m_isActionFlag = true;
+        m_lightScript.m_isActionFlag = false;
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
                 "店主と話す", true);
         if (other.CompareTag("Player") && m_storeNow == false)
@@ -54,7 +54,7 @@ public class Store : MonoBehaviour
         //ActuonキーのUIをライトONOFFテキストに戻す
         if (other.CompareTag("Player"))
         {
-            m_lightScript.m_isActionFlag = false;
+            m_lightScript.m_isActionFlag = true;
         }
     }
 
