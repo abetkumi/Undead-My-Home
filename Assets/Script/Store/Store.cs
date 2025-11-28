@@ -31,7 +31,7 @@ public class Store : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        m_lightScript.m_isActionFlag = true;
+       // m_lightScript.m_isActionFlag = true;
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
                 "“XŽå‚Æ˜b‚·", true);
         if (other.CompareTag("Player") && m_storeNow == false)
