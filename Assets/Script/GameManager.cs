@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
 
         //オーディオクリップを設定
         OneShotAudioClip oneShotAudio = oneShotObj.GetComponent<OneShotAudioClip>();
-        oneShotAudio.PlaySE(clip, volume,pitch,
+        oneShotAudio.PlaySE(clip, volume, pitch,
             spatialBlend, minDistance, maxDistance);
 
         return oneShotAudio;
@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
     public enum GameState
     {
         enGameState_Play,
-        enGameState_Clear,
         enGameState_GameOver,
         enGameState_GameClear,
         enGameState_Shopping,
@@ -88,7 +87,10 @@ public class GameManager : MonoBehaviour
     {
         return ItemID[no];
     }
-
+    public void SetItemID(int no, int setno)
+    {
+        ItemID[no] = setno;
+    }
     //アイテム欄のUI
     [SerializeField]
     UI_Item ItemUI;
@@ -110,6 +112,17 @@ public class GameManager : MonoBehaviour
         return OperationUI;
     }
 
+    //アイテムドロップできるか
+    bool m_isItemDrop = true;
+    public bool GetItemDrop()
+    {
+        return m_isItemDrop;
+    }
+    public void SetItemDrop(bool drop)
+    {
+        m_isItemDrop = drop;
+    }
+
     //所持金額
     int m_money;
     public int GetMoney()
@@ -120,6 +133,17 @@ public class GameManager : MonoBehaviour
     {
         m_money += money;
         return m_money;
+    }
+
+    //クリアカウントが3つ貯まるとクリア
+    int m_clearCount = 0;
+    public int GetClearCount()
+    {
+        return m_clearCount;
+    }
+    public void SetClearCount(int clearCount)
+    {
+        m_clearCount = clearCount;
     }
 
     //効果音
@@ -177,7 +201,7 @@ public class GameManager : MonoBehaviour
     void ItemDrop()
     {
         //アイテムがあるか確認
-        if (ItemID[SelectItemNo] == -1)
+        if (ItemID[SelectItemNo] == -1 || m_isItemDrop == false)
         {
             Debug.Log("【エラー】" + SelectItemNo + "番にアイテムがありません！");
             return;
@@ -219,8 +243,61 @@ public class GameManager : MonoBehaviour
         m_gameState = GameState.enGameState_Play;
     }
 
+    //マチェーテを使った
+    async void UseMachete()
+    {
+        m_player.Attack();
+
+        //アイテムの重量分減算する。
+        m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+
+        await UniTask.Delay(1000);
+        //アイテム欄のIDをリセット
+        ItemID[SelectItemNo] = -1;
+        //UIを更新
+        ItemUI.UpdateUI();
+    }
+
+    //爆竹を使った
+    void UseFireCracker()
+    {
+        //使うアイテムを生成
+        Vector3 itemPos = Camera.main.transform.position;
+        itemPos.y -= 0.7f;
+        GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
+            itemPos, Camera.main.transform.rotation);
+        //前方に発射
+        dropItem.GetComponent<ItemObject>().ItemDrop(m_player.transform.position);
+
+        ItemFireCracker fireCracker = dropItem.GetComponent<ItemFireCracker>();
+        fireCracker.Fire();
+        //アイテムの重量分減算する。
+        m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+        //アイテム欄のIDをリセット
+        ItemID[SelectItemNo] = -1;
+        //UIを更新
+        ItemUI.UpdateUI();
+    }
+
+    //回復アイテムを使った
+    void UseRecovery()
+    {
+        if (m_player.GetPlayerHP() >= 100.0f)
+        {
+            return;
+        }
+        m_player.RecoveryHP(40.0f);
+
+        //アイテムの重量分減算する。
+        m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
+        //アイテム欄のIDをリセット
+        ItemID[SelectItemNo] = -1;
+        //UIを更新
+        ItemUI.UpdateUI();
+    }
+
     // Update is called once per frame
-    async void Update()
+    void Update()
     {
         //プレイ中でないなら中断
         if (m_gameState != GameState.enGameState_Play)
@@ -253,52 +330,17 @@ public class GameManager : MonoBehaviour
             switch (selectID)
             {
                 case (int)UseItemState.Machete:
-                    m_player.Attack();
-
-                    //アイテムの重量分減算する。
-                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
-
-                    await UniTask.Delay(1000);
-                    //アイテム欄のIDをリセット
-                    ItemID[SelectItemNo] = -1;
-                    //UIを更新
-                    ItemUI.UpdateUI();
+                    UseMachete();
                     Debug.Log("アタック");
                     return;
                 case (int)UseItemState.FireCracker:
-                    //使うアイテムを生成
-                    Vector3 itemPos = Camera.main.transform.position;
-                    itemPos.y -= 0.7f;
-                    GameObject dropItem = Instantiate(Item_Data.Items[ItemID[SelectItemNo]].ItemPrefab,
-                        itemPos, Camera.main.transform.rotation);
-                    //前方に発射
-                    dropItem.GetComponent<ItemObject>().ItemDrop(m_player.transform.position);
-
-                    ItemFireCracker fireCracker = dropItem.GetComponent<ItemFireCracker>();
-                    fireCracker.Fire();
-                    //アイテムの重量分減算する。
-                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
-                    //アイテム欄のIDをリセット
-                    ItemID[SelectItemNo] = -1;
-                    //UIを更新
-                    ItemUI.UpdateUI();
+                    UseFireCracker();
                     return;
                 case (int)UseItemState.Recovery:
-                    if (m_player.GetPlayerHP() >= 100.0f)
-                    {
-                        return;
-                    }
-                    m_player.RecoveryHP(40.0f);
-
-                    //アイテムの重量分減算する。
-                    m_player.ItemWeightAdd(Item_Data.Items[ItemID[SelectItemNo]].weight, false);
-                    //アイテム欄のIDをリセット
-                    ItemID[SelectItemNo] = -1;
-                    //UIを更新
-                    ItemUI.UpdateUI();
+                    UseRecovery();
                     return;
                 default:
-                    Debug.Log("使えるアイテムではない");
+                    Debug.Log("使えるアイテムはない");
                     return;
             }
         }

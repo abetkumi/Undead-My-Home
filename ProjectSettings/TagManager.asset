@@ -11,6 +11,9 @@ TagManager:
   - GameManager
   - Enemy
   - FireCracker
+  - Weapon
+  - Timer
+  - UICamera
   layers:
   - Default
   - TransparentFX

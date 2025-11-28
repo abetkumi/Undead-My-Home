@@ -52,7 +52,6 @@ public class Player : MonoBehaviour
     PlayerAvoid m_playerAvoid;
 
     //ゲームオーバー変数
-    [SerializeField] GameObject m_gameOverObject;
     GameOver m_gameOver;
 
     //獲得したアイテムの総重量。
@@ -92,7 +91,7 @@ public class Player : MonoBehaviour
         m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_animator = m_playerAnimObject.GetComponent<Animator>();
-        m_gameOver = m_gameOverObject.GetComponent<GameOver>();
+        
     }
 
     void PlayerStatus()
@@ -365,8 +364,9 @@ public class Player : MonoBehaviour
     }
 
     //プレイヤーが4んだ時
-    void Dead()
+    public void Dead()
     {
+        m_gameOver = GameObject.FindWithTag("GameOver").GetComponent<GameOver>();
         m_gameOver.SetGameOver();
         if(m_animator.GetBool("Dead") == false)
         {

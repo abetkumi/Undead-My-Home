@@ -20,7 +20,7 @@ public class DoorOpen : MonoBehaviour
     {
         //m_lightScript.m_isActionFlag = true;
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
-                "ƒhƒA‚ðŠJ‚¯‚é", true);
+                "ï¿½hï¿½Aï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½", true);
         if (other.CompareTag("Player"))
         {
             if (Input.GetButton("Action"))
@@ -34,7 +34,7 @@ public class DoorOpen : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            m_lightScript.m_isActionFlag = false;
+            m_lightScript.m_isActionFlag = true;
             m_animator.SetBool("Open",false);
         }  
     }

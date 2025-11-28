@@ -7,25 +7,51 @@ using UnityEngine;
 public class GameClear : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
-    [SerializeField] GameObject m_timerObject;
-    bool m_isGameClaer = false;
-    int m_clearCount = 0;
+    GameManager m_gameManager;
+    LightONOFF m_lightScript;
+    //GameObject m_playerObject;
 
+    bool m_isGameClaer = false;
+
+    private void Awake()
+    {
+        //ゲームマネージャーを取得
+        m_gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        //プレイヤーを取得
+        //m_playerObject = GameObject.FindGameObjectWithTag("Player");
+        //ライトスクリプトを取得
+        m_lightScript = GameObject.FindWithTag("Player").GetComponent<LightONOFF>();
+    }
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && Input.GetButtonDown("Action"))
+        m_lightScript.m_isActionFlag = false;
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
+                "探索を終了する", true);
+        if (other.CompareTag("Player") && Input.GetButtonUp("Action"))
         {
-            if(m_clearCount == 3)
+            int clearCountNow = m_gameManager.GetClearCount();
+            if(clearCountNow == 3)
             {
                 SetGameClear();
-                m_clearCount++;
+
                 Debug.Log("Clear");
             }
             else
             {
-                SetStoreScene();
+                SetStoreScene(); 
+                clearCountNow++;
+                m_gameManager.SetClearCount(clearCountNow);
+                m_lightScript.m_isActionFlag = true;
                 Debug.Log("ショップへ");
             }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            m_lightScript.m_isActionFlag = true;
         }
     }
 
@@ -38,16 +64,11 @@ public class GameClear : MonoBehaviour
         fadeObject.GetComponent<FadeScene>().FadeStart("StoreScene", Color.black, true);
 
         //自身はシーンをまたいでも削除されないようにする
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(fadeObject);
     }
     async public void SetGameClear()
     {
-        //ゲームマネージャーを取得
-        GameManager m_gameManager =
-            GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameClear);
-
-        Destroy(m_timerObject);
 
         await UniTask.Delay(1000);
         // シーン切替
