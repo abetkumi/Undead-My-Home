@@ -23,10 +23,7 @@ public class Skeleton : EnemyBase
     // Update is called once per frame
     new void Update() 
     {
-        if (DebugStop == true)
-        {
-            return;
-        }
+        if (DebugStop) return;
 
         if (m_stateLook == true)
         {
@@ -36,37 +33,31 @@ public class Skeleton : EnemyBase
 
         if (PlayerSearch(m_searchRayRange))
         {
-            Vector3 playerPos = m_targetPlayer.transform.position;
-            m_NextMovePos = playerPos;
+            m_NextMovePos = m_targetPlayer.transform.position;
 
-            if ((transform.position - m_NextMovePos).sqrMagnitude <= ATTACK_RANGE)
-            {
+            if ((transform.position - m_NextMovePos).sqrMagnitude <= ATTACK_RANGE && GetCooldown(m_attackCoolTime))
                 m_enemyState = EnemyState.enEnemyState_Attack;
-            }
-        }
-        else if ((transform.position - m_NextMovePos).sqrMagnitude != 0.0f)
-        {
-            m_enemyState = EnemyState.enEnemyState_Chase;
-        }
-        else
-        {
-            m_enemyState = EnemyState.enEnemyState_Lost;
+            else if ((transform.position - m_NextMovePos).sqrMagnitude != 0.0f)
+                m_enemyState = EnemyState.enEnemyState_Chase;
+
+            if (SoundTimer(10.0f))
+                PlaySound(0);
+
+            UpdateState();
+            return;
         }
 
-        if (Input.GetButton("testKye1"))
-        {
-            m_navActive = true;
-        }
-        else if (Input.GetButton("Jump"))
-        {
-            PlaySound();
-        }
+        //デバック用。
+        //if (Input.GetButton("testKye1"))
+        //    m_navActive = true;
+        //if (Input.GetButton("Jump"))
+        //    PlaySound(0);
 
+
+        base.Update();
         if (m_navActive) { SetNavMovePos(); }
 
         UpdateState();
-
-        base.Update();
     }
 
     public override void UpdateState()
@@ -84,23 +75,18 @@ public class Skeleton : EnemyBase
             //追跡。
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
-                m_animator.SetBool("Search", false);
-                m_animator.ResetTrigger("Attack");
                 m_animator.SetTrigger("ChaesStart");
                 Move();
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
                 m_animator.SetTrigger("Lost");
-                m_animator.SetBool("Search", false);
-                m_animator.SetBool("Chaes", false);
+                LostKeepTime(3.0f);
                 break;
             //攻撃。
             case EnemyState.enEnemyState_Attack:
-                m_animator.SetBool("Chaes", false);
                 m_animator.SetTrigger("Attack");
                 StartAttack();
-                Move();
                 break;
             //逃げる。
             case EnemyState.enEnemyState_Escape:
@@ -115,7 +101,6 @@ public class Skeleton : EnemyBase
                 break;
             //死。
             case EnemyState.enEnemyState_Death:
-                m_animator.SetBool("Move", false);
                 m_animator.SetTrigger("Death");
                 DebugStop = true;
                 break;
@@ -127,11 +112,10 @@ public class Skeleton : EnemyBase
 
     public override void StartAttack()
     {
-        m_NextMovePos = transform.position;
         m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
 
-        if (AnimationEndCheak("Attack") == true)
+        if (AnimationEndCheck("Attack") == true)
         {
             EndAttack();
         }
@@ -141,7 +125,6 @@ public class Skeleton : EnemyBase
     {
         m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
-        m_animator.SetBool("Chaes", true);
-        m_animator.SetTrigger("ChaesStart");
+        m_animator.ResetTrigger("Attack");
     }
 }
