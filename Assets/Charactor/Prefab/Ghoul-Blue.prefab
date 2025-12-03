@@ -10302,12 +10302,12 @@ GameObject:
   m_Component:
   - component: {fileID: 3573733735632679786}
   - component: {fileID: 2977428873248112739}
-  - component: {fileID: 1082908329446509962}
+  - component: {fileID: 1944041230867452067}
   - component: {fileID: 8832115697137814599}
   - component: {fileID: -8124156714081776895}
   - component: {fileID: 2927374542052127228}
   m_Layer: 0
-  m_Name: Ghoul-Blue (Mobile)
+  m_Name: Ghoul-Blue
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10323,7 +10323,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5701499046075537852}
@@ -10353,7 +10353,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1082908329446509962
+--- !u!114 &1944041230867452067
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10362,23 +10362,23 @@ MonoBehaviour:
   m_GameObject: {fileID: 5720020798199005440}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28aa05c909feb5d4fb41d001e1414944, type: 3}
+  m_Script: {fileID: 11500000, guid: cb622c8c76d99184d8336143596a3ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_targetPlayer: {fileID: 0}
-  StepSE: {fileID: 0}
-  m_navPoint: {fileID: 0}
-  m_navActive: 0
+  m_attackCollider: {fileID: 0}
+  m_animator: {fileID: 2977428873248112739}
+  m_soundClip:
+  - {fileID: 0}
+  m_searchAngle: 100
+  m_navPoint: {fileID: 8502102696853569626, guid: 8e84ca937b931364d8eebfe98498fcf0,
+    type: 3}
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
-  m_targetPos: []
-  m_attackCollider: {fileID: 0}
-  m_hp: 1000
-  m_speed: 0
-  m_dashSpeed: 0
-  m_searchAngle: 100
-  m_searchRayRange: 200
-  m_chaseRayRange: 300
+  m_stateLook: 0
+  m_hp: 100
+  m_attackCoolTime: 0
+  m_searchRayRange: 150
+  m_chaseRayRange: 200
 --- !u!195 &8832115697137814599
 NavMeshAgent:
   m_ObjectHideFlags: 0

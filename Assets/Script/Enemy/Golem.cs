@@ -10,7 +10,11 @@ public class Golem : EnemyBase
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
 
-    float m_speed = 1.0f;
+    float m_speed = 3.5f;
+    [SerializeField] float time = 0.0f;
+
+    float m_dashTime = 0.0f;
+    bool m_dashActiv = false;
 
     // Start is called before the first frame update
     new void Start()
@@ -35,42 +39,51 @@ public class Golem : EnemyBase
 
         if (PlayerSearch(m_searchRayRange))
         {
-            Vector3 playerPos = m_targetPlayer.transform.position;
-            m_NextMovePos = playerPos;
+            m_NextMovePos = m_targetPlayer.transform.position;
 
-            if ((transform.position - m_NextMovePos).sqrMagnitude <= ATTACK_RANGE)
-            {
+            if ((transform.position - m_NextMovePos).sqrMagnitude <= ATTACK_RANGE && GetCooldown(m_attackCoolTime))
                 m_enemyState = EnemyState.enEnemyState_Attack;
-            }
-        }
-        else if ((transform.position - m_NextMovePos).sqrMagnitude != 0.0f)
-        {
-            m_enemyState = EnemyState.enEnemyState_Chase;
+            else if ((transform.position - m_NextMovePos).sqrMagnitude != 0.0f)
+                m_enemyState = EnemyState.enEnemyState_Chase;
+
+            if (SoundTimer(8.0f))
+                PlaySound(0);
+
+            m_dashTime = 0.0f;
+            m_dashActiv = true;
+
+            UpdateState();
+            return;
         }
         else
         {
-            m_enemyState = EnemyState.enEnemyState_Lost;
+            if (m_dashActiv == true) {
+                m_dashTime += Time.deltaTime;
+
+                if (m_dashTime >= 0.5f)
+                    m_NextMovePos = transform.position;
+            }
         }
 
-        if (Input.GetButton("testKye1"))
-        {
-            m_navActive = true;
-        }
-        else if (Input.GetButton("Jump"))
-        {
-            PlaySound();
-        }
+        //デバック用。
+        //if (Input.GetButton("testKye1"))
+        //    PlaySound(0);
+        //if (Input.GetButton("Jump"))
+        //{
+        //    ResetAllAnimatorParameters();
+        //    m_animator.SetTrigger("SleepStart");
+        //    m_enemyState = EnemyState.enEnemyState_Sleep;
+        //}
 
+        base.Update();
         if (m_navActive) { SetNavMovePos(); }
 
         UpdateState();
-
-        base.Update();
     }
 
     public override void UpdateState()
     {
-        //ResetAllAnimatorParameters();
+        ResetAllAnimatorParameters();
 
         switch (m_enemyState)
         {
@@ -89,14 +102,14 @@ public class Golem : EnemyBase
             case EnemyState.enEnemyState_Lost:
                 m_animator.SetFloat("Walk", 0.0f);
                 m_animator.SetTrigger("IdelAction");
-                m_speed = 1.0f;
+                m_speed = 3.5f;
+                LostKeepTime(3.0f);
                 break;
             //攻撃。
             case EnemyState.enEnemyState_Attack:
                 m_animator.SetFloat("Walk", 0.0f);
                 m_animator.SetTrigger("Hit");
                 StartAttack();
-                Move();
                 break;
             //逃げる。
             case EnemyState.enEnemyState_Escape:
@@ -110,7 +123,6 @@ public class Golem : EnemyBase
                 break;
             //眠る。
             case EnemyState.enEnemyState_Sleep:
-                m_animator.SetTrigger("SleepStart");
                 Sleep();
                 break;
             //死。
@@ -125,19 +137,19 @@ public class Golem : EnemyBase
     }
 
     void ChaseSpeedSet(){
-        m_speed += Time.deltaTime * 1.0f;
+        m_speed += Time.deltaTime * 3.0f;
+        m_agent.speed = m_speed;
     }
 
     void Sleep()
     {
-        float time = 0.0f;
         time += Time.deltaTime;
         m_stateLook = true;
 
-        if (time >= 3.0f)
-        {
+        if (time >= 3.0f) {
             m_stateLook = false;
             m_animator.SetTrigger("SleepEnd");
+            time = 0.0f;
         }
     }
 
@@ -147,7 +159,7 @@ public class Golem : EnemyBase
         m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
 
-        if (AnimationEndCheak("Hit") == true)
+        if (AnimationEndCheck("Hit") == true)
         {
             EndAttack();
         }
