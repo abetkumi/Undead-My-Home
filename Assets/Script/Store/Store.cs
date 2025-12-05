@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,13 @@ public class Store : MonoBehaviour
     [SerializeField] GameObject m_UICanvas;
     [SerializeField] GameObject m_storeCanvas;
     [SerializeField] GameObject m_storeOwner;
-    [SerializeField] GameObject m_playerObject;
-
-    //���蕨�{�^��
     [SerializeField] GameObject m_storePanel;
     [SerializeField] GameObject m_storeShoppingPanel;
     
     Rigidbody rb;
     LightONOFF m_lightScript;
     GameManager m_gameManager;
+
     bool m_storeNow = false;
 
     // Start is called before the first frame update
@@ -27,13 +26,14 @@ public class Store : MonoBehaviour
         m_lightScript = GameObject.FindWithTag("Player").GetComponent<LightONOFF>();
         m_UICanvas = GameObject.FindGameObjectWithTag("UI");
         m_storeCanvas.SetActive(false);
+        m_gameManager.SetItemDrop(true);
     }
 
     private void OnTriggerStay(Collider other)
     {
-       // m_lightScript.m_isActionFlag = true;
+        m_lightScript.m_isActionFlag = false;
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
-                "�X��Ƙb��", true);
+                "話す", true);
         if (other.CompareTag("Player") && m_storeNow == false)
         {
             if (Input.GetButton("Action"))
@@ -43,37 +43,34 @@ public class Store : MonoBehaviour
                 m_storeCanvas.SetActive(true);
                 rb.transform.LookAt(m_storeOwner.transform);
                 m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
-                Debug.Log("�������J�n");
+                Debug.Log("買い物開始");
             }
         }
     }
 
-    //�v���C���[����b�͈͂���o���
+
     private void OnTriggerExit(Collider other)
     {
-        //Actuon�L�[��UI����C�gONOFF�e�L�X�g�ɖ߂�
         if (other.CompareTag("Player"))
         {
             m_lightScript.m_isActionFlag = true;
         }
     }
 
-    //�����������{�^���������ꂽ����
     public void OpenStore()
     {
         m_storeShoppingPanel.SetActive(true);
         m_storePanel.SetActive(false);
     }
 
-    //��������I���{�^���������ꂽ����
     public void CloseStore()
     {
         m_storeNow = false;
         m_UICanvas.SetActive(true);
         m_storeCanvas.SetActive(false);
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
-        Cursor.visible = false;  //�}�E�X�J�[�\����\��
-        Cursor.lockState = CursorLockMode.Confined; //�}�E�X�J�[�\���̈ړ��𐧌����Ȃ�
+        Cursor.visible = false;  
+        Cursor.lockState = CursorLockMode.Confined; 
     }
 
     void Shopping()
@@ -94,8 +91,8 @@ public class Store : MonoBehaviour
             return;
         }
 
-        Cursor.visible = true;  //�}�E�X�J�[�\����\��
-        Cursor.lockState = CursorLockMode.None; //�}�E�X�J�[�\���̈ړ��𐧌����Ȃ�
+        Cursor.visible = true;  
+        Cursor.lockState = CursorLockMode.None; 
 
         Shopping();
     }
