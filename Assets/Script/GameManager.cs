@@ -124,15 +124,27 @@ public class GameManager : MonoBehaviour
     }
 
     //所持金額
-    int m_money;
-    public int GetMoney()
+    [SerializeField]
+    float m_money;
+    public float GetMoney()
     {
         return m_money;
     }
-    public int SetMoney(int money)
+    public void SetMoney(float money)
     {
         m_money += money;
-        return m_money;
+    }
+
+    //ノルマ金額
+    [SerializeField]
+    float m_norma;
+    public float GetNorma()
+    {
+        return m_norma;
+    }
+    public void SetNorma(float norma)
+    {
+        m_norma = norma;
     }
 
     //クリアカウントが3つ貯まるとクリア
@@ -173,10 +185,10 @@ public class GameManager : MonoBehaviour
                 ItemID[selectID] = getItemID;
 
                 //アイテムを取得時にそのアイテムの重量分加算する。
-                m_player.ItemWeightAdd(GetItemData().Items[getItemID].weight, true);
+                m_player.ItemWeightAdd(Item_Data.Items[getItemID].weight, true);
 
                 //効果音再生
-                PlaySE(ItemGetSE);
+                PlaySE(ItemGetSE,0.3f);
                 //UIを更新
                 ItemUI.UpdateUI();
 
@@ -311,6 +323,10 @@ public class GameManager : MonoBehaviour
             ItemDrop();
         }
 
+        //現在の所持金とノルマを表示
+        GetOperationUI().SetOperation(UI_Operation.Button.enMoney,
+                "$ " + GetMoney() + "/ $ " + GetNorma(), true);
+
         //選択されたアイテムを手に持つ
         int selectID = GetItemID(GetSelectItemNo());
 
@@ -356,7 +372,7 @@ public class GameManager : MonoBehaviour
             //UIを更新
             ItemUI.UpdateUI();
             //効果音再生
-            PlaySE(SelectSE);
+            PlaySE(SelectSE, 0.3f);
         }
         if ((Input.GetKeyDown("joystick button 5") || Input.GetAxis("Mouse ScrollWheel") > 0))
         {
@@ -368,7 +384,7 @@ public class GameManager : MonoBehaviour
             //UIを更新
             ItemUI.UpdateUI();
             //効果音再生
-            PlaySE(SelectSE);
+            PlaySE(SelectSE, 0.3f);
         }
     }
 }
