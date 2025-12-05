@@ -37,7 +37,7 @@ public class Skeleton : EnemyBase
 
             if ((transform.position - m_NextMovePos).sqrMagnitude <= ATTACK_RANGE && GetCooldown(m_attackCoolTime))
                 m_enemyState = EnemyState.enEnemyState_Attack;
-            else if ((transform.position - m_NextMovePos).sqrMagnitude != 0.0f)
+            else if ((transform.position - m_NextMovePos).sqrMagnitude <= CHASE_RANGE)
                 m_enemyState = EnemyState.enEnemyState_Chase;
 
             if (SoundTimer(10.0f))

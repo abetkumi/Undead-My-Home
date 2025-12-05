@@ -43,7 +43,7 @@ public class Golem : EnemyBase
 
             if ((transform.position - m_NextMovePos).sqrMagnitude <= ATTACK_RANGE && GetCooldown(m_attackCoolTime))
                 m_enemyState = EnemyState.enEnemyState_Attack;
-            else if ((transform.position - m_NextMovePos).sqrMagnitude != 0.0f)
+            else if ((transform.position - m_NextMovePos).sqrMagnitude <= CHASE_RANGE)
                 m_enemyState = EnemyState.enEnemyState_Chase;
 
             if (SoundTimer(8.0f))
@@ -60,8 +60,11 @@ public class Golem : EnemyBase
             if (m_dashActiv == true) {
                 m_dashTime += Time.deltaTime;
 
-                if (m_dashTime >= 0.5f)
+                if (m_dashTime >= 1.0f)
+                {
                     m_NextMovePos = transform.position;
+                    m_dashActiv = false;
+                }
             }
         }
 
