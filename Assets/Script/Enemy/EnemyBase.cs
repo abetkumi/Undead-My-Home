@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UIElements;
 using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyBase : MonoBehaviour
@@ -9,17 +10,17 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected AttackCollider m_attackCollider;
     [SerializeField] protected Animator m_animator;
 
-    [SerializeField] protected GameObject m_targetPlayer;
+    protected GameObject m_targetPlayer;
 
-    [SerializeField] protected AudioClip m_soundClip;
-    private AudioSource m_audioSource;
+    [SerializeField] protected AudioClip[] m_soundClip;
+    private AudioSource[] m_audioSource;
 
-    NavMeshAgent m_agent;
+    protected NavMeshAgent m_agent;
     protected Rigidbody rb;
 
     [SerializeField] protected float m_searchAngle;
 
-    [SerializeField] NavPointList m_navPoint;
+    NavPointList m_navPoint;
     int m_currentTarget = -1;
     protected bool m_navActive = false;
 
@@ -44,19 +45,33 @@ public class EnemyBase : MonoBehaviour
 
     [SerializeField] float m_hp;
 
+    float m_cooldown = 100.0f;
+    [SerializeField] protected float m_attackCoolTime;
+
     //デバック用変数。
     //死亡時に全ての処理を停止させる
     protected bool DebugStop = false;
+
+    private float soundTimer = 100.0f;
 
     // Start is called before the first frame update
     public virtual void Start()
     {
         m_agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
-        m_audioSource = gameObject.AddComponent<AudioSource>();
 
-        m_audioSource.clip = m_soundClip;
-        m_audioSource.playOnAwake = false; // 自動再生しない
+        // AudioSource配列を初期化
+        m_audioSource = new AudioSource[m_soundClip.Length];
+
+        for (int i = 0; i < m_soundClip.Length; i++)
+        {
+            m_audioSource[i] = gameObject.AddComponent<AudioSource>();
+            m_audioSource[i].clip = m_soundClip[i];
+            m_audioSource[i].playOnAwake = false; // 自動再生しない
+        }
+        
+        m_targetPlayer = GameObject.FindWithTag("Player");
+        m_navPoint = gameObject.AddComponent<NavPointList>();
 
         m_agent.updateRotation = true;
 
@@ -75,11 +90,13 @@ public class EnemyBase : MonoBehaviour
             return;
         }
 
+        soundTimer += Time.deltaTime;
+
         if (!m_agent.pathPending) // 経路計算が完了していて
         {
             if (m_agent.remainingDistance <= m_agent.stoppingDistance) // 残り距離が停止距離以下
             {
-                if (!m_agent.hasPath || m_agent.velocity.sqrMagnitude == 0f) // 経路がなく、停止している
+                if (!m_agent.hasPath || m_agent.velocity.sqrMagnitude <= 3f) // 経路がなく、停止している
                 {
                     m_enemyState = EnemyState.enEnemyState_Lost;
                 }
@@ -91,26 +108,32 @@ public class EnemyBase : MonoBehaviour
     //プレイヤーを見つける。
     protected bool PlayerSearch(float rayRange)
     {
-        // レイの始点を計算
-        Vector3 startPos = transform.position;
-        startPos.y += 10.0f;
-        // プレイヤーへ伸びるベクトルを計算
+        if (m_targetPlayer == null) return false;
+
+        // 敵の目の高さからレイを飛ばす
+        Vector3 startPos = transform.position + Vector3.up * 1.5f;
         Vector3 diff = m_targetPlayer.transform.position - startPos;
+        Vector3 dir = diff.normalized;
 
         // レイを描画
         Debug.DrawRay(startPos, diff.normalized * rayRange, Color.red, 0.1f);
 
+        // レイヤーマスク (例: Default と Player のみ)
+        int layerMask = LayerMask.GetMask("Default", "Player");
+
         // レイを発射
         RaycastHit hit;
-        if (Physics.Raycast(startPos, diff.normalized, out hit, rayRange))
+        if (Physics.Raycast(startPos, dir, out hit, rayRange, layerMask))
         {
-            // プレイヤーが視野角内かつレイが最初にヒットしたのがプレイヤーだったら…
-            if (Vector3.Angle(transform.forward, diff) <= m_searchAngle
-                && hit.collider.CompareTag("Player"))
+            // 視野角チェック
+            if (Vector3.Angle(transform.forward, dir) <= m_searchAngle)
             {
-                m_NextMovePos = m_targetPlayer.transform.position;
-                // プレイヤー発見
-                return true;
+                // 最初にヒットしたのがプレイヤーなら「見えている」
+                if (hit.collider.CompareTag("Player"))
+                {
+                    m_NextMovePos = m_targetPlayer.transform.position;
+                    return true;
+                }
             }
         }
         return false;
@@ -135,7 +158,7 @@ public class EnemyBase : MonoBehaviour
         }
     }
     //移動処理。
-    protected void Move()
+    protected void Move() 
     {
         Vector3 direction = m_NextMovePos - transform.position;
         float distance = direction.magnitude;
@@ -168,10 +191,8 @@ public class EnemyBase : MonoBehaviour
         m_navActive = false;
     }
 
-    public void PlaySound()
-    {
-        m_audioSource.Play();
-    }
+    public void PlaySound(int i) =>
+        m_audioSource[i].Play();
 
     //宣言でアニメーション内のすべての変数のリセット。
     public void ResetAllAnimatorParameters()
@@ -196,16 +217,19 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-
-    //固有処理。
-    public virtual void UpdateState() { }
-
-    public virtual void StartAttack() { }
-
-    public virtual void EndAttack() { }
+    //クールタイム計算。
+    protected bool GetCooldown(float time)
+    {
+        m_cooldown += Time.deltaTime;
+        if (m_cooldown >= time){
+            m_cooldown = 0f;
+            return true;
+        }
+        return false;
+    }
 
     //アニメーションが終わったかを判定。
-    public bool AnimationEndCheak(string animeName)
+    public bool AnimationEndCheck(string animeName)
     {
         AnimatorStateInfo stateInfo = m_animator.GetCurrentAnimatorStateInfo(0);
         if (stateInfo.IsName(animeName) && stateInfo.normalizedTime >= 1f)
@@ -214,4 +238,34 @@ public class EnemyBase : MonoBehaviour
         }
         return false;
     }
+
+    float lostTimer = 0.0f;
+    protected void LostKeepTime(float lostTime)
+    {
+        lostTimer += Time.deltaTime;
+
+        if (lostTimer >= lostTime)
+        {
+            lostTimer = 0.0f;
+            m_navActive = true;
+        }
+    }
+
+    
+    protected bool SoundTimer(float soundTime)
+    {
+        if (soundTimer >= soundTime)
+        {
+            soundTimer = 0.0f;
+            return true;
+        }
+        return false;
+    }
+
+    //固有処理。
+    public virtual void UpdateState() { }
+
+    public virtual void StartAttack() { }
+
+    public virtual void EndAttack() { }
 }
