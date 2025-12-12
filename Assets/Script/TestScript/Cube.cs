@@ -10,7 +10,6 @@ public class Cube : MonoBehaviour
     GameObject[] cubes = new GameObject[100];
 
     //ポイントリストを指定。
-    [SerializeField] GameObject PointList;
     Point[] point = new Point[100];
 
     public List<GameObject> colorPrefabs;
@@ -19,6 +18,8 @@ public class Cube : MonoBehaviour
     int cubeNum = 0;
     //設置したポイントの個数。
     int pointNum = 0;
+    //設置するオブジェクトの総額の目安。
+    int m_allObjValue = 0;
 
     Transform parent;
 
@@ -122,6 +123,23 @@ public class Cube : MonoBehaviour
                 else{}
             }
         }
+    }
+
+
+    //生成するオブジェクトの最大、最小個数。
+    int m_objMaxNum,m_objMinNum;
+    
+    //外部からの参照。
+    //オブジェクトの上限個数を設定。
+    public void SetObjMaxNum(int num)
+    {
+        m_objMaxNum = num;
+    }
+
+    //オブジェクトのだいたいの合計金額を設定。
+    public void SetValue(int value)
+    {
+        m_allObjValue = value;
     }
 
     // Update is called once per frame
