@@ -148,7 +148,13 @@ public class GameManager : MonoBehaviour
     }
 
     //クリアカウントが3つ貯まるとクリア
-    int m_clearCount = 0;
+    int m_clearCondition = 3;
+    public int GetClearCondition()
+    {
+        return m_clearCondition;
+    }
+
+    [SerializeField] int m_clearCount = 0;
     public int GetClearCount()
     {
         return m_clearCount;
@@ -324,11 +330,19 @@ public class GameManager : MonoBehaviour
         }
 
         //現在の所持金とノルマを表示
-        GetOperationUI().SetOperation(UI_Operation.Button.enMoney,
-                "$ " + GetMoney() + "/ $ " + GetNorma(), true);
+        if (m_clearCount < m_clearCondition)
+        {
+            GetOperationUI().SetOperation(UI_Operation.Button.enMoney,
+                    "$ " + GetMoney() + "/ $ " + GetNorma(), true);
+        }
+        else
+        {
+            GetOperationUI().SetOperation(UI_Operation.Button.enMoney,
+                "$ " + GetMoney() + "/ Clear", true);
+        }
 
-        //選択されたアイテムを手に持つ
-        int selectID = GetItemID(GetSelectItemNo());
+            //選択されたアイテムを手に持つ
+            int selectID = GetItemID(GetSelectItemNo());
 
         if (selectID == (int)UseItemState.Machete)
         {

@@ -34,7 +34,7 @@ public class BuyItem : MonoBehaviour
     {
         GameManager gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         float money = gameManager.GetMoney();
-        if (money > m_price)
+        if (money >= m_price)
         {
             gameManager.SetMoney(-m_price);
             CreateItem(m_itemObject);

@@ -9,7 +9,6 @@ public class GameOver : MonoBehaviour
     [SerializeField] GameObject m_fadeCanvas;
     CameraCulling m_cameraCulling;
     PlayerAttack m_playerAttack;
-    bool m_isGameOver = false;
 
     // Start is called before the first frame update
 
@@ -72,24 +71,7 @@ public class GameOver : MonoBehaviour
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("GameOverScene", Color.black, true);
 
-        m_isGameOver = true;
-        //自身はシーンをまたいでも削除されないようにする
-        DontDestroyOnLoad(gameObject);        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(m_isGameOver == false)
-        {
-            return;
-        }
-
-        if (Input.anyKeyDown)
-        {
-            GameObject fadeObject = Instantiate(m_fadeCanvas);
-            fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
-            Destroy(gameObject);
-        }
+        ////自身はシーンをまたいでも削除されないようにする
+        //DontDestroyOnLoad(gameObject);        
     }
 }
