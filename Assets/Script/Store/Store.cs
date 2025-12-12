@@ -11,9 +11,9 @@ public class Store : MonoBehaviour
     [SerializeField] GameObject m_storeOwner;
     [SerializeField] GameObject m_storePanel;
     [SerializeField] GameObject m_storeShoppingPanel;
-    
+    [SerializeField] GameObject m_spawnPoint;
+
     Rigidbody rb;
-    LightONOFF m_lightScript;
     GameManager m_gameManager;
 
     bool m_storeNow = false;
@@ -23,20 +23,23 @@ public class Store : MonoBehaviour
     {
         rb = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
-        m_lightScript = GameObject.FindWithTag("Player").GetComponent<LightONOFF>();
         m_UICanvas = GameObject.FindGameObjectWithTag("UI");
         m_storeCanvas.SetActive(false);
         m_gameManager.SetItemDrop(true);
+        //ストレージをアイテムとして配置する
+        Vector3 itemPos = m_spawnPoint.transform.position;
+        itemPos.z -= 3.0f;
+        GameObject dropItem = Instantiate(m_gameManager.GetItemData().Items[10].ItemPrefab,
+            itemPos, Camera.main.transform.rotation);
     }
 
     private void OnTriggerStay(Collider other)
     {
-        m_lightScript.m_isActionFlag = false;
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
                 "話す", true);
         if (other.CompareTag("Player") && m_storeNow == false)
         {
-            if (Input.GetButton("Action"))
+            if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
             {
                 m_storeNow = true;
                 m_UICanvas.SetActive(false);
@@ -45,15 +48,6 @@ public class Store : MonoBehaviour
                 m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
                 Debug.Log("買い物開始");
             }
-        }
-    }
-
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            m_lightScript.m_isActionFlag = true;
         }
     }
 

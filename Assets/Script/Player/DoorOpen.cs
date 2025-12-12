@@ -5,7 +5,6 @@ using UnityEngine;
 public class DoorOpen : MonoBehaviour
 {
     Animator m_animator;
-    LightONOFF m_lightScript;
     GameManager m_gameManager;
 
     // Start is called before the first frame update
@@ -13,17 +12,15 @@ public class DoorOpen : MonoBehaviour
     {
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         m_animator = GetComponent<Animator>();
-        m_lightScript = GameObject.FindWithTag("Player").GetComponent<LightONOFF>();
     }
 
     private void OnTriggerStay(Collider other)
     {
-        m_lightScript.m_isActionFlag = false;
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
                 "ドアを開ける", true);
         if (other.CompareTag("Player"))
         {
-            if (Input.GetButton("Action"))
+            if (Input.GetKey("joystick button 0") || Input.GetMouseButton(0))
             {
                 m_animator.SetBool("Open",true);
             }
@@ -34,7 +31,6 @@ public class DoorOpen : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            m_lightScript.m_isActionFlag = true;
             m_animator.SetBool("Open",false);
         }  
     }
