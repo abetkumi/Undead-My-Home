@@ -7,7 +7,7 @@ public class AttackCollider : MonoBehaviour
     public Transform animatedBone;
     public Collider hitBox;
 
-    public float damage = 10.0f;
+    public float damage = 100.0f;
 
     // Start is called before the first frame update
     void Start()
