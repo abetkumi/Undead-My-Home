@@ -10,6 +10,10 @@ public class ItemObject : MonoBehaviour
 {
     [SerializeField, Tooltip("-1は調べられるアイテム0以上は取得できるアイテム")]
     int ItemID = -1;    //アイテム識別用番号
+    public int GetItemID()
+    {
+        return ItemID;
+    }
     [SerializeField] ItemData itemDataBase; //アイテムリスト
 
     [SerializeField] string Name; //カーソルを合わせたときに表示する名前
@@ -184,7 +188,7 @@ public class ItemObject : MonoBehaviour
         else
         {
             //獲得できるアイテムなのでアイテムデータベースから名前を引っ張ってくる
-            name = m_gameManager.GetItemData().Items[ItemID].ItemName;
+            name = itemDataBase.Items[ItemID].ItemName;
             //操作説明の更新
             m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
                 "拾う", true);

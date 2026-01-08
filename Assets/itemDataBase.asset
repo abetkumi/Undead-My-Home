@@ -113,3 +113,13 @@ MonoBehaviour:
     UI_Scale: {x: 1, y: 1, z: 1}
     weight: 10
     value: 10
+  - ItemName: Bag
+    ItemExplanation: "\u30A2\u30A4\u30C6\u30E0\u304C\u53CE\u7D0D\u3055\u308C\u305F\u30D0\u30C3\u30B0"
+    ItemPrefab: {fileID: 391528793527060366, guid: 0e75d7ae21303c94192c98c7dca83181,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: -0.4, y: -0.3, z: 1}
+    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+    weight: 10
+    value: 60
