@@ -72,7 +72,7 @@ MonoBehaviour:
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
     weight: 40
-    value: 40
+    value: 50
   - ItemName: Crystal
     ItemExplanation: "\u30AF\u30EA\u30B9\u30BF\u30EB"
     ItemPrefab: {fileID: 6694425846037771819, guid: a04d96871bb7cd9449db91b524e87c5a,
@@ -82,7 +82,7 @@ MonoBehaviour:
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
     weight: 50
-    value: 50
+    value: 100
   - ItemName: Machete
     ItemExplanation: "\u30DE\u30C1\u30A7\u30FC\u30C6"
     ItemPrefab: {fileID: 4953936116830592579, guid: 26950a37b651074408927a6382f65595,
