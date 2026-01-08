@@ -228,6 +228,16 @@ public class EnemyBase : MonoBehaviour
         return false;
     }
 
+    bool wasAttack = false;
+    //アニメーションが始まったかを判定。
+    public bool AnimationStartCheck(string animeName) { 
+        var state = m_animator.GetCurrentAnimatorStateInfo(0); 
+        bool isAttack = state.IsName(animeName); 
+        
+        bool started = isAttack && !wasAttack; wasAttack = isAttack; 
+        return started; 
+    }
+
     //アニメーションが終わったかを判定。
     public bool AnimationEndCheck(string animeName)
     {

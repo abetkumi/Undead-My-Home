@@ -2365,7 +2365,8 @@ MonoBehaviour:
   m_attackCollider: {fileID: 8883885490341325550}
   m_animator: {fileID: 7119318408104739236}
   m_soundClip:
-  - {fileID: 0}
+  - {fileID: 8300000, guid: cb78c5ef89bcf3842ac3ac961cbbcc70, type: 3}
+  - {fileID: 8300000, guid: c73d61d6f61d50e4e88186267fe2c56c, type: 3}
   m_searchAngle: 100
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0

@@ -8,7 +8,7 @@ public class EnemyGenerator : MonoBehaviour
 {
     [SerializeField] private List<GameObject> enemyPrefabs;
     private Point[] spawnPoints;
-    private GameObject[] pointPos;
+    private Transform[] pointPos;
     Transform parent;
     private List<GameObject> activeEnemies = new List<GameObject>();
 
@@ -21,50 +21,11 @@ public class EnemyGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButton("Jump"))
-            SpawnEnemy();
+        //if (Input.GetButton("Jump")) SpawnEnemy();
     }
 
-    //void SetPoint()
-    //{
-    //    bool found = false;
-    //    int count = 0;
-
-    //    //ポイントリストが存在するか検索。
-    //    parent = GameObject.Find("EnemySpawnPointList")?.transform;
-    //    if (parent == null)
-    //    {
-    //        Debug.LogWarning("PointList が見つかりませんでした");
-    //        return;
-    //    }
-
-    //    while (!found)
-    //    {
-    //        string name = "SpawnPoint" + (count + 1).ToString("D3");
-    //        Transform obj = parent.Find(name);
-    //        if (obj != null)
-    //        {
-    //            Point p = obj.GetComponent<Point>();
-    //            if (p != null)
-    //            {
-    //                spawnPoints[count] = p;
-    //                pointPos[count].transform.position = obj.transform.position;
-    //                count++;
-    //            }
-    //            else
-    //            {
-    //                Debug.LogWarning($"{name} に Point コンポーネントがありません");
-    //                found = true; // 終了するか、スキップするかは要検討。
-    //            }
-    //        }
-    //        else found = true;
-    //    }
-    //}
     void SetPoint()
     {
-        bool found = false;
-        int count = 0;
-
         //ポイントリストが存在するか検索。
         parent = GameObject.Find("EnemySpawnPointList")?.transform;
         if (parent == null)
@@ -73,17 +34,24 @@ public class EnemyGenerator : MonoBehaviour
             return;
         }
 
-        while (!found)
+        // 子オブジェクト数を取得して配列を確保
+        int childCount = parent.childCount;
+        pointPos = new Transform[childCount];
+
+        // SpawnPoint001 ～ SpawnPointXXX を順番に探して格納
+        for (int i = 0; i < childCount; i++)
         {
-            string name = "SpawnPoint" + (count + 1).ToString("D3");
+            string name = "SpawnPoint" + (i + 1).ToString("D3"); // 001形式
             Transform obj = parent.Find(name);
+
             if (obj != null)
             {
-                pointPos[count] = new GameObject("Point" + (count + 1));
-                pointPos[count].transform.position = obj.transform.position;
-                count++;
+                pointPos[i] = obj;
             }
-            else found = true;
+            else
+            {
+                Debug.LogWarning($"{name} が見つかりませんでした");
+            }
         }
     }
 
