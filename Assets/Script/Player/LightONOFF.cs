@@ -8,6 +8,7 @@ public class LightONOFF : MonoBehaviour
     GameManager m_gameManager;
     bool m_isLightON = true;
     [SerializeField] GameObject m_spotlight;
+    [SerializeField] AudioClip m_spotlightSE;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +34,7 @@ public class LightONOFF : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
         {
             m_isLightON = !m_isLightON;
+            GameManager.PlaySE(m_spotlightSE);
         }
     }
 

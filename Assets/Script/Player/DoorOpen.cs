@@ -6,6 +6,9 @@ public class DoorOpen : MonoBehaviour
 {
     Animator m_animator;
     GameManager m_gameManager;
+    [SerializeField] AudioClip m_openSE, m_closeSE;
+
+    bool m_open = false;
 
     // Start is called before the first frame update
     void Start()
@@ -20,10 +23,7 @@ public class DoorOpen : MonoBehaviour
                 "ドアを開ける", true);
         if (other.CompareTag("Player"))
         {
-            if (Input.GetKey("joystick button 0") || Input.GetMouseButton(0))
-            {
-                m_animator.SetBool("Open",true);
-            }
+            m_open = true;
         }
     }
 
@@ -31,7 +31,27 @@ public class DoorOpen : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            m_open = false;
             m_animator.SetBool("Open",false);
         }  
+    }
+
+    void CloseDoorSE()
+    {
+        GameManager.PlaySE(m_closeSE);
+    }
+
+    private void Update()
+    {
+        if (!m_open)
+        {
+            return;
+        }
+
+        if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+        {
+            m_animator.SetBool("Open", true);
+            GameManager.PlaySE(m_openSE);
+        }
     }
 }
