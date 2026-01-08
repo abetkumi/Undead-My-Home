@@ -8,10 +8,12 @@ public class Store : MonoBehaviour
 {
     [SerializeField] GameObject m_UICanvas;
     [SerializeField] GameObject m_storeCanvas;
-    [SerializeField] GameObject m_storeOwner;
+    [SerializeField] GameObject m_storeNPC;
     [SerializeField] GameObject m_storePanel;
     [SerializeField] GameObject m_storeShoppingPanel;
     [SerializeField] GameObject m_spawnPoint;
+    [SerializeField] AudioClip m_welcomeSE, m_thankyouSE, m_byeSE;
+    [SerializeField] Animator m_shopNPCAnimatior;
 
     Rigidbody rb;
     GameManager m_gameManager;
@@ -24,6 +26,7 @@ public class Store : MonoBehaviour
         rb = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         m_UICanvas = GameObject.FindGameObjectWithTag("UI");
+        m_shopNPCAnimatior = m_storeNPC.GetComponent<Animator>();
         m_storeCanvas.SetActive(false);
         m_gameManager.SetItemDrop(true);
         //ストレージをアイテムとして配置する
@@ -44,8 +47,11 @@ public class Store : MonoBehaviour
                 m_storeNow = true;
                 m_UICanvas.SetActive(false);
                 m_storeCanvas.SetActive(true);
-                rb.transform.LookAt(m_storeOwner.transform);
+                rb.transform.LookAt(m_storeNPC.transform);
                 m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
+                GameManager.PlaySE(m_welcomeSE);
+                m_shopNPCAnimatior.SetBool("Shop", true);
+
                 Debug.Log("買い物開始");
             }
         }
@@ -63,13 +69,15 @@ public class Store : MonoBehaviour
         m_UICanvas.SetActive(true);
         m_storeCanvas.SetActive(false);
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
+        m_shopNPCAnimatior.SetBool("Shop", false);
         Cursor.visible = false;  
-        Cursor.lockState = CursorLockMode.Confined; 
+        Cursor.lockState = CursorLockMode.Confined;
+        GameManager.PlaySE(m_byeSE);
     }
 
     void Shopping()
     {
-        Vector3 dir = m_storeOwner.transform.position - rb.position;
+        Vector3 dir = m_storeNPC.transform.position - rb.position;
         dir.y = 0f;
         if (dir.sqrMagnitude < 0.01f) return;
 

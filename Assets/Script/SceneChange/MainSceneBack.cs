@@ -82,8 +82,6 @@ public class MainSceneBack : MonoBehaviour
             {
                 Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
                 player.SetPlayerState(Player.PlayerState.Dead);
-                GameOver gameOver = m_gameOverObject.GetComponent<GameOver>();
-                gameOver.SetGameOver();
             }
         }
     }

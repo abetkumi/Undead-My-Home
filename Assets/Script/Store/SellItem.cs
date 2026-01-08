@@ -32,10 +32,4 @@ public class SellItem : MonoBehaviour
         GameManager.PlaySE(m_moneyGetSE);
         Destroy(other.gameObject);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
