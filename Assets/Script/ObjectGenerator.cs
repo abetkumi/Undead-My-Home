@@ -28,7 +28,7 @@ public class ObjectGenerator : MonoBehaviour
         SetObjectsPrice();
         SetPoint();
 
-        AllSet(2, 4, 200.0f, 0.1f);
+        AllSet(20, 30, 200.0f, 0.1f);
 
         GenerateObjects();
     }
@@ -118,6 +118,7 @@ public class ObjectGenerator : MonoBehaviour
         }
         // ポイントに配置
         PointSelect(count);
+        Debug.Log("今回の合計金額は" + totalPrice + "です");
     }
 
     void SetPoint()

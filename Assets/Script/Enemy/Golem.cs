@@ -16,6 +16,14 @@ public class Golem : EnemyBase
     float m_dashTime = 0.0f;
     bool m_dashActiv = false;
 
+    enum GolemSound
+    {
+        enGolemSound_voice,
+        enGolemSound_AttackSkill1,
+        enGolemSound_AttackSkill2,
+        enGolemSound_Num,
+    }
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -51,6 +59,9 @@ public class Golem : EnemyBase
 
             m_dashTime = 0.0f;
             m_dashActiv = true;
+
+            if (SoundTimer(10.0f))
+                PlaySound((int)GolemSound.enGolemSound_voice);
 
             UpdateState();
             return;
@@ -162,10 +173,11 @@ public class Golem : EnemyBase
         m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
 
+        if (AnimationStartCheck("Hit") == true)
+            PlaySound((int)GolemSound.enGolemSound_AttackSkill1);
+
         if (AnimationEndCheck("Hit") == true)
-        {
             EndAttack();
-        }
     }
 
     public override void EndAttack()

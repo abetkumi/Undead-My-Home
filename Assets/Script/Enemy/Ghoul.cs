@@ -9,6 +9,12 @@ public class Ghoul : EnemyBase
 
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
+    enum GhoulSound
+    {
+        enGhoulSound_voice,
+        enGhoulSound_Attack,
+        enGhoulSound_Num,
+    }
 
     // Start is called before the first frame update
     new void Start()
@@ -42,7 +48,10 @@ public class Ghoul : EnemyBase
             else if ((transform.position - m_NextMovePos).sqrMagnitude <= CHASE_RANGE)
                 m_enemyState = EnemyState.enEnemyState_Chase;
 
-            UpdateState();
+            if (SoundTimer(10.0f))
+                PlaySound((int)GhoulSound.enGhoulSound_voice);
+
+                UpdateState();
             return;
         }
 
@@ -113,10 +122,11 @@ public class Ghoul : EnemyBase
         m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
 
+        if (AnimationStartCheck("Attack") == true)
+            PlaySound((int)GhoulSound.enGhoulSound_Attack);
+
         if (AnimationEndCheck("Attack") == true)
-        {
             EndAttack();
-        }
     }
 
     public override void EndAttack()

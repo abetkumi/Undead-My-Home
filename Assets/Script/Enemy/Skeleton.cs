@@ -11,6 +11,13 @@ public class Skeleton : EnemyBase
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
 
+    enum SkeletonSound{
+        enSkeletonSound_voice1,
+        enSkeletonSound_voice2, 
+        enSkeletonSound_Attack,
+        enSkeletonSound_Num,
+    }
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -40,9 +47,12 @@ public class Skeleton : EnemyBase
             else if ((transform.position - m_NextMovePos).sqrMagnitude <= CHASE_RANGE)
                 m_enemyState = EnemyState.enEnemyState_Chase;
 
-            if (SoundTimer(10.0f))
-                PlaySound(0);
-
+            if (SoundTimer(10.0f)){
+                if (Random.value < 0.5f)
+                    PlaySound((int)SkeletonSound.enSkeletonSound_voice1);
+                else PlaySound((int)SkeletonSound.enSkeletonSound_voice2);
+            }
+                
             UpdateState();
             return;
         }
@@ -112,13 +122,14 @@ public class Skeleton : EnemyBase
 
     public override void StartAttack()
     {
-        m_attackCollider.SwitchWnabled(true);
+        m_attackCollider.SwitchWnabled(true); 
         m_stateLook = true;
 
+        if(AnimationStartCheck("Attack"))
+                Invoke(nameof(PlayAttackSound), 0.2f);
+
         if (AnimationEndCheck("Attack") == true)
-        {
             EndAttack();
-        }
     }
 
     public override void EndAttack()
@@ -127,4 +138,7 @@ public class Skeleton : EnemyBase
         m_stateLook = false;
         m_animator.ResetTrigger("Attack");
     }
+
+    void PlayAttackSound() =>
+        PlaySound((int)SkeletonSound.enSkeletonSound_Attack);
 }
