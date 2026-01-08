@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//未完成につきアタッチしてない
 public class Save : object
 {
     //所持金

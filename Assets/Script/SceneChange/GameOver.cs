@@ -64,6 +64,12 @@ public class GameOver : MonoBehaviour
         Camera.main.GetComponent<GameCamera>().FocusStart(m_playerObject.transform.position, 3.0f, 5.0f);
         m_playerObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
+        GameObject m_itemObject = GameObject.FindWithTag("Item");
+        if(m_itemObject != null)
+        {
+            Destroy(m_itemObject);
+        }
+
         await UniTask.Delay(1000);
         // シーン切替
         // フェード演出用オブジェクトを生成
@@ -71,7 +77,7 @@ public class GameOver : MonoBehaviour
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("GameOverScene", Color.black, true);
 
-        ////自身はシーンをまたいでも削除されないようにする
-        //DontDestroyOnLoad(gameObject);        
+        //自身はシーンをまたいでも削除されないようにする
+        DontDestroyOnLoad(fadeObject);
     }
 }

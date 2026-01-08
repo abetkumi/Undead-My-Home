@@ -20,6 +20,8 @@ public class PayNorma : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+                "ƒmƒ‹ƒ}‚ðŽx•¥‚¤", true);
             m_isInArea = true;
         }
     }
