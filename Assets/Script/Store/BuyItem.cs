@@ -10,6 +10,7 @@ public class BuyItem : MonoBehaviour
     //”„‚è•¨ƒpƒlƒ‹
     [SerializeField] GameObject m_storePanel;
     [SerializeField] GameObject m_storeShoppingPanel;
+    [SerializeField] float m_price;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +32,12 @@ public class BuyItem : MonoBehaviour
 
     public void OnClick()
     {
-        CreateItem(m_itemObject);
+        GameManager gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        float money = gameManager.GetMoney();
+        if (money >= m_price)
+        {
+            gameManager.SetMoney(-m_price);
+            CreateItem(m_itemObject);
+        }
     }
 }

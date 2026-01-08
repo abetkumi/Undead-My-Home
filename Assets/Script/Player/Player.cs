@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
         Avoid,
         Attack,
         Dead,
-
     }
 
     
@@ -91,7 +90,6 @@ public class Player : MonoBehaviour
         m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_animator = m_playerAnimObject.GetComponent<Animator>();
-        
     }
 
     void PlayerStatus()
