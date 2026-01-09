@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     //アニメーション
     [SerializeField] Animator m_animator;
     [SerializeField] GameObject m_playerAnimObject;
+    [SerializeField] GameObject m_slashAnimObject;
 
     //キャッシュ
     Rigidbody m_rigidBody;
@@ -90,6 +91,7 @@ public class Player : MonoBehaviour
         m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_animator = m_playerAnimObject.GetComponent<Animator>();
+        m_slashAnimObject.SetActive(false);
     }
 
     void PlayerStatus()
@@ -171,13 +173,6 @@ public class Player : MonoBehaviour
         PlayerMove += right + forward;
 
         //他のステートに移行
-        //UseItemキーが押されている場合
-        //if (Input.GetButtonDown("UseItem"))
-        //{
-        //    m_playerState = PlayerState.Attack;
-        //    m_animator.SetTrigger("Attack");
-        //    GameManager.PlaySE(m_attackSE);
-        //}
         //Runキーが押されている場合
         if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
         {
@@ -336,6 +331,7 @@ public class Player : MonoBehaviour
     {
         m_playerState = PlayerState.Attack;
         m_animator.SetTrigger("Attack");
+        m_slashAnimObject.SetActive(true);
         GameManager.PlaySE(m_attackSE);
     }
 
