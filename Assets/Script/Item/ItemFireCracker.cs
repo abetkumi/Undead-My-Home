@@ -7,11 +7,12 @@ public class ItemFireCracker : MonoBehaviour
 {
     [SerializeField] AudioClip m_fireCrackerSE;
     [SerializeField] GameObject m_hitCollider;
-
+    Rigidbody rb;
     // Start is called before the first frame update
     void Awake()
     {
         m_hitCollider.SetActive(false);
+        rb = GetComponent<Rigidbody>();
     }
 
     //”š’|‚ªg‚í‚ê‚½‚Æ‚«‚Ìˆ—
@@ -20,7 +21,7 @@ public class ItemFireCracker : MonoBehaviour
         //’²‚×‚ç‚ê‚È‚¢‚æ‚¤‚É‚·‚é
         ItemObject item = gameObject.GetComponent<ItemObject>();
         item.SetIsCheck(true);
-
+        rb.isKinematic = false;
         //1•b‘Ò‹@
         await UniTask.Delay(1000);
         //ItemDropŠÖ”‚Å‚à‚¤ˆê“xE‚¦‚é‚æ‚¤‚É‚È‚Á‚Ä‚µ‚Ü‚¤‚½‚ß
