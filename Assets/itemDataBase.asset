@@ -95,7 +95,7 @@ MonoBehaviour:
     value: 10
   - ItemName: Firecracker
     ItemExplanation: "\u7206\u7AF9"
-    ItemPrefab: {fileID: 8588740026680714012, guid: bda9e4ce8e756f3419400eff184f9b4c,
+    ItemPrefab: {fileID: 2739293598641599454, guid: ceb44710b989c8c4ea7beafe38feda0e,
       type: 3}
     ItemPivot: {x: 0, y: 0, z: 0}
     UI_Offset: {x: 0, y: -0.2, z: 1}
@@ -105,11 +105,11 @@ MonoBehaviour:
     value: 10
   - ItemName: recovery
     ItemExplanation: "\u56DE\u5FA9"
-    ItemPrefab: {fileID: 6387932759853707015, guid: 9f92bd116531056479c33205b41fd82e,
+    ItemPrefab: {fileID: 2373679112428191796, guid: d1e64b35083f963418d2f8e2b219603f,
       type: 3}
     ItemPivot: {x: 0, y: 0, z: 0}
-    UI_Offset: {x: 0, y: -0.2, z: 1}
-    UI_Rotation: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 0.2}
+    UI_Rotation: {x: 90, y: -45, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
     weight: 10
     value: 10
@@ -122,4 +122,4 @@ MonoBehaviour:
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
     weight: 10
-    value: 60
+    value: 0
