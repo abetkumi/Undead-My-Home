@@ -86,9 +86,7 @@ public class EnemyBase : MonoBehaviour
     public virtual void Update()
     {
         if (DebugStop == true)
-        {
             return;
-        }
 
         soundTimer += Time.deltaTime;
 
