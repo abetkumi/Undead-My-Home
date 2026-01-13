@@ -222,6 +222,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
       propertyPath: m_RootOrder
       value: 27
@@ -53165,6 +53169,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56019a5fb2f53b044a107cf4e79053ed, type: 3}
+--- !u!4 &376444408 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 2048564680}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &376928755
 GameObject:
   m_ObjectHideFlags: 0
@@ -91554,6 +91564,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 365539190}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &858027517 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1233661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &866245249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -109849,6 +109865,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
       propertyPath: m_TagString
       value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
       propertyPath: m_RootOrder
@@ -134710,6 +134730,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Ground
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -154521,6 +154545,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1064027293}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1661599904 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1202940916}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1664900541
 GameObject:
   m_ObjectHideFlags: 0
@@ -157108,6 +157138,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 3acd38da7be7a7e42942f5a2c8c332d5,
     type: 3}
   m_PrefabInstance: {fileID: 33103797}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1737015499 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1367053132}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1737342339 stripped
 Transform:
@@ -190186,7 +190222,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   doors:
   - {fileID: 936050516}
-  openHeight: 6.36
+  - {fileID: 376444408}
+  - {fileID: 1737015499}
+  - {fileID: 858027517}
+  - {fileID: 1661599904}
+  - {fileID: 376444408}
+  - {fileID: 1737015499}
+  openHeight: 13.58
   doorSpeed: 2
   doorDelay: 0.2
   lever: {fileID: 1494386786}
@@ -197831,6 +197873,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
       propertyPath: m_TagString
       value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 124a05486ebe6cd4e867e3dc3cf60c3d, type: 3}
       propertyPath: m_RootOrder
