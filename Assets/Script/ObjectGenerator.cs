@@ -28,7 +28,7 @@ public class ObjectGenerator : MonoBehaviour
         SetObjectsPrice();
         SetPoint();
 
-        AllSet(20, 30, 200.0f, 0.1f);
+        AllSet(20, 30, 100.0f, 0.1f);
 
         GenerateObjects();
     }
@@ -98,13 +98,15 @@ public class ObjectGenerator : MonoBehaviour
         int minAcceptable = Mathf.RoundToInt(m_targetPrice * (1f - m_toleranceRate));
         int maxAcceptable = Mathf.RoundToInt(m_targetPrice * (1f + m_toleranceRate));
 
-        while (generated.Count < count)
+        bool objPriceOver = false;
+        int generatedObjCount = 0;
+        while (generated.Count < count && !objPriceOver)
         {
-            int objNo = Random.Range(0, objPrefabs.Count);
+            int objNo = Random.Range(1, objPrefabs.Count + 1);
             float price = prices[objNo];
             if (totalPrice + price <= maxAcceptable)
             {
-                GameObject prefab = objPrefabs[objNo];
+                GameObject prefab = objPrefabs[objNo - 1];
 
                 // 仮生成
                 GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
@@ -113,11 +115,16 @@ public class ObjectGenerator : MonoBehaviour
 
                 generated.Add(price);
                 totalPrice += price;
+                generatedObjCount++;
             }
-            else continue;
+            else if (totalPrice >= minAcceptable)
+            {
+                break;
+            }
+            else { objPriceOver = true; continue; }
         }
         // ポイントに配置
-        PointSelect(count);
+        PointSelect(generatedObjCount);
         Debug.Log("今回の合計金額は" + totalPrice + "です");
     }
 
