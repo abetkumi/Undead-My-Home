@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     public enum PlayerState
     {
         Idle,
@@ -17,16 +16,33 @@ public class Player : MonoBehaviour
         Dead,
     }
 
-    
-    //パラメータ
-    [SerializeField] private float m_hpGauge = 100.0f;
 
+    //パラメータ
+    [SerializeField] GameObject m_BarObject;
+    UI_Gauge m_uIGauge;
+    [SerializeField] private float m_maxHPGauge = 100.0f;
+    private float m_hpGauge = 100.0f;
+
+    public float GetMaxHP()
+    {
+        return m_maxHPGauge;
+    }
     public float GetPlayerHP()
     {
         return m_hpGauge;
     }
 
-    [SerializeField] private float m_staminaGauge = 100.0f;
+    [SerializeField] private float m_maxStaminaGauge = 100.0f;
+    private float m_staminaGauge = 100.0f;
+    public float GetMaxStamina()
+    {
+        return m_maxStaminaGauge;
+    }
+    public float GetStamina()
+    {
+        return m_staminaGauge;
+    }
+
     //スタミナ
     private float m_runStamina = 20.0f;
     private float m_idleStaminaRecovery = 7.0f;
@@ -85,13 +101,17 @@ public class Player : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //必要な情報を取得
         m_playerAvoid = GetComponent<PlayerAvoid>();
         m_rigidBody = GetComponent<Rigidbody>();
         m_animator = m_playerAnimObject.GetComponent<Animator>();
         m_slashAnimObject.SetActive(false);
+        m_hpGauge = m_maxHPGauge;
+        m_staminaGauge = m_maxStaminaGauge;
+        m_uIGauge = m_BarObject.GetComponent<UI_Gauge>();
+        //m_uIGauge.UpdateStaminaGauge();
     }
 
     void PlayerStatus()
@@ -268,11 +288,17 @@ public class Player : MonoBehaviour
     void UseStamina(float stamina, float ratio)
     {
         m_staminaGauge -= stamina * Time.deltaTime * ratio;
+        m_uIGauge.UpdateStaminaGauge();
     }
 
     //スタミナ回復用関数
     async void RecoveryStamina(float stamina)
     {
+        if(m_staminaGauge >= 100.0f)
+        {
+            return;
+        }
+
         //スタミナが0になると回復開始を遅らせる
         if (m_staminaGauge <= 0)
         {
@@ -300,6 +326,7 @@ public class Player : MonoBehaviour
                 m_staminaGauge = 100.0f;
             }
         }
+        m_uIGauge.UpdateStaminaGauge();
     }
 
     //スタミナの増減幅をプレイヤーの重量によって変更する値を決定。
@@ -344,6 +371,7 @@ public class Player : MonoBehaviour
         {
             m_hpGauge = 100.0f;
         }
+        m_uIGauge.UpdateHPGauge();
     }
 
     //プレイヤーがダメージを受けた時
@@ -355,6 +383,7 @@ public class Player : MonoBehaviour
             m_hpGauge = 0.0f;
             m_playerState = PlayerState.Dead;
         }
+        m_uIGauge.UpdateHPGauge();
     }
 
     //プレイヤーが4んだ時
