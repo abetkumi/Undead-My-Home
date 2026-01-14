@@ -144,6 +144,7 @@ public class Skeleton : EnemyBase
         m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
         m_animator.ResetTrigger("Attack");
+        m_enemyState = EnemyState.enEnemyState_Chase;
     }
 
     void PlayAttackSound() =>
