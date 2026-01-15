@@ -15,6 +15,7 @@ public class Skeleton : EnemyBase
         enSkeletonSound_voice1,
         enSkeletonSound_voice2, 
         enSkeletonSound_Attack,
+        enSkeletonSound_Footsteps,
         enSkeletonSound_Num,
     }
 
@@ -33,6 +34,9 @@ public class Skeleton : EnemyBase
     {
         if (DebugStop) return;
 
+        if (m_footsteps)
+            Footsteps();
+
         if (m_stateLook == true)
         {
             UpdateState();
@@ -45,6 +49,8 @@ public class Skeleton : EnemyBase
 
             if ((transform.position - m_NextMovePos).sqrMagnitude <= ATTACK_RANGE && GetCooldown(m_attackCoolTime))
                 m_enemyState = EnemyState.enEnemyState_Attack;
+            else if ((transform.position - m_NextMovePos).sqrMagnitude < ATTACK_RANGE)
+                m_enemyState = EnemyState.enEnemyState_Lost;
             else if ((transform.position - m_NextMovePos).sqrMagnitude <= CHASE_RANGE)
                 m_enemyState = EnemyState.enEnemyState_Chase;
 
@@ -63,7 +69,7 @@ public class Skeleton : EnemyBase
         //    m_navActive = true;
         if (Input.GetButtonDown("testKye1"))
         {
-            TakeDamage(10, 1);
+            TakeDamage(10, 0);
             return;
         }
             
@@ -100,7 +106,8 @@ public class Skeleton : EnemyBase
                 break;
             //UŒ‚B
             case EnemyState.enEnemyState_Attack:
-                m_animator.SetTrigger("Attack");
+                if (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                    m_animator.SetTrigger("Attack");
                 StartAttack();
                 break;
             //“¦‚°‚éB
@@ -127,6 +134,12 @@ public class Skeleton : EnemyBase
         }
     }
 
+    void Footsteps()
+    {
+        PlaySound((int)SkeletonSound.enSkeletonSound_Footsteps);
+        m_footsteps = false;
+    }
+
     public override void StartAttack()
     {
         m_attackCollider.SwitchWnabled(true); 
@@ -144,7 +157,7 @@ public class Skeleton : EnemyBase
         m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
         m_animator.ResetTrigger("Attack");
-        m_enemyState = EnemyState.enEnemyState_Chase;
+        m_enemyState = EnemyState.enEnemyState_Num;
     }
 
     void PlayAttackSound() =>
