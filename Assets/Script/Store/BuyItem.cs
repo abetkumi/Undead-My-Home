@@ -1,6 +1,8 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuyItem : MonoBehaviour
 {
@@ -12,11 +14,8 @@ public class BuyItem : MonoBehaviour
     [SerializeField] GameObject m_storeShoppingPanel;
     [SerializeField] float m_price;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
+    [SerializeField] Button m_focusButton_ShoppingOpen;
+    [SerializeField] AudioClip m_thankyouSE;
 
     void CreateItem(GameObject item)
     {
@@ -24,10 +23,14 @@ public class BuyItem : MonoBehaviour
         Item.transform.position = m_itemBuyArea.transform.position;
     }
 
-    public void OnCancelClick()
+    async public void OnCancelClick()
     {
         m_storeShoppingPanel.SetActive(false);
         m_storePanel.SetActive(true);
+
+        await UniTask.Delay(100);
+        m_focusButton_ShoppingOpen = m_focusButton_ShoppingOpen.GetComponent<Button>();
+        m_focusButton_ShoppingOpen.Select();
     }
 
     public void OnClick()
@@ -36,6 +39,7 @@ public class BuyItem : MonoBehaviour
         float money = gameManager.GetMoney();
         if (money >= m_price)
         {
+            GameManager.PlaySE(m_thankyouSE);
             gameManager.SetMoney(-m_price);
             CreateItem(m_itemObject);
         }

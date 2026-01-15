@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour
 
     //ノルマ金額
     [SerializeField]
-    float m_norma;
+    float m_norma = 50.0f;
     public float GetNorma()
     {
         return m_norma;
@@ -255,6 +255,8 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //初期ノルマ
+        m_norma = 50.0f;
         //UIを更新
         ItemUI.UpdateUI();
         //ステートの更新（初期化）

@@ -26,7 +26,7 @@ public class PlayerAttack : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             EnemyBase enemy = other.GetComponent<EnemyBase>();
-            enemy.TakeDamage(1, 1);
+            enemy.TakeDamage(1, 0);
             m_attackCollider.enabled = false;
             GameManager.PlaySE(m_hitSE);
             Debug.Log("“G‚Éƒqƒbƒg");
