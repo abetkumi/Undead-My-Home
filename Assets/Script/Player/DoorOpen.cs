@@ -1,12 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class DoorOpen : MonoBehaviour
 {
+    //アイテム欄のUI
+    [SerializeField]
+    UI_Item ItemUI;
     Animator m_animator;
     GameManager m_gameManager;
     [SerializeField] AudioClip m_openSE, m_closeSE;
+    int m_itemIDLength = 4;
 
     bool m_open = false;
 
@@ -41,6 +46,36 @@ public class DoorOpen : MonoBehaviour
         GameManager.PlaySE(m_closeSE);
     }
 
+    private bool KeyCheck()
+    {
+        int selectID = m_gameManager.GetSelectItemNo();
+
+        //順番にアイテム欄を確認していって、空いている場所にIDを格納
+        for (int i = 0; i < m_itemIDLength; i++)
+        {
+            if (m_gameManager.GetItemID(selectID) == 11)
+            {
+                m_animator.SetBool("Open", true);
+                GameManager.PlaySE(m_openSE);
+                m_gameManager.SetItemID(selectID, -1);
+                //UIを更新
+                ItemUI.UpdateUI();
+                return true;
+            }
+
+            selectID++;
+
+            if (selectID > m_itemIDLength - 1)
+            {
+                //オーバーしたので0に戻す
+                selectID = 0;
+            }
+        }
+
+        //空きがなかった
+        return false;
+    }
+
     private void Update()
     {
         if (!m_open)
@@ -50,8 +85,7 @@ public class DoorOpen : MonoBehaviour
 
         if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
         {
-            m_animator.SetBool("Open", true);
-            GameManager.PlaySE(m_openSE);
+            KeyCheck();
         }
     }
 }
