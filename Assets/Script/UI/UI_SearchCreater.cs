@@ -7,7 +7,7 @@ using TMPro;
 public class UI_SearchCreater : MonoBehaviour
 {
     //Canvasの場所を取得
-    [SerializeField] public RectTransform m_canvasRect;
+    public RectTransform m_canvasRect;
     //UIテキスト生成用
     [SerializeField] UI_Search m_UI_SearchPrefab;
    

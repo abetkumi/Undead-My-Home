@@ -7,43 +7,26 @@ using UnityEngine;
 public class GameClear : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
+    [SerializeField] ItemData Item_Data;
     GameManager m_gameManager;
     LightONOFF m_lightScript;
-    //GameObject m_playerObject;
 
-    bool m_isGameClaer = false;
+    bool m_isArea = false;
 
     private void Awake()
     {
         //ゲームマネージャーを取得
         m_gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
-        //プレイヤーを取得
-        //m_playerObject = GameObject.FindGameObjectWithTag("Player");
         //ライトスクリプトを取得
         m_lightScript = GameObject.FindWithTag("Player").GetComponent<LightONOFF>();
     }
     private void OnTriggerStay(Collider other)
     {
-        m_lightScript.m_isActionFlag = false;
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
-                "探索を終了する", true);
-        if (other.CompareTag("Player") && Input.GetButtonUp("Action"))
+        if (other.CompareTag("Player"))
         {
-            int clearCountNow = m_gameManager.GetClearCount();
-            if(clearCountNow == 3)
-            {
-                SetGameClear();
-
-                Debug.Log("Clear");
-            }
-            else
-            {
-                SetStoreScene(); 
-                clearCountNow++;
-                m_gameManager.SetClearCount(clearCountNow);
-                m_lightScript.m_isActionFlag = true;
-                Debug.Log("ショップへ");
-            }
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+                "探索を終了する", true);
+            m_isArea = true;
         }
     }
 
@@ -51,7 +34,7 @@ public class GameClear : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            m_lightScript.m_isActionFlag = true;
+            m_isArea = false;
         }
     }
 
@@ -66,6 +49,7 @@ public class GameClear : MonoBehaviour
         //自身はシーンをまたいでも削除されないようにする
         DontDestroyOnLoad(fadeObject);
     }
+
     async public void SetGameClear()
     {
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameClear);
@@ -76,25 +60,25 @@ public class GameClear : MonoBehaviour
         GameObject fadeObject = Instantiate(m_fadeCanvas);
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("GameClearScene", Color.black, true);
-
-        m_isGameClaer = true;
-        //自身はシーンをまたいでも削除されないようにする
-        DontDestroyOnLoad(gameObject);
+        GameObject item = GameObject.FindWithTag("Item");
+        if (item != null)
+        {
+            Destroy(item);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (m_isGameClaer == false)
+        if(m_isArea == false)
         {
             return;
         }
-
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
         {
-            GameObject fadeObject = Instantiate(m_fadeCanvas);
-            fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
-            Destroy(gameObject);
+            SetStoreScene();
+            m_isArea = false;
+            Debug.Log("ショップへ");
         }
     }
 }
