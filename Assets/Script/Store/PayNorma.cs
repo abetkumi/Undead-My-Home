@@ -6,6 +6,8 @@ using UnityEngine;
 public class PayNorma : MonoBehaviour
 {
     GameManager m_gameManager;
+    [SerializeField] GameObject m_mainBackObject;
+    MainSceneBack m_mainBack;
     [SerializeField] AudioClip m_paySE;
 
     bool m_isInArea = false;
@@ -14,10 +16,16 @@ public class PayNorma : MonoBehaviour
     void Start()
     {
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        m_mainBack = m_mainBackObject.GetComponent<MainSceneBack>();
     }
 
     private void OnTriggerStay(Collider other)
     {
+        if(m_gameManager.GetClearCount() != m_mainBack.GetClearCount())
+        {
+            return;
+        }
+
         if (other.CompareTag("Player"))
         {
             m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -12,8 +13,10 @@ public class Store : MonoBehaviour
     [SerializeField] GameObject m_storePanel;
     [SerializeField] GameObject m_storeShoppingPanel;
     [SerializeField] GameObject m_spawnPoint;
-    [SerializeField] AudioClip m_welcomeSE, m_thankyouSE, m_byeSE;
+    [SerializeField] AudioClip m_welcomeSE, m_byeSE;
     [SerializeField] Animator m_shopNPCAnimatior;
+    [SerializeField] Button m_focusButton_ShoppingOpen;
+    [SerializeField] Button m_focusButton_Machete;
 
     Rigidbody rb;
     GameManager m_gameManager;
@@ -36,7 +39,7 @@ public class Store : MonoBehaviour
             itemPos, Camera.main.transform.rotation);
     }
 
-    private void OnTriggerStay(Collider other)
+    async private void OnTriggerStay(Collider other)
     {
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
                 "話す", true);
@@ -50,17 +53,27 @@ public class Store : MonoBehaviour
                 rb.transform.LookAt(m_storeNPC.transform);
                 m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
                 GameManager.PlaySE(m_welcomeSE);
+
+
                 m_shopNPCAnimatior.SetBool("Shop", true);
+
+                await UniTask.Delay(100);
+                m_focusButton_ShoppingOpen = m_focusButton_ShoppingOpen.GetComponent<Button>();
+                m_focusButton_ShoppingOpen.Select();
 
                 Debug.Log("買い物開始");
             }
         }
     }
 
-    public void OpenStore()
+    async public void OpenStore()
     {
         m_storeShoppingPanel.SetActive(true);
         m_storePanel.SetActive(false);
+
+        await UniTask.Delay(100);
+        m_focusButton_Machete = m_focusButton_Machete.GetComponent<Button>();
+        m_focusButton_Machete.Select();
     }
 
     public void CloseStore()

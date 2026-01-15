@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     float m_stepSEWalkInterval = 0.5f;
     float m_stepSERunInterval = 0.35f;
     [SerializeField]
-    AudioClip m_attackSE, m_stepSE, m_jumpSE, m_recoverySE;
+    AudioClip m_attackSE, m_stepSE, m_jumpSE, m_recoverySE, m_damageSE;
     
 
     //ステート変更用関数
@@ -378,6 +378,7 @@ public class Player : MonoBehaviour
     public void TakeDamage(float damage)
     {
         m_hpGauge -= damage;
+        GameManager.PlaySE(m_damageSE);
         if(m_hpGauge <= 0.0f)
         {
             m_hpGauge = 0.0f;
