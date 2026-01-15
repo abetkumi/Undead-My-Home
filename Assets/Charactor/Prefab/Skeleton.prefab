@@ -1208,12 +1208,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: eac130e32e4b05d47b412fdebd1a7150, type: 3}
   - {fileID: 8300000, guid: c1978557926507f41987c799deadf70a, type: 3}
   - {fileID: 8300000, guid: 0b5b4480cf2c79b4497a42bf646d1c54, type: 3}
+  - {fileID: 8300000, guid: d7aca547b87e4374b9160315159b2cc0, type: 3}
+  m_footsteps: 0
   m_searchAngle: 100
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
   m_stateLook: 0
   m_hp: 100
-  m_attackCoolTime: 0
+  m_attackCoolTime: 0.01
   m_searchRayRange: 150
   m_chaseRayRange: 10
 --- !u!195 &4335996447596918895
