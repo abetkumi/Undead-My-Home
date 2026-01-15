@@ -13,6 +13,11 @@ public class MainSceneBack : MonoBehaviour
 
     bool m_isInArea = false;
     int m_clearCount = 0;
+    public int GetClearCount()
+    {
+        return m_clearCount;
+    }
+
     private void Awake()
     {
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
