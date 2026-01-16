@@ -117,9 +117,9 @@ public class ObjectGenerator : MonoBehaviour
                 totalPrice += price;
                 generatedObjCount++;
             }
-            else if (totalPrice >= minAcceptable)
+            else if (totalPrice < minAcceptable)
             {
-                break;
+                
             }
             else { objPriceOver = true; continue; }
         }
