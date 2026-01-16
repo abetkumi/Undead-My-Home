@@ -122,6 +122,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &426820498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 426820500}
+  - component: {fileID: 426820499}
+  m_Layer: 0
+  m_Name: TitleBack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &426820499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426820498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45f1775501e6574db26add0248ad80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
+    type: 3}
+--- !u!4 &426820500
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426820498}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 15.120004, y: 3.272921, z: 13.522546}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &689117837
 GameObject:
   m_ObjectHideFlags: 0
@@ -179,7 +225,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Game Clear
+  m_text: 'Game Clear
+
+    Any Key Press "Title"'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 141bcfa37265f0d44b74c5434acc94e3, type: 2}
   m_sharedMaterial: {fileID: -3851128578409511887, guid: 141bcfa37265f0d44b74c5434acc94e3,
@@ -681,3 +729,4 @@ SceneRoots:
   - {fileID: 1829794431}
   - {fileID: 1222427761}
   - {fileID: 1241461477}
+  - {fileID: 426820500}

@@ -7,16 +7,40 @@ using UnityEngine.UI;
 public class MainSceneBack : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
-   
+    [SerializeField] GameObject m_gameClearObject;
+    [SerializeField] GameObject m_gameOverObject;
+    GameManager m_gameManager;
+
+    bool m_isInArea = false;
+    int m_clearCount = 0;
+    public int GetClearCount()
+    {
+        return m_clearCount;
+    }
+
+    private void Awake()
+    {
+        m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+
+        m_clearCount = m_gameManager.GetClearCount();
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Player") && Input.GetButtonDown("Action"))
+        if (other.CompareTag("Player"))
         {
-            SetMainGameBack();
-            Debug.Log("SampleSceneに戻る");
+            m_isInArea = true;
         }
     }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            m_isInArea = false;
+        }
+    }
+
 
     void SetMainGameBack()
     {
@@ -30,5 +54,40 @@ public class MainSceneBack : MonoBehaviour
         
         //自身はシーンをまたいでも削除されないようにする
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void Update()
+    {
+        if (!m_isInArea)
+        {
+            return;
+        }
+
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+                "1日を終了する", true);
+
+        if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+        {
+
+            int clearCountNow = m_gameManager.GetClearCount();
+            //ノルマをすべて達成したのでゲームクリア
+            if (clearCountNow >= m_gameManager.GetClearCondition())
+            {
+                GameClear gameClear = m_gameClearObject.GetComponent<GameClear>();
+                gameClear.SetGameClear();
+                Debug.Log("Clear");
+            }
+            //ノルマ達成のため次のゲームへ
+            else if (m_clearCount != clearCountNow)
+            {
+                SetMainGameBack();
+            }
+            //ノルマ未達成のためゲームオーバー
+            else
+            {
+                Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+                player.SetPlayerState(Player.PlayerState.Dead);
+            }
+        }
     }
 }

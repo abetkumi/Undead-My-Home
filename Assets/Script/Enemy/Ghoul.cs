@@ -33,6 +33,9 @@ public class Ghoul : EnemyBase
             return;
         }
 
+        if (m_footsteps)
+            Footsteps();
+
         if (m_stateLook == true)
         {
             UpdateState();
@@ -115,6 +118,12 @@ public class Ghoul : EnemyBase
             default:
                 break;
         }
+    }
+
+    void Footsteps()
+    {
+        PlaySound((int)GhoulSound.enGhoulSound_Num);
+        m_footsteps = false;
     }
 
     public override void StartAttack()
