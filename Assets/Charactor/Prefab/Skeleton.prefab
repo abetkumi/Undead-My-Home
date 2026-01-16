@@ -715,7 +715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatedBone: {fileID: 7893678224703340049}
   hitBox: {fileID: 1672031681425435726}
-  damage: 10
+  damage: 40
 --- !u!1 &4685632518724124366
 GameObject:
   m_ObjectHideFlags: 0
