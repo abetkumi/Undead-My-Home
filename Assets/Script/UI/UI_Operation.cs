@@ -22,6 +22,7 @@ public class UI_Operation : MonoBehaviour
         enButton_X,
         enButton_Y,
         enButton_RB,
+        enMoney,
     }
 
     //à–¾—“‚Ì•ÏX
@@ -80,6 +81,9 @@ public class UI_Operation : MonoBehaviour
                 {
                     Texts[(int)button].text = "E:" + text;
                 }
+                break;
+            case Button.enMoney:
+                Texts[(int)button].text = text;
                 break;
         }
 
