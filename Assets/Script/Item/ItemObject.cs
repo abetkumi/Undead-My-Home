@@ -129,7 +129,7 @@ public class ItemObject : MonoBehaviour
         //リジッドボディの取得
         Rigidbody rb = GetComponent<Rigidbody>();
         if (m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) >= 7 &&
-            m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) < 10)
+            m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) < 10 && m_gameManager.GetItemID(m_gameManager.GetSelectItemNo()) == 11)
         {
             //物理演算を無効にする
             rb.isKinematic = true;

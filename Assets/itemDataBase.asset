@@ -123,3 +123,13 @@ MonoBehaviour:
     UI_Scale: {x: 1, y: 1, z: 1}
     weight: 10
     value: 0
+  - ItemName: Key
+    ItemExplanation: "\u9375\n"
+    ItemPrefab: {fileID: 3405648610721210824, guid: af81a54fa1b1af946b91cd5f90eea66a,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0.3, z: 1}
+    UI_Rotation: {x: 0, y: 90, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+    weight: 10
+    value: 0
