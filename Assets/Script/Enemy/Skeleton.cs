@@ -67,11 +67,11 @@ public class Skeleton : EnemyBase
         //デバック用。
         //if (Input.GetButton("testKye1"))
         //    m_navActive = true;
-        if (Input.GetButtonDown("testKye1"))
-        {
-            TakeDamage(10, 0);
-            return;
-        }
+        //if (Input.GetButtonDown("testKye1"))
+        //{
+        //    TakeDamage(10, 0);
+        //    return;
+        //}
             
 
 
