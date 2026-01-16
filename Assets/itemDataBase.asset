@@ -41,7 +41,7 @@ MonoBehaviour:
     UI_Offset: {x: 0, y: -0.2, z: 1}
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
-    weight: 10
+    weight: 5
     value: 10
   - ItemName: Saphire
     ItemExplanation: "\u30B5\u30D5\u30A1\u30A4\u30A2"
@@ -51,7 +51,7 @@ MonoBehaviour:
     UI_Offset: {x: 0, y: -0.2, z: 1}
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
-    weight: 20
+    weight: 10
     value: 20
   - ItemName: Emerald
     ItemExplanation: "\u30A8\u30E1\u30E9\u30EB\u30C9"
@@ -61,7 +61,7 @@ MonoBehaviour:
     UI_Offset: {x: 0, y: -0.2, z: 1}
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
-    weight: 30
+    weight: 15
     value: 30
   - ItemName: Ruby
     ItemExplanation: "\u30EB\u30D3\u30FC"
@@ -71,7 +71,7 @@ MonoBehaviour:
     UI_Offset: {x: 0, y: -0.2, z: 1}
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
-    weight: 40
+    weight: 30
     value: 50
   - ItemName: Crystal
     ItemExplanation: "\u30AF\u30EA\u30B9\u30BF\u30EB"
@@ -81,7 +81,7 @@ MonoBehaviour:
     UI_Offset: {x: 0, y: -0.2, z: 1}
     UI_Rotation: {x: 0, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
-    weight: 50
+    weight: 60
     value: 100
   - ItemName: Machete
     ItemExplanation: "\u30DE\u30C1\u30A7\u30FC\u30C6"
