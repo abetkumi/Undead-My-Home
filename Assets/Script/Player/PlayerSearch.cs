@@ -12,11 +12,13 @@ public class PlayerSearch : MonoBehaviour
     [SerializeField] GameObject m_searchCollider;
     //サーチする際のエフェクト
     [SerializeField] GameObject m_searchImageObject;
+    GameManager m_gameManager;
 
     private void Awake()
     {
         m_searchCollider.SetActive(false);
         m_searchImageObject.SetActive(false);
+        m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
     }
 
     //範囲内に収集アイテムがある場合
@@ -51,7 +53,8 @@ public class PlayerSearch : MonoBehaviour
         {
             return;
         }
-
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+                "サーチ", true);
         //サーチボタンが押されると
         if (Input.GetButtonUp("Search"))
         {

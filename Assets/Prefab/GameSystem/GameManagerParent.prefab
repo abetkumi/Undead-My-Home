@@ -310,6 +310,8 @@ MonoBehaviour:
   SearchUI: {fileID: 4646721660341747245, guid: bf97332eaff8ef7469041ec59bee0f05,
     type: 3}
   OperationUI: {fileID: 0}
+  m_money: 0
+  m_norma: 0
   ItemGetSE: {fileID: 8300000, guid: a681bc80f64850745ada094dfca1ba56, type: 3}
   ItemHitSE: {fileID: 0}
   SelectSE: {fileID: 8300000, guid: 2ba18d40ad534b547a91be29e7d6a569, type: 3}

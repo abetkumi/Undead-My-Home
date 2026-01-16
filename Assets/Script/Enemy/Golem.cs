@@ -39,6 +39,9 @@ public class Golem : EnemyBase
             return;
         }
 
+        if (m_footsteps)
+            Footsteps();
+
         if (m_stateLook == true)
         {
             UpdateState();
@@ -165,6 +168,12 @@ public class Golem : EnemyBase
             m_animator.SetTrigger("SleepEnd");
             time = 0.0f;
         }
+    }
+
+    //アニメーションのadd eventにより呼び出し。
+    void Footsteps()
+    {
+        PlaySound((int)GolemSound.enGolemSound_Num);
     }
 
     public override void StartAttack()

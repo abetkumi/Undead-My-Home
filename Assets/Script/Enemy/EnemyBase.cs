@@ -14,6 +14,7 @@ public class EnemyBase : MonoBehaviour
 
     [SerializeField] protected AudioClip[] m_soundClip;
     private AudioSource[] m_audioSource;
+    [SerializeField] protected bool m_footsteps = false;       //ë´âπÅB
 
     protected NavMeshAgent m_agent;
     protected Rigidbody rb;
