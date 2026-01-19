@@ -5316,7 +5316,7 @@ PrefabInstance:
     - target: {fileID: 7168820300417781237, guid: 3e73b9f16c4a1614c8fb248e6403dabb,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7168820300417781237, guid: 3e73b9f16c4a1614c8fb248e6403dabb,
         type: 3}
@@ -8197,7 +8197,12 @@ PrefabInstance:
     - target: {fileID: 4735853986454638754, guid: 754b89c5467a88240ab708f17485bac5,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4735853986454638754, guid: 754b89c5467a88240ab708f17485bac5,
+        type: 3}
+      propertyPath: m_searchRayRange
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4735853986454638754, guid: 754b89c5467a88240ab708f17485bac5,
         type: 3}
@@ -8213,6 +8218,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Golem
+      objectReference: {fileID: 0}
+    - target: {fileID: 8395061182663415797, guid: 754b89c5467a88240ab708f17485bac5,
+        type: 3}
+      propertyPath: MinDistance
+      value: 1.0027418
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
