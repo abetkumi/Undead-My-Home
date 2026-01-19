@@ -326,7 +326,7 @@ public class GameManager : MonoBehaviour
         }
 
         //Bƒ{ƒ^ƒ“‚ÅŽÌ‚Ä‚é
-        if ((Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.G)))
+        if (Input.GetButtonDown("ItemDrop"))
         {
             ItemDrop();
         }
