@@ -106,7 +106,9 @@ public class Golem : EnemyBase
         {
             //èÑâÒÅB
             case EnemyState.enEnemyState_Search:
-                m_animator.SetFloat("Walk", 1.0f);
+                m_speed = 3.5f;
+                m_agent.speed = m_speed;
+                m_animator.SetFloat("Walk", m_speed);
                 Move();
                 break;
             //í«ê’ÅB
@@ -120,6 +122,7 @@ public class Golem : EnemyBase
                 m_animator.SetFloat("Walk", 0.0f);
                 m_animator.SetTrigger("IdelAction");
                 m_speed = 3.5f;
+                m_agent.speed = m_speed;
                 LostKeepTime(3.0f);
                 break;
             //çUåÇÅB
