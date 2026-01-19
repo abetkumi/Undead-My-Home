@@ -28,7 +28,7 @@ public class ObjectGenerator : MonoBehaviour
         SetObjectsPrice();
         SetPoint();
 
-        AllSet(20, 30, 100.0f, 0.1f);
+        AllSet(20, 30, 500.0f, 0.1f);
 
         GenerateObjects();
     }
@@ -110,7 +110,8 @@ public class ObjectGenerator : MonoBehaviour
 
                 // 仮生成
                 GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-                obj.transform.localScale = new Vector3(20f, 20f, 20f);
+                //obj.transform.localScale = new Vector3(20f, 20f, 20f);
+                obj.transform.localScale = new Vector3(1f, 1f, 1f);
                 m_objects[generated.Count] = obj;
 
                 generated.Add(price);

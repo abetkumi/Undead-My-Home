@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e6624db64b25ee74c92c435c6cff3f09, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 436b320e3a391e4488f0c9fc6383a3c9, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3639,6 +3639,7 @@ MonoBehaviour:
   m_jumpForce: 5
   m_totalWeight: 0
   wightRatio: 0
+  baseWight: 0
   m_animator: {fileID: 1240917362391637162}
   m_playerAnimObject: {fileID: 8041799693744194708}
   m_slashAnimObject: {fileID: 1279709904831457000}
@@ -3838,7 +3839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f21d3c7c6a0a0804f9868954778c0576, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f47f5b1af979c6b46b1fb2f2ebde6919, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4231,7 +4232,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f47f5b1af979c6b46b1fb2f2ebde6919, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e6624db64b25ee74c92c435c6cff3f09, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
