@@ -52,7 +52,7 @@ public class StoreDoor : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
         {
             m_animator.SetBool("Open", true);
             GameManager.PlaySE(m_openSE);

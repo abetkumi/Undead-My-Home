@@ -45,7 +45,7 @@ public class Store : MonoBehaviour
                 "話す", true);
         if (other.CompareTag("Player") && m_storeNow == false)
         {
-            if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
             {
                 m_storeNow = true;
                 m_UICanvas.SetActive(false);
@@ -76,7 +76,7 @@ public class Store : MonoBehaviour
         m_focusButton_Machete.Select();
     }
 
-    public void CloseStore()
+    async public void CloseStore()
     {
         m_storeNow = false;
         m_UICanvas.SetActive(true);

@@ -154,7 +154,7 @@ public class Player : MonoBehaviour
         }
 
         //他のステートに移行する
-        if (Input.GetButton("Run") || Input.GetButton("Jump"))
+        if (Input.GetAxis("Run") > 0.1f || Input.GetButton("Jump"))
         {
             m_playerState = PlayerState.Move;
         }
@@ -195,7 +195,7 @@ public class Player : MonoBehaviour
 
         //他のステートに移行
         //Runキーが押されている場合
-        if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
+        if (Input.GetAxis("Run") > 0.1f && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
         {
             m_animator.SetBool("Run", true);
             m_animator.SetBool("Walk",false);
@@ -249,7 +249,7 @@ public class Player : MonoBehaviour
         }
 
         //回避ボタンが押されたら回避
-        if (Input.GetButtonDown("Avoid"))
+        if (Input.GetAxis("Avoid") > 0.1f)
         {
             m_playerState = PlayerState.Avoid;
         }
