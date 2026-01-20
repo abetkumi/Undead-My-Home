@@ -107,7 +107,7 @@ public class ItemStorage : MonoBehaviour
     {
         if(m_isStorage == true)
         {
-            if ((Input.GetKeyDown("joystick button 1") || Input.GetKeyDown(KeyCode.G)))
+            if (Input.GetButton("ItemDrop"))
             {
                 Storage();
             }

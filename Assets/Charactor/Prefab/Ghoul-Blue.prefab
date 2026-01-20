@@ -2368,14 +2368,16 @@ MonoBehaviour:
   m_soundClip:
   - {fileID: 8300000, guid: cb78c5ef89bcf3842ac3ac961cbbcc70, type: 3}
   - {fileID: 8300000, guid: c73d61d6f61d50e4e88186267fe2c56c, type: 3}
+  - {fileID: 8300000, guid: 7812f4c618f769c41aab18b840ec7112, type: 3}
+  m_footsteps: 0
   m_searchAngle: 100
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
   m_stateLook: 0
   m_hp: 100
   m_attackCoolTime: 0.01
-  m_searchRayRange: 150
-  m_chaseRayRange: 200
+  m_searchRayRange: 30
+  m_chaseRayRange: 40
 --- !u!195 &5546522227509721614
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -11643,7 +11645,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatedBone: {fileID: 5596837730965079543}
   hitBox: {fileID: 6425471180892735077}
-  damage: 10
+  damage: 30
 --- !u!65 &6425471180892735077
 BoxCollider:
   m_ObjectHideFlags: 0

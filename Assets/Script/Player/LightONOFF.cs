@@ -31,7 +31,7 @@ public class LightONOFF : MonoBehaviour
             m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
                 "ƒ‰ƒCƒg‚ð‚Â‚¯‚é", true);
         }
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetButtonDown("LightON"))
         {
             m_isLightON = !m_isLightON;
             GameManager.PlaySE(m_spotlightSE);

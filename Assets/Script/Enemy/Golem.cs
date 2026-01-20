@@ -21,6 +21,7 @@ public class Golem : EnemyBase
         enGolemSound_voice,
         enGolemSound_AttackSkill1,
         enGolemSound_AttackSkill2,
+        enGolemSound_Footsteps,
         enGolemSound_Num,
     }
 
@@ -28,7 +29,7 @@ public class Golem : EnemyBase
     new void Start()
     {
         base.Start();
-        m_animator = GetComponent<Animator>();
+        m_animator.applyRootMotion = false;
     }
 
     // Update is called once per frame
@@ -42,6 +43,10 @@ public class Golem : EnemyBase
         if (m_stateLook == true)
         {
             UpdateState();
+
+            if (PlayerSearch(m_searchRayRange))
+                m_stateLook = false;
+
             return;
         }
 
@@ -103,7 +108,9 @@ public class Golem : EnemyBase
         {
             //巡回。
             case EnemyState.enEnemyState_Search:
-                m_animator.SetFloat("Walk", 1.0f);
+                m_speed = 3.5f;
+                m_agent.speed = m_speed;
+                m_animator.SetFloat("Walk", m_speed);
                 Move();
                 break;
             //追跡。
@@ -117,6 +124,7 @@ public class Golem : EnemyBase
                 m_animator.SetFloat("Walk", 0.0f);
                 m_animator.SetTrigger("IdelAction");
                 m_speed = 3.5f;
+                m_agent.speed = m_speed;
                 LostKeepTime(3.0f);
                 break;
             //攻撃。
@@ -167,14 +175,19 @@ public class Golem : EnemyBase
         }
     }
 
+    //アニメーションのイベントにより呼び出し。
+    //-----------------------------------------------------------//
+    void PlayFootstepsSound() =>
+        PlaySound((int)GolemSound.enGolemSound_Footsteps);
+
+    void PlayAttackSound() =>
+        PlaySound((int)GolemSound.enGolemSound_AttackSkill1);
+    //-----------------------------------------------------------//
+
     public override void StartAttack()
     {
         m_NextMovePos = transform.position;
-        m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
-
-        if (AnimationStartCheck("Hit") == true)
-            PlaySound((int)GolemSound.enGolemSound_AttackSkill1);
 
         if (AnimationEndCheck("Hit") == true)
             EndAttack();
@@ -182,7 +195,7 @@ public class Golem : EnemyBase
 
     public override void EndAttack()
     {
-        m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
+        m_enemyState = EnemyState.enEnemyState_Search;
     }
 }

@@ -74,7 +74,7 @@ public class Player : MonoBehaviour
     //重さによる倍率。
     [SerializeField] float wightRatio = 0.0f;
     //乗数。
-    float n = 2.0f;
+    [SerializeField]  float baseWight;
 
     //アニメーション
     [SerializeField] Animator m_animator;
@@ -149,11 +149,12 @@ public class Player : MonoBehaviour
         //スタミナが減っていたら回復する
         if (m_staminaGauge < 100.0f)
         {
-            RecoveryStamina(m_idleStaminaRecovery);
+            StaminaWeightModifier(m_totalWeight, baseWight);
+            RecoveryStamina(m_moveStaminaRecovery * 1.5f / wightRatio);
         }
 
         //他のステートに移行する
-        if (Input.GetButton("Run") || Input.GetButton("Jump"))
+        if (Input.GetAxis("Run") > 0.1f || Input.GetButton("Jump"))
         {
             m_playerState = PlayerState.Move;
         }
@@ -194,13 +195,13 @@ public class Player : MonoBehaviour
 
         //他のステートに移行
         //Runキーが押されている場合
-        if (Input.GetButton("Run") && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
+        if (Input.GetAxis("Run") > 0.1f && m_staminaGauge > 0.0f && stickL.magnitude > 0.1f)
         {
             m_animator.SetBool("Run", true);
             m_animator.SetBool("Walk",false);
             m_animator.SetBool("Idle", false);
             ////重量によってスタミナの増幅幅を変更。
-            StaminaWeightModifier(m_totalWeight, n);
+            StaminaWeightModifier(m_totalWeight, baseWight);
             UseStamina(m_runStamina, wightRatio);
             m_moveSpeed = m_runSpeed;
 
@@ -222,7 +223,7 @@ public class Player : MonoBehaviour
             m_moveSpeed = m_walkSpeed;
 
             //重量によってスタミナの増幅幅を変更。
-            StaminaWeightModifier(m_totalWeight, n);
+            StaminaWeightModifier(m_totalWeight, baseWight);
             RecoveryStamina(m_moveStaminaRecovery / wightRatio);
 
             //足音のピッチ変更
@@ -248,7 +249,7 @@ public class Player : MonoBehaviour
         }
 
         //回避ボタンが押されたら回避
-        if (Input.GetButtonDown("Avoid"))
+        if (Input.GetAxis("Avoid") > 0.1f)
         {
             m_playerState = PlayerState.Avoid;
         }
@@ -330,9 +331,18 @@ public class Player : MonoBehaviour
     }
 
     //スタミナの増減幅をプレイヤーの重量によって変更する値を決定。
-    void StaminaWeightModifier(float weight, float root)
+    void StaminaWeightModifier(float weight, float baseWight)
     {
-        wightRatio = (weight == 0.0f ? 1.0f : Mathf.Pow(weight, 1.0f / root));
+        //wightRatio = (weight == 0.0f ? 1.0f : Mathf.Pow(weight, 1.0f / root));
+        wightRatio = 1.0f;
+
+        if (weight == 0.0f){
+            return;
+        }
+
+
+        float ratio = weight / baseWight;
+        wightRatio += ratio;
     }
 
     //プレイヤーがアイテムを取得した時の重さの加算と減算。

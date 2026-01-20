@@ -76,14 +76,15 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 7b4b4068b980bd94e8a6c8d00038d884, type: 3}
   - {fileID: 8300000, guid: dec1dc1fc7dc23145af876d2fb56ccf3, type: 3}
   - {fileID: 8300000, guid: 24c33a469f71f3b4991f8260ce1c2904, type: 3}
+  m_footsteps: 0
   m_searchAngle: 100
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
   m_stateLook: 0
   m_hp: 200
   m_attackCoolTime: 0.1
-  m_searchRayRange: 10
-  m_chaseRayRange: 100
+  m_searchRayRange: 20
+  m_chaseRayRange: 30
   time: 0
 --- !u!195 &3375108161461432079
 NavMeshAgent:
@@ -406,7 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animatedBone: {fileID: 3700388201770376298}
   hitBox: {fileID: 482251115270983953}
-  damage: 10
+  damage: 15
 --- !u!65 &482251115270983953
 BoxCollider:
   m_ObjectHideFlags: 0

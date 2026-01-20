@@ -721,9 +721,9 @@ MonoBehaviour:
   m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
+  m_SubmitButton: Action
+  m_CancelButton: Jump
+  m_InputActionsPerSecond: 5
   m_RepeatDelay: 0.5
   m_ForceModuleActive: 0
 --- !u!114 &84876762
@@ -4010,7 +4010,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6064131584567701982, guid: bf5d2ab8b61ad11409c57982fdec35ec,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2102391272}
+      addedObject: {fileID: 2102391275}
     - targetCorrespondingSourceObject: {fileID: 6726719733963394194, guid: bf5d2ab8b61ad11409c57982fdec35ec,
         type: 3}
       insertIndex: -1
@@ -5280,7 +5280,7 @@ MonoBehaviour:
   m_storePanel: {fileID: 1580819574}
   m_storeShoppingPanel: {fileID: 1522281578}
   m_price: 0
-  m_focusButton_ShoppingOpen: {fileID: 0}
+  m_focusButton_ShoppingOpen: {fileID: 721719400}
   m_thankyouSE: {fileID: 8300000, guid: ebf8519e97600754c8041d9d03600169, type: 3}
 --- !u!114 &967816898
 MonoBehaviour:
@@ -11179,20 +11179,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 3, z: 2}
   m_Center: {x: -1.36, y: 0.75, z: 1}
---- !u!114 &2102391272
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2102391268}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe8e6d06a2a2ecd45873e4630daa93c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_openSE: {fileID: 8300000, guid: b43f9d214f9609447b64997f7235e1db, type: 3}
-  m_closeSE: {fileID: 8300000, guid: 3fe68c20b3ac56f4799bbd02f2b47c37, type: 3}
 --- !u!95 &2102391273
 Animator:
   serializedVersion: 5
@@ -11214,6 +11200,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2102391275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2102391268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20d0d3252e6e0ba4ab934e36bfa4e296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ItemUI: {fileID: 0}
+  m_openSE: {fileID: 8300000, guid: b43f9d214f9609447b64997f7235e1db, type: 3}
+  m_closeSE: {fileID: 8300000, guid: 3fe68c20b3ac56f4799bbd02f2b47c37, type: 3}
 --- !u!1001 &2103759313
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11752,6 +11753,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: BountyHunterRIO2
       objectReference: {fileID: 0}
+    - target: {fileID: 8031447495131220856, guid: 7927b704fded6204cbba9ae3ad9e909c,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 436b320e3a391e4488f0c9fc6383a3c9,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

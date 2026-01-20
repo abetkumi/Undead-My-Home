@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Store : MonoBehaviour
@@ -45,8 +46,9 @@ public class Store : MonoBehaviour
                 "話す", true);
         if (other.CompareTag("Player") && m_storeNow == false)
         {
-            if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+            if (Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
             {
+                await UniTask.Delay(10);
                 m_storeNow = true;
                 m_UICanvas.SetActive(false);
                 m_storeCanvas.SetActive(true);
@@ -54,10 +56,8 @@ public class Store : MonoBehaviour
                 m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
                 GameManager.PlaySE(m_welcomeSE);
 
-
                 m_shopNPCAnimatior.SetBool("Shop", true);
 
-                await UniTask.Delay(100);
                 m_focusButton_ShoppingOpen = m_focusButton_ShoppingOpen.GetComponent<Button>();
                 m_focusButton_ShoppingOpen.Select();
 
@@ -74,9 +74,10 @@ public class Store : MonoBehaviour
         await UniTask.Delay(100);
         m_focusButton_Machete = m_focusButton_Machete.GetComponent<Button>();
         m_focusButton_Machete.Select();
+ 
     }
 
-    public void CloseStore()
+    async public void CloseStore()
     {
         m_storeNow = false;
         m_UICanvas.SetActive(true);
