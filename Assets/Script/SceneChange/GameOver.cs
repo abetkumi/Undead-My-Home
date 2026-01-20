@@ -19,11 +19,6 @@ public class GameOver : MonoBehaviour
             Player player = other.GetComponent<Player>();
             player.Dead();
 
-            GameObject machete = GameObject.FindWithTag("Weapon");
-            if (machete != null)
-            {
-                machete.transform.localScale = Vector3.one;
-            }
             Debug.Log("Dead");
         }
         else if(other.CompareTag("Item"))
@@ -39,6 +34,12 @@ public class GameOver : MonoBehaviour
         GameManager m_gameManager = 
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameOver);
+
+        GameObject machete = GameObject.FindWithTag("Weapon");
+        if (machete != null)
+        {
+            machete.transform.localScale = Vector3.one;
+        }
 
         //プレイヤーをカメラに映るようにする
         m_cameraCulling = Camera.main.GetComponent<CameraCulling>();
