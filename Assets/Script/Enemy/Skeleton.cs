@@ -23,7 +23,6 @@ public class Skeleton : EnemyBase
     new void Start()
     {
         base.Start();
-        m_animator = GetComponent<Animator>();
         m_animator.applyRootMotion = false;
 
         m_animator.SetBool("Move", true);
@@ -33,9 +32,6 @@ public class Skeleton : EnemyBase
     new void Update() 
     {
         if (DebugStop) return;
-
-        if (m_footsteps)
-            Footsteps();
 
         if (m_stateLook == true)
         {
@@ -72,8 +68,6 @@ public class Skeleton : EnemyBase
         //    TakeDamage(10, 0);
         //    return;
         //}
-            
-
 
         base.Update();
         if (m_navActive) { SetNavMovePos(); }
@@ -95,7 +89,7 @@ public class Skeleton : EnemyBase
                 break;
             //追跡。
             case EnemyState.enEnemyState_Chase:
-                m_animator.SetBool("Chaes", true);
+                m_animator.SetBool("Chase", true);
                 m_animator.SetTrigger("ChaesStart");
                 Move();
                 break;
@@ -108,6 +102,7 @@ public class Skeleton : EnemyBase
             case EnemyState.enEnemyState_Attack:
                 if (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                     m_animator.SetTrigger("Attack");
+                m_stateLook = true;
                 StartAttack();
                 break;
             //逃げる。
@@ -134,19 +129,19 @@ public class Skeleton : EnemyBase
         }
     }
 
-    void Footsteps()
-    {
+    //アニメーションのイベントにより呼び出し。
+    //-----------------------------------------------------------//
+    void PlayFootstepsSound() =>
         PlaySound((int)SkeletonSound.enSkeletonSound_Footsteps);
-        m_footsteps = false;
-    }
+
+    void PlayAttackSound() =>
+        PlaySound((int)SkeletonSound.enSkeletonSound_Attack);
+    //-----------------------------------------------------------//
+
 
     public override void StartAttack()
     {
-        m_attackCollider.SwitchWnabled(true); 
         m_stateLook = true;
-
-        if(AnimationStartCheck("Attack"))
-                Invoke(nameof(PlayAttackSound), 0.2f);
 
         if (AnimationEndCheck("Attack") == true)
             EndAttack();
@@ -154,44 +149,8 @@ public class Skeleton : EnemyBase
 
     public override void EndAttack()
     {
-        m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
         m_animator.ResetTrigger("Attack");
-        m_enemyState = EnemyState.enEnemyState_Num;
+        m_enemyState = EnemyState.enEnemyState_Search;
     }
-
-    void PlayAttackSound() =>
-        PlaySound((int)SkeletonSound.enSkeletonSound_Attack);
-
-    void DamageAnimation()
-    {
-        m_stateLook = true;
-
-        // ★ NavMeshAgent を止める（EnemyBase に m_navAgent がある前提）
-        if (m_agent != null) {
-            m_agent.isStopped = true;
-            m_agent.updatePosition = false; 
-            m_agent.updateRotation = false;
-            m_agent.velocity = Vector3.zero;
-        }
-
-        m_animator.applyRootMotion = true;
-
-        // ★ ダメージアニメーションが終わったら復帰
-        if (AnimationEndCheck("Damage") || AnimationEndCheck("Knockback")) { 
-            m_stateLook = false;
-
-            m_animator.applyRootMotion = false; 
-
-            // NavMeshAgent を再開
-            if (m_agent != null) { 
-                m_agent.isStopped = false; 
-                m_agent.updatePosition = true; 
-                m_agent.updateRotation = true; 
-            }
-
-            m_enemyState = EnemyState.enEnemyState_Search;
-        }
-    }
-
 }

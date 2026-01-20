@@ -226,7 +226,7 @@ AnimatorStateTransition:
     m_ConditionEvent: Move
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: Chaes
+    m_ConditionEvent: Chase
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6092046592207838744}
@@ -269,7 +269,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Chaes
+  - m_Name: Chase
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -355,7 +355,7 @@ AnimatorStateTransition:
     m_ConditionEvent: Move
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: Chaes
+    m_ConditionEvent: Chase
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6092046592207838744}
@@ -545,7 +545,7 @@ AnimatorStateTransition:
     m_ConditionEvent: Move
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: Chaes
+    m_ConditionEvent: Chase
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: ChaesStart
@@ -706,7 +706,7 @@ AnimatorStateTransition:
     m_ConditionEvent: Move
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: Chaes
+    m_ConditionEvent: Chase
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: Lost
