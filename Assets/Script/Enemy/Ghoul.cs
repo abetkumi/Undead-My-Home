@@ -37,6 +37,10 @@ public class Ghoul : EnemyBase
         if (m_stateLook == true)
         {
             UpdateState();
+
+            if (PlayerSearch(m_searchRayRange))
+                m_stateLook = false;
+
             return;
         }
 
