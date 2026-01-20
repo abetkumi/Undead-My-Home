@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class BuyItem : MonoBehaviour
@@ -15,6 +16,7 @@ public class BuyItem : MonoBehaviour
     [SerializeField] float m_price;
 
     [SerializeField] Button m_focusButton_ShoppingOpen;
+    Animator m_anim;
     [SerializeField] AudioClip m_thankyouSE;
 
     void CreateItem(GameObject item)
@@ -31,6 +33,13 @@ public class BuyItem : MonoBehaviour
         await UniTask.Delay(100);
         m_focusButton_ShoppingOpen = m_focusButton_ShoppingOpen.GetComponent<Button>();
         m_focusButton_ShoppingOpen.Select();
+    }
+
+    public void OnResetButtonAnim()
+    {
+        m_anim = GetComponent<Animator>();
+        m_anim.Rebind();
+        m_anim.Update(0f);
     }
 
     public void OnClick()
