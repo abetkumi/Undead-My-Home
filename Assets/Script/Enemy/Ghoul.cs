@@ -13,6 +13,7 @@ public class Ghoul : EnemyBase
     {
         enGhoulSound_voice,
         enGhoulSound_Attack,
+        enGhoulSound_Footsteps,
         enGhoulSound_Num,
     }
 
@@ -20,7 +21,7 @@ public class Ghoul : EnemyBase
     new void Start()
     {
         base.Start();
-        m_animator = GetComponent<Animator>();
+        m_animator.applyRootMotion = false;
 
         m_animator.SetBool("Move", true);
     }
@@ -32,9 +33,6 @@ public class Ghoul : EnemyBase
         {
             return;
         }
-
-        if (m_footsteps)
-            Footsteps();
 
         if (m_stateLook == true)
         {
@@ -120,19 +118,17 @@ public class Ghoul : EnemyBase
         }
     }
 
-    void Footsteps()
-    {
-        PlaySound((int)GhoulSound.enGhoulSound_Num);
-        m_footsteps = false;
-    }
+    //アニメーションのイベントにより呼び出し。
+    //-----------------------------------------------------------//
+    void PlayFootstepsSound() =>
+        PlaySound((int)GhoulSound.enGhoulSound_Footsteps);
+    void PlayAttackSound() =>
+        PlaySound((int)GhoulSound.enGhoulSound_Attack);
+    //-----------------------------------------------------------//
 
     public override void StartAttack()
     {
-        m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
-
-        if (AnimationStartCheck("Attack") == true)
-            PlaySound((int)GhoulSound.enGhoulSound_Attack);
 
         if (AnimationEndCheck("Attack") == true)
             EndAttack();
@@ -140,8 +136,8 @@ public class Ghoul : EnemyBase
 
     public override void EndAttack()
     {
-        m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
         m_animator.ResetTrigger("Attack");
+        m_enemyState = EnemyState.enEnemyState_Search;
     }
 }

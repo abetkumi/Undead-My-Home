@@ -21,6 +21,7 @@ public class Golem : EnemyBase
         enGolemSound_voice,
         enGolemSound_AttackSkill1,
         enGolemSound_AttackSkill2,
+        enGolemSound_Footsteps,
         enGolemSound_Num,
     }
 
@@ -28,7 +29,7 @@ public class Golem : EnemyBase
     new void Start()
     {
         base.Start();
-        m_animator = GetComponent<Animator>();
+        m_animator.applyRootMotion = false;
     }
 
     // Update is called once per frame
@@ -38,9 +39,6 @@ public class Golem : EnemyBase
         {
             return;
         }
-
-        if (m_footsteps)
-            Footsteps();
 
         if (m_stateLook == true)
         {
@@ -173,20 +171,19 @@ public class Golem : EnemyBase
         }
     }
 
-    //アニメーションのadd eventにより呼び出し。
-    void Footsteps()
-    {
-        PlaySound((int)GolemSound.enGolemSound_Num);
-    }
+    //アニメーションのイベントにより呼び出し。
+    //-----------------------------------------------------------//
+    void PlayFootstepsSound() =>
+        PlaySound((int)GolemSound.enGolemSound_Footsteps);
+
+    void PlayAttackSound() =>
+        PlaySound((int)GolemSound.enGolemSound_AttackSkill1);
+    //-----------------------------------------------------------//
 
     public override void StartAttack()
     {
         m_NextMovePos = transform.position;
-        m_attackCollider.SwitchWnabled(true);
         m_stateLook = true;
-
-        if (AnimationStartCheck("Hit") == true)
-            PlaySound((int)GolemSound.enGolemSound_AttackSkill1);
 
         if (AnimationEndCheck("Hit") == true)
             EndAttack();
@@ -194,7 +191,7 @@ public class Golem : EnemyBase
 
     public override void EndAttack()
     {
-        m_attackCollider.SwitchWnabled(false);
         m_stateLook = false;
+        m_enemyState = EnemyState.enEnemyState_Search;
     }
 }

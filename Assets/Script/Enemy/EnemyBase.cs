@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 public class EnemyBase : MonoBehaviour
 {
@@ -14,7 +13,6 @@ public class EnemyBase : MonoBehaviour
 
     [SerializeField] protected AudioClip[] m_soundClip;
     private AudioSource[] m_audioSource;
-    [SerializeField] protected bool m_footsteps = false;       //足音。
 
     protected NavMeshAgent m_agent;
     protected Rigidbody rb;
@@ -25,7 +23,7 @@ public class EnemyBase : MonoBehaviour
     int m_currentTarget = -1;
     protected bool m_navActive = false;
 
-    [SerializeField]  protected Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
+    [SerializeField] protected Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
 
     protected enum EnemyState
     {
@@ -41,12 +39,15 @@ public class EnemyBase : MonoBehaviour
         enEnemyState_Num,       //ステートの数。
     }
 
-    [SerializeField]  protected EnemyState m_enemyState = EnemyState.enEnemyState_Search;
-    [SerializeField]  public bool m_stateLook = false;
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    //インスペクターによる確認用。
+    [SerializeField] protected EnemyState m_enemyState = EnemyState.enEnemyState_Search;
+    [SerializeField] public bool m_stateLook = false;
 
     [SerializeField] float m_hp;
+    ////////////////////////////////////////////////////////////////////////////////////////////
 
-    float m_cooldown = 100.0f;
+    float m_attackCooldown = 100.0f;
     [SerializeField] protected float m_attackCoolTime;
 
     //デバック用変数。
@@ -54,10 +55,10 @@ public class EnemyBase : MonoBehaviour
     protected bool DebugStop = false;
 
     private float soundTimer = 100.0f;
-
     // Start is called before the first frame update
     public virtual void Start()
     {
+        m_animator = GetComponent<Animator>();
         m_agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 
@@ -70,7 +71,7 @@ public class EnemyBase : MonoBehaviour
             m_audioSource[i].clip = m_soundClip[i];
             m_audioSource[i].playOnAwake = false; // 自動再生しない
         }
-        
+
         m_targetPlayer = GameObject.FindWithTag("Player");
         m_navPoint = gameObject.AddComponent<NavPointList>();
 
@@ -89,8 +90,6 @@ public class EnemyBase : MonoBehaviour
         if (DebugStop == true)
             return;
 
-        soundTimer += Time.deltaTime;
-
         if (!m_agent.pathPending) // 経路計算が完了していて
         {
             if (m_agent.remainingDistance <= m_agent.stoppingDistance) // 残り距離が停止距離以下
@@ -103,7 +102,11 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+
+    //-------------------------------------------------------------------------------//
     //汎用処理。
+    //基本的にいじらないでください、不備があったら河田まで。
+
     //プレイヤーを見つける。
     protected bool PlayerSearch(float rayRange)
     {
@@ -137,7 +140,9 @@ public class EnemyBase : MonoBehaviour
         }
         return false;
     }
+
     //ダメージを受ける。また、ダメージのレベルによって処理を変更できる。(死亡判定もここで行う)
+    //ノックバックアニメーションが修正不可能なため、damageLevelに0以外の数字を入れないでください。
     public void TakeDamage(float damage, int damageLevel)
     {
         m_hp -= damage;
@@ -156,8 +161,9 @@ public class EnemyBase : MonoBehaviour
             DebugStop = true;
         }
     }
+
     //移動処理。
-    protected void Move() 
+    protected void Move()
     {
         Vector3 direction = m_NextMovePos - transform.position;
         float distance = direction.magnitude;
@@ -172,6 +178,7 @@ public class EnemyBase : MonoBehaviour
             m_agent.isStopped = true;
         }
     }
+
     //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
     protected void SetNavMovePos()
     {
@@ -190,9 +197,64 @@ public class EnemyBase : MonoBehaviour
         m_navActive = false;
     }
 
+    //サウンドの再生。
     public void PlaySound(int i) =>
         m_audioSource[i].Play();
 
+    //ダメージによる移動処理の停止。
+    protected void DamageAnimation()
+    {
+        m_stateLook = true;
+
+        // ★ NavMeshAgent を止める（EnemyBase に m_navAgent がある前提）
+        if (m_agent != null)
+        {
+            m_agent.isStopped = true;
+            m_agent.updatePosition = false;
+            m_agent.updateRotation = false;
+            m_agent.velocity = Vector3.zero;
+        }
+
+        m_animator.applyRootMotion = true;
+
+        // ★ ダメージアニメーションが終わったら復帰
+        if (AnimationEndCheck("Damage") || AnimationEndCheck("Knockback")
+            || AnimationEndCheck("damage") || AnimationEndCheck("Hit"))
+        {
+            m_stateLook = false;
+
+            m_animator.applyRootMotion = false;
+
+            // NavMeshAgent を再開
+            if (m_agent != null)
+            {
+                m_agent.isStopped = false;
+                m_agent.updatePosition = true;
+                m_agent.updateRotation = true;
+            }
+
+            m_enemyState = EnemyState.enEnemyState_Search;
+        }
+    }
+
+    //アタック時のダメージ判定用コリジョンを使用可能、使用不可にする。
+    protected void AttackColliderTrue() =>
+        m_attackCollider.SwitchWnabled(true);
+    protected void AttackColliderFalse() =>
+        m_attackCollider.SwitchWnabled(false);
+
+    //ここからは判定、リセット系。
+    //クールタイム計算。
+    protected bool GetCooldown(float time)
+    {
+        m_attackCooldown += Time.deltaTime;
+        if (m_attackCooldown >= time)
+        {
+            m_attackCooldown = 0f;
+            return true;
+        }
+        return false;
+    }
     //宣言でアニメーション内のすべての変数のリセット。
     public void ResetAllAnimatorParameters()
     {
@@ -216,25 +278,15 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    //クールタイム計算。
-    protected bool GetCooldown(float time)
-    {
-        m_cooldown += Time.deltaTime;
-        if (m_cooldown >= time){
-            m_cooldown = 0f;
-            return true;
-        }
-        return false;
-    }
-
     bool wasAttack = false;
     //アニメーションが始まったかを判定。
-    public bool AnimationStartCheck(string animeName) { 
-        var state = m_animator.GetCurrentAnimatorStateInfo(0); 
-        bool isAttack = state.IsName(animeName); 
-        
-        bool started = isAttack && !wasAttack; wasAttack = isAttack; 
-        return started; 
+    public bool AnimationStartCheck(string animeName)
+    {
+        var state = m_animator.GetCurrentAnimatorStateInfo(0);
+        bool isAttack = state.IsName(animeName);
+
+        bool started = isAttack && !wasAttack; wasAttack = isAttack;
+        return started;
     }
 
     //アニメーションが終わったかを判定。
@@ -249,6 +301,7 @@ public class EnemyBase : MonoBehaviour
     }
 
     float lostTimer = 0.0f;
+    //Lostステートに入ってから指定秒数後次のステートへ移行できるようにする。
     protected void LostKeepTime(float lostTime)
     {
         lostTimer += Time.deltaTime;
@@ -260,7 +313,6 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
-    
     protected bool SoundTimer(float soundTime)
     {
         if (soundTimer >= soundTime)
@@ -270,11 +322,10 @@ public class EnemyBase : MonoBehaviour
         }
         return false;
     }
+    //-------------------------------------------------------------------------------//
 
     //固有処理。
     public virtual void UpdateState() { }
-
     public virtual void StartAttack() { }
-
     public virtual void EndAttack() { }
 }
