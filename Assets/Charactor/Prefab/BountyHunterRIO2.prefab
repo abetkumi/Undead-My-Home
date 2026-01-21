@@ -4282,6 +4282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8822a55f76e8c449267ac6281456d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_pauseObject: {fileID: 0}
+  m_fadeCanvas: {fileID: 0}
+  m_gameManagerObject: {fileID: 0}
   m_focusButton_Title: {fileID: 170191125537588329}
   m_focusButton_GameBack: {fileID: 591895497911242904}
 --- !u!1 &6627619806265480493
@@ -4404,7 +4407,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f21d3c7c6a0a0804f9868954778c0576, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f47f5b1af979c6b46b1fb2f2ebde6919, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4797,7 +4800,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: f47f5b1af979c6b46b1fb2f2ebde6919, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e6624db64b25ee74c92c435c6cff3f09, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
