@@ -38,7 +38,7 @@ public class Ghoul : EnemyBase
         {
             UpdateState();
 
-            if (PlayerSearch(m_searchRayRange))
+            if (PlayerSearch(m_searchRayRange) && m_enemyState == EnemyState.enEnemyState_Lost)
                 m_stateLook = false;
 
             return;
