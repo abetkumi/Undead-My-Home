@@ -1,9 +1,14 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using static GameManager;
 using static UnityEditor.Progress;
 
 public class GameManager : MonoBehaviour
@@ -11,6 +16,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] Player m_player;
     [SerializeField] RectTransform m_canvasRect;
     [SerializeField] GameObject m_machete;
+    [SerializeField] GameObject m_pauseObject;
+    [SerializeField] Button m_focusButton_Title;
+    UI_Pause m_pause;
 
     //効果音再生関数
     static public OneShotAudioClip PlaySE(AudioClip clip,
@@ -45,6 +53,7 @@ public class GameManager : MonoBehaviour
         enGameState_GameOver,
         enGameState_GameClear,
         enGameState_Shopping,
+        enGameState_Pause,
     }
     static GameState m_gameState = GameState.enGameState_Play;
 
@@ -261,6 +270,8 @@ public class GameManager : MonoBehaviour
         ItemUI.UpdateUI();
         //ステートの更新（初期化）
         m_gameState = GameState.enGameState_Play;
+        //UI_PauseScriptを読み込む
+        m_pause = m_player.GetComponent<UI_Pause>();
     }
 
     //マチェーテを使った
@@ -316,6 +327,23 @@ public class GameManager : MonoBehaviour
         ItemUI.UpdateUI();
     }
 
+    async void Pause()
+    {
+        m_gameState = GameState.enGameState_Pause;
+        m_pauseObject.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(null); 
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0.0f;
+
+        await UniTask.Delay(10);
+        EventSystem.current.SetSelectedGameObject(null);
+        m_focusButton_Title = m_focusButton_Title.GetComponent<Button>();
+        m_focusButton_Title.Select();
+    }
+
+
+
     // Update is called once per frame
     void Update()
     {
@@ -343,8 +371,8 @@ public class GameManager : MonoBehaviour
                 "$ " + GetMoney() + "/ Clear", true);
         }
 
-            //選択されたアイテムを手に持つ
-            int selectID = GetItemID(GetSelectItemNo());
+        //選択されたアイテムを手に持つ
+        int selectID = GetItemID(GetSelectItemNo());
 
         if (selectID == (int)UseItemState.Machete)
         {
@@ -401,6 +429,11 @@ public class GameManager : MonoBehaviour
             ItemUI.UpdateUI();
             //効果音再生
             PlaySE(SelectSE, 0.3f);
+        }
+
+        if(Input.GetButtonDown("Pause"))
+        {
+            Pause();
         }
     }
 }

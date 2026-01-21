@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ public class Title : MonoBehaviour
         m_focusButton_Start = m_focusButton_Start.GetComponent<Button>();
         m_focusButton_End = m_focusButton_End.GetComponent<Button>();
         m_focusButton_Start.Select();
+
     }
 
     public void OnClickStartButton()
