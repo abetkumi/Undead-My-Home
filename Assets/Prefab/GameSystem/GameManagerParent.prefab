@@ -304,6 +304,7 @@ MonoBehaviour:
   m_canvasRect: {fileID: 0}
   m_machete: {fileID: 0}
   m_pauseObject: {fileID: 0}
+  m_focusButton_Title: {fileID: 0}
   Item_Data: {fileID: 11400000, guid: 58a89a36e579d9344acf50d0e43ceb2d, type: 2}
   SelectItemNo: 0
   ItemID: ffffffffffffffffffffffffffffffff
@@ -312,7 +313,7 @@ MonoBehaviour:
     type: 3}
   OperationUI: {fileID: 0}
   m_money: 0
-  m_norma: 0
+  m_norma: 50
   m_clearCount: 0
   ItemGetSE: {fileID: 8300000, guid: a681bc80f64850745ada094dfca1ba56, type: 3}
   ItemHitSE: {fileID: 0}

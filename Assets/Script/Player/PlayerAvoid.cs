@@ -33,7 +33,7 @@ public class PlayerAvoid : MonoBehaviour
         m_playerCollider = GetComponent<CapsuleCollider>();
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
         //UIに回避可能時表示
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_RB,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L2,
                 "回避", true);
     }
 
@@ -82,7 +82,7 @@ public class PlayerAvoid : MonoBehaviour
         m_avoidTimer = 0f;
 
         //UIに回避可能時表示
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_RB,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L2,
                 "回避", false);
 
         // 無敵開始
@@ -107,7 +107,7 @@ public class PlayerAvoid : MonoBehaviour
         m_canAvoid = true;
 
         //UIに回避可能時表示
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_RB,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L2,
                 "回避", true);
 
         Debug.Log("回避クールタイム終了");

@@ -42,7 +42,7 @@ public class PlayerItem : MonoBehaviour
 
 
                 // 決定時の処理
-                if ((Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0)))
+                if ((Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0)))
                 {
                     // アイテムに応じた処理
                     itemObject.ItemCheck();
@@ -50,7 +50,7 @@ public class PlayerItem : MonoBehaviour
 
 
                 // アイテム使用時の処理
-                if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown(KeyCode.I)))
+                if ((Input.GetKeyDown("UseItem") || Input.GetKeyDown(KeyCode.I)))
                 {
                     // アイテムに応じた処理
                     itemObject.ItemUse();

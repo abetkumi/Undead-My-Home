@@ -43,7 +43,7 @@ public class ItemStorage : MonoBehaviour
 
         m_gameManager.SetItemDrop(false);
 
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_Y,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
             "ƒAƒCƒeƒ€‚ðŽû”[‚·‚é", true);
 
         m_isStorage = true;

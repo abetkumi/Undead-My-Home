@@ -18,10 +18,10 @@ public class UI_Operation : MonoBehaviour
     public enum Button
     {
         enButton_A,
-        enButton_B,
+        enButton_R3,
+        enButton_L3,
         enButton_X,
-        enButton_Y,
-        enButton_RB,
+        enButton_L2,
         enMoney,
     }
 
@@ -42,14 +42,24 @@ public class UI_Operation : MonoBehaviour
                     Texts[(int)button].text = "左クリック:" + text;
                 }
                 break;
-            case Button.enButton_B:
+            case Button.enButton_R3:
                 if (m_usingGamepad == true)
                 {
-                    Texts[(int)button].text = "B:" + text;
+                    Texts[(int)button].text = "R3:" + text;
                 }
                 else
                 {
                     Texts[(int)button].text = "Q:" + text;
+                }
+                break;
+            case Button.enButton_L3:
+                if (m_usingGamepad == true)
+                {
+                    Texts[(int)button].text = "L3:" + text;
+                }
+                else
+                {
+                    Texts[(int)button].text = "F:" + text;
                 }
                 break;
             case Button.enButton_X:
@@ -59,23 +69,13 @@ public class UI_Operation : MonoBehaviour
                 }
                 else
                 {
-                    Texts[(int)button].text = "F:" + text;
-                }
-                break;
-            case Button.enButton_Y:
-                if (m_usingGamepad == true)
-                {
-                    Texts[(int)button].text = "Y:" + text;
-                }
-                else
-                {
                     Texts[(int)button].text = "G:" + text;
                 }
                 break;
-            case Button.enButton_RB:
+            case Button.enButton_L2:
                 if (m_usingGamepad == true)
                 {
-                    Texts[(int)button].text = "RB:" + text;
+                    Texts[(int)button].text = "L2:" + text;
                 }
                 else
                 {
@@ -115,14 +115,18 @@ public class UI_Operation : MonoBehaviour
     private bool CheckKeyboardMouseInput()
     {
         // キーボードまたはマウスが押されたら true
-        return Input.anyKeyDown;
+        return Input.GetAxis("Mouse X") != 0 ||
+               Input.GetAxis("Mouse Y") != 0 ||
+               Input.GetMouseButtonDown(0)   ||
+               Input.GetMouseButtonDown(1)||
+            Input.anyKeyDown;
     }
 
     private bool CheckGamepadInput()
     {
         // 代表的なゲームパッドの入力を検出
-        return Input.GetButtonDown("Action") ||
-               Input.GetButtonDown("Jump");
+        return Input.GetButtonDown("Camera_Horizontal") ||
+               Input.GetButtonDown("Camera_Vertical");
     }
 
     private void Update()

@@ -53,7 +53,7 @@ public class PlayerSearch : MonoBehaviour
         {
             return;
         }
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L3,
                 "サーチ", true);
         //サーチボタンが押されると
         if (Input.GetButtonUp("Search"))

@@ -66,7 +66,7 @@ public class MainSceneBack : MonoBehaviour
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
                 "1“ú‚ğI—¹‚·‚é", true);
 
-        if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
         {
 
             int clearCountNow = m_gameManager.GetClearCount();
