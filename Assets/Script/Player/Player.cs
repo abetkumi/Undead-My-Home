@@ -73,8 +73,8 @@ public class Player : MonoBehaviour
     [SerializeField] private float m_totalWeight = 0.0f;
     //重さによる倍率。
     [SerializeField] float wightRatio = 0.0f;
-    //乗数。
-    [SerializeField]  float baseWight;
+    //重さの基準値。
+    float baseWight = 60.0f;
 
     //アニメーション
     [SerializeField] Animator m_animator;
@@ -299,6 +299,9 @@ public class Player : MonoBehaviour
         {
             return;
         }
+
+        if(m_staminaGauge < 0.0f)
+            m_staminaGauge = 0.0f;
 
         //スタミナが0になると回復開始を遅らせる
         if (m_staminaGauge <= 0)
