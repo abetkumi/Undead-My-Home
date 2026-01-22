@@ -62,6 +62,11 @@ public class ItemStorage : MonoBehaviour
                 Debug.Log("使用アイテムです");
                 break;
             }
+            else if(itemID == 11)
+            {
+                Debug.Log("使用アイテムです");
+                break;
+            }
 
             if (m_itemStorageID[selectID] == -1)
             {

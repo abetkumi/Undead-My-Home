@@ -30,6 +30,11 @@ public class UI_Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(GameManager.GetGameState() != GameManager.GameState.enGameState_Play)
+        {
+            return;
+        }
+
         //ŽžŠÔ‚ðŒ¸‚ç‚·
         m_currentTimeSecond -= Time.deltaTime;
 

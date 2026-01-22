@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
 
 /// <summary>
 /// レバーをクリックして複数の鉄檻の扉を開閉するシステム
@@ -132,7 +131,7 @@ public class LeverDoorSystem : MonoBehaviour
         CheckLeverHover();
 
         // レバーのクリック検出（左クリックのみ）
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Action"))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
