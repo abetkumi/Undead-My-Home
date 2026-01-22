@@ -10,7 +10,7 @@ public class Golem : EnemyBase
     const float CHASE_RANGE = 120.0f;
     const float ATTACK_RANGE = 30.0f;
 
-    float m_speed = 3.5f;
+    float m_speed = 1.0f;
     [SerializeField] float time = 0.0f;
 
     float m_dashTime = 0.0f;
@@ -108,22 +108,21 @@ public class Golem : EnemyBase
         {
             //èÑâÒÅB
             case EnemyState.enEnemyState_Search:
-                m_speed = 3.5f;
                 m_agent.speed = m_speed;
                 m_animator.SetFloat("Walk", m_speed);
-                Move();
+                Move(1.0f);
                 break;
             //í«ê’ÅB
             case EnemyState.enEnemyState_Chase:
                 ChaseSpeedSet();
                 m_animator.SetFloat("Walk", m_speed);
-                Move();
+                Move(m_speed);
                 break;
             //å©é∏Ç§ÅB
             case EnemyState.enEnemyState_Lost:
+                m_speed = 1.0f;
                 m_animator.SetFloat("Walk", 0.0f);
                 m_animator.SetTrigger("IdelAction");
-                m_speed = 3.5f;
                 m_agent.speed = m_speed;
                 LostKeepTime(3.0f);
                 break;
@@ -159,7 +158,7 @@ public class Golem : EnemyBase
     }
 
     void ChaseSpeedSet(){
-        m_speed += Time.deltaTime * 3.0f;
+        m_speed += Time.deltaTime * 0.5f;
         m_agent.speed = m_speed;
     }
 

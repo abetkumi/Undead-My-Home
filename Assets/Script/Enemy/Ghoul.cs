@@ -82,13 +82,13 @@ public class Ghoul : EnemyBase
             //èÑâÒÅB
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
-                Move();
+                Move(1.0f);
                 break;
             //í«ê’ÅB
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
                 m_animator.SetTrigger("ChaesStart");
-                Move();
+                Move(1.5f);
                 break;
             //å©é∏Ç§ÅB
             case EnemyState.enEnemyState_Lost:

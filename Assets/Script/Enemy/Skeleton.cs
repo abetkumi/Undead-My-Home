@@ -88,13 +88,13 @@ public class Skeleton : EnemyBase
             //èÑâÒÅB
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
-                Move();
+                Move(1.0f);
                 break;
             //í«ê’ÅB
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chase", true);
                 m_animator.SetTrigger("ChaesStart");
-                Move();
+                Move(2.0f);
                 break;
             //å©é∏Ç§ÅB
             case EnemyState.enEnemyState_Lost:
