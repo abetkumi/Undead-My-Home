@@ -70,6 +70,12 @@ public class EnemyBase : MonoBehaviour
             m_audioSource[i] = gameObject.AddComponent<AudioSource>();
             m_audioSource[i].clip = m_soundClip[i];
             m_audioSource[i].playOnAwake = false; // é©ìÆçƒê∂ÇµÇ»Ç¢
+
+            m_audioSource[i].spatialBlend = 1.0f;
+            m_audioSource[i].rolloffMode = AudioRolloffMode.Logarithmic;
+            m_audioSource[i].minDistance = 1.0f;
+            m_audioSource[i].maxDistance = 20.0f;
+
         }
 
         m_targetPlayer = GameObject.FindWithTag("Player");

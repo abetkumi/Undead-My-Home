@@ -2368,9 +2368,8 @@ MonoBehaviour:
   m_soundClip:
   - {fileID: 8300000, guid: cb78c5ef89bcf3842ac3ac961cbbcc70, type: 3}
   - {fileID: 8300000, guid: c73d61d6f61d50e4e88186267fe2c56c, type: 3}
-  - {fileID: 8300000, guid: 7812f4c618f769c41aab18b840ec7112, type: 3}
-  m_footsteps: 0
-  m_searchAngle: 100
+  - {fileID: 8300000, guid: 1048fa7d84a5d9a47bbbdc982803dd04, type: 3}
+  m_searchAngle: 120
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
   m_stateLook: 0
@@ -2470,8 +2469,8 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 5
+  MaxDistance: 30
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
