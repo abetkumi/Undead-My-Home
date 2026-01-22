@@ -24,7 +24,7 @@ public class GameClear : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "’Tõ‚ğI—¹‚·‚é", true);
             m_isArea = true;
         }

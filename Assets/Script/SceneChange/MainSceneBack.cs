@@ -63,7 +63,7 @@ public class MainSceneBack : MonoBehaviour
             return;
         }
 
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "1“ú‚ğI—¹‚·‚é", true);
 
         if (Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
