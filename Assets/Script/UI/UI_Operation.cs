@@ -11,13 +11,13 @@ public class UI_Operation : MonoBehaviour
     [SerializeField, Header("押せない時の不透明度")]
     float NoActiveAlpha = 0.4f;
 
-    private bool m_usingGamepad = false; // 現在どちらの入力を使っているか
+    private bool m_usingGamepad = true; // 現在どちらの入力を使っているか
     private float lastInputTime = 0f;
 
     //ボタンの種類
     public enum Button
     {
-        enButton_A,
+        enButton_B,
         enButton_R3,
         enButton_L3,
         enButton_X,
@@ -32,10 +32,10 @@ public class UI_Operation : MonoBehaviour
         //テキストを更新
         switch (button)
         {
-            case Button.enButton_A:
+            case Button.enButton_B:
                 if (m_usingGamepad == true)
                 {
-                    Texts[(int)button].text = "A:" + text;
+                    Texts[(int)button].text = "B:" + text;
                 }
                 else
                 {
@@ -131,22 +131,22 @@ public class UI_Operation : MonoBehaviour
 
     private void Update()
     {
-        //ゲームパッドの入力検知
-        if (CheckGamepadInput())
-        {
-            if (!m_usingGamepad)
-            {
-                m_usingGamepad = true;
-            }
-            lastInputTime = Time.time;
-        }
-
         //キーボード・マウスの入力検知
         if (CheckKeyboardMouseInput())
         {
             if (m_usingGamepad)
             {
                 m_usingGamepad = false;
+            }
+            lastInputTime = Time.time;
+        }
+
+        //ゲームパッドの入力検知
+        if (CheckGamepadInput())
+        {
+            if (!m_usingGamepad)
+            {
+                m_usingGamepad = true;
             }
             lastInputTime = Time.time;
         }

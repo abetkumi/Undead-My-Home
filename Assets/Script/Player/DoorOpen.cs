@@ -24,7 +24,7 @@ public class DoorOpen : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "ドアを開ける", true);
         if (other.CompareTag("Player"))
         {

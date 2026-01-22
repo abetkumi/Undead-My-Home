@@ -42,7 +42,7 @@ public class Store : MonoBehaviour
 
     async private void OnTriggerStay(Collider other)
     {
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "話す", true);
         if (other.CompareTag("Player") && m_storeNow == false)
         {

@@ -22,13 +22,13 @@ public class LightONOFF : MonoBehaviour
         if (m_isLightON == true)
         {
             m_spotlight.SetActive(true);
-            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L3,
                 "ライトを消す", true);
         }
         else
         {
             m_spotlight.SetActive(false);
-            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_X,
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L3,
                 "ライトをつける", true);
         }
         if (Input.GetButtonDown("LightON"))
