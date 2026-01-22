@@ -17,6 +17,8 @@ public class EnemyBase : MonoBehaviour
     protected NavMeshAgent m_agent;
     protected Rigidbody rb;
 
+    private float m_defaultSpeed;
+
     [SerializeField] protected float m_searchAngle;
 
     NavPointList m_navPoint;
@@ -61,6 +63,9 @@ public class EnemyBase : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
+
+        //元々のスピードを保存。
+        m_defaultSpeed = m_agent.speed;
 
         // AudioSource配列を初期化
         m_audioSource = new AudioSource[m_soundClip.Length];
@@ -169,10 +174,11 @@ public class EnemyBase : MonoBehaviour
     }
 
     //移動処理。
-    protected void Move()
+    protected void Move(float speedMultiplier = 1f)
     {
+        m_agent.speed = m_defaultSpeed * speedMultiplier;
+
         Vector3 direction = m_NextMovePos - transform.position;
-        float distance = direction.magnitude;
 
         if (direction.sqrMagnitude > 1.0f)
         {
@@ -184,6 +190,7 @@ public class EnemyBase : MonoBehaviour
             m_agent.isStopped = true;
         }
     }
+
 
     //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
     protected void SetNavMovePos()
