@@ -100,7 +100,7 @@ public class ItemObject : MonoBehaviour
                 //m_gameManager.GetSearchUI().SearchUI_Off();
 
                 //Aボタン表示を暗くする
-                m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+                m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                     "", false);
 
                 //自身を削除する
@@ -186,7 +186,7 @@ public class ItemObject : MonoBehaviour
             //調べる系のアイテムなので指定した名前を使う
             name = Name;
             //操作説明の更新
-            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "調べる", true);
         }
         else
@@ -194,7 +194,7 @@ public class ItemObject : MonoBehaviour
             //獲得できるアイテムなのでアイテムデータベースから名前を引っ張ってくる
             name = itemDataBase.Items[ItemID].ItemName;
             //操作説明の更新
-            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "拾う", true);
         }
         //m_gameManager.GetSearchUI().SearchUI_On(name, false);
@@ -210,7 +210,7 @@ public class ItemObject : MonoBehaviour
         //m_gameManager.GetSearchUI().SearchUI_Off();
 
         //操作説明の更新
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
              "", false);
     }
 

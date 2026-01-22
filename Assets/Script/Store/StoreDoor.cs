@@ -23,7 +23,7 @@ public class StoreDoor : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_A,
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "ƒhƒA‚ðŠJ‚¯‚é", true);
         if (other.CompareTag("Player"))
         {
