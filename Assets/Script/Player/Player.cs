@@ -45,7 +45,6 @@ public class Player : MonoBehaviour
 
     //スタミナ
     private float m_runStamina = 20.0f;
-    private float m_idleStaminaRecovery = 7.0f;
     private float m_moveStaminaRecovery = 20.0f;
     private bool m_staminaRecoveryFlag = true;
     //移動速度

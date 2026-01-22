@@ -77,7 +77,7 @@ public class Store : MonoBehaviour
  
     }
 
-    async public void CloseStore()
+    public void CloseStore()
     {
         m_storeNow = false;
         m_UICanvas.SetActive(true);
