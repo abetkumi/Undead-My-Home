@@ -331,12 +331,10 @@ public class GameManager : MonoBehaviour
     {
         m_gameState = GameState.enGameState_Pause;
         m_pauseObject.SetActive(true);
-        EventSystem.current.SetSelectedGameObject(null); 
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0.0f;
 
-        await UniTask.Delay(10);
         EventSystem.current.SetSelectedGameObject(null);
         m_focusButton_Title = m_focusButton_Title.GetComponent<Button>();
         m_focusButton_Title.Select();
