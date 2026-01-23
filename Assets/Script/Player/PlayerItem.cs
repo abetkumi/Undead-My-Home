@@ -47,14 +47,6 @@ public class PlayerItem : MonoBehaviour
                     // アイテムに応じた処理
                     itemObject.ItemCheck();
                 }
-
-
-                // アイテム使用時の処理
-                if ((Input.GetKeyDown("UseItem") || Input.GetKeyDown(KeyCode.I)))
-                {
-                    // アイテムに応じた処理
-                    itemObject.ItemUse();
-                }
             }
 
         }
