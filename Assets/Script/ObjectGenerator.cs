@@ -81,7 +81,7 @@ public class ObjectGenerator : MonoBehaviour
     //    }
     //}
 
-    void GenerateObjects()
+    public void GenerateObjects()
     {
         List<float> generated = new List<float>();
         float totalPrice = 0;
@@ -129,7 +129,7 @@ public class ObjectGenerator : MonoBehaviour
         Debug.Log("今回の合計金額は" + totalPrice + "です");
     }
 
-    void SetPoint()
+    private void SetPoint()
     {
         bool found = false;
 
@@ -163,7 +163,7 @@ public class ObjectGenerator : MonoBehaviour
         }
     }
 
-    void SetObjectsPrice()
+    private void SetObjectsPrice()
     {
         if (m_itemData == null) return;
 
@@ -179,7 +179,7 @@ public class ObjectGenerator : MonoBehaviour
     }
 
     //ポイントを選択。(引数には設置するcubeの数を代入)
-    void PointSelect(int count)
+    private void PointSelect(int count)
     {
         //リスト内の未使用のポイントを検索。
         for (int i = 0; i < count; i++){
@@ -204,7 +204,7 @@ public class ObjectGenerator : MonoBehaviour
     }
 
     //オブジェクトの見た目を変更。
-    void SetPrefab(int cubeNo, int objNo)
+    private void SetPrefab(int cubeNo, int objNo)
     {
         if (objPrefabs.Count == 0)
         {
