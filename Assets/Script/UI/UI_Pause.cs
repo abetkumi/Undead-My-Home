@@ -61,5 +61,7 @@ public class UI_Pause : MonoBehaviour
         m_gameManager.SetGameState(GameState.enGameState_Play);
         m_pauseObject.SetActive(false);
         Time.timeScale = 1.0f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 }

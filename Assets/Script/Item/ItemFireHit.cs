@@ -12,6 +12,6 @@ public class ItemFireHit : MonoBehaviour
         }
 
         EnemyBase enemy = other.GetComponent<EnemyBase>();
-        enemy.TakeDamage(0, 1);
+        enemy.TakeDamage(0, 0);
     }
 }

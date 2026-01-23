@@ -157,8 +157,13 @@ public class Player : MonoBehaviour
         {
             m_playerState = PlayerState.Move;
         }
-        else if (Input.GetAxis("Horizontal") > 0.1f || Input.GetAxis("Horizontal") < -0.1f || 
+        else if (Input.GetAxis("Horizontal") > 0.1f || Input.GetAxis("Horizontal") < -0.1f ||
             Input.GetAxis("Vertical") > 0.1f || Input.GetAxis("Vertical") < -0.1f)
+        {
+            m_playerState = PlayerState.Move;
+        }
+        else if (Input.GetAxis("Horizontal_Pad") > 0.1f || Input.GetAxis("Horizontal_Pad") < -0.1f ||
+            Input.GetAxis("Vertical_Pad") > 0.1f || Input.GetAxis("Vertical_Pad") < -0.1f)
         {
             m_playerState = PlayerState.Move;
         }
@@ -174,8 +179,18 @@ public class Player : MonoBehaviour
         //ƒJƒƒ‰‚ðl—¶‚µ‚½ˆÚ“®
         Vector3 PlayerMove = Vector3.zero;
         stickL = Vector3.zero;
-        stickL.z = Input.GetAxis("Vertical");
-        stickL.x = Input.GetAxis("Horizontal");
+
+        if(Input.GetAxis("Vertical")!=0.0f || Input.GetAxis("Horizontal") != 0.0f)
+        {
+            stickL.z = Input.GetAxis("Vertical");
+            stickL.x = Input.GetAxis("Horizontal");
+        }
+        else if (Input.GetAxis("Vertical_Pad") != 0.0f || Input.GetAxis("Horizontal_Pad") != 0.0f)
+        {
+            stickL.z = Input.GetAxis("Vertical_Pad");
+            stickL.x = Input.GetAxis("Horizontal_Pad");
+        }
+
         if (stickL.magnitude <= 0.1f)
         {
             m_playerState = PlayerState.Idle;
