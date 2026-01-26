@@ -61,7 +61,7 @@ public class UI_Item : MonoBehaviour
 
                     //操作説明の更新
                     m_gameManager.GetOperationUI().SetOperation
-                        (UI_Operation.Button.enButton_X, "", false);
+                        (UI_Operation.Button.enButton_Y, "", false);
 
                 }
                 else if(m_gameManager.GetItemDrop() == false)
@@ -80,7 +80,7 @@ public class UI_Item : MonoBehaviour
 
                     //操作説明の更新
                     m_gameManager.GetOperationUI().SetOperation
-                        (UI_Operation.Button.enButton_X, "捨てる", true);
+                        (UI_Operation.Button.enButton_Y, "捨てる", true);
                 }
             }
 

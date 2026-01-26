@@ -12,16 +12,15 @@ public class UI_Operation : MonoBehaviour
     float NoActiveAlpha = 0.4f;
 
     private bool m_usingGamepad = true; // 現在どちらの入力を使っているか
-    private float lastInputTime = 0f;
 
     //ボタンの種類
     public enum Button
     {
         enButton_B,
+        enButton_Y,
+        enButton_L2,
         enButton_R3,
         enButton_L3,
-        enButton_X,
-        enButton_L2,
         enMoney,
     }
 
@@ -29,10 +28,10 @@ public class UI_Operation : MonoBehaviour
     = new Dictionary<Button, (string, string)>
 {
     { Button.enButton_B,  ("B",  "左クリック") },
+    { Button.enButton_Y,  ("Y",  "G") },
+    { Button.enButton_L2, ("L2", "E") },
     { Button.enButton_R3, ("R3", "Q") },
     { Button.enButton_L3, ("L3", "F") },
-    { Button.enButton_X,  ("X",  "G") },
-    { Button.enButton_L2, ("L2", "E") },
 };
 
 

@@ -10304,8 +10304,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
+  m_HorizontalAxis: Horizontal_Pad
+  m_VerticalAxis: Vertical_Pad
   m_SubmitButton: Action
   m_CancelButton: Jump
   m_InputActionsPerSecond: 10

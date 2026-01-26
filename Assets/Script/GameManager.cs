@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject m_machete;
     [SerializeField] GameObject m_pauseObject;
     [SerializeField] Button m_focusButton_Title;
-    UI_Pause m_pause;
 
     //効果音再生関数
     static public OneShotAudioClip PlaySE(AudioClip clip,
@@ -270,8 +269,6 @@ public class GameManager : MonoBehaviour
         ItemUI.UpdateUI();
         //ステートの更新（初期化）
         m_gameState = GameState.enGameState_Play;
-        //UI_PauseScriptを読み込む
-        m_pause = m_player.GetComponent<UI_Pause>();
     }
 
     //マチェーテを使った
@@ -327,7 +324,7 @@ public class GameManager : MonoBehaviour
         ItemUI.UpdateUI();
     }
 
-    async void Pause()
+    void Pause()
     {
         m_gameState = GameState.enGameState_Pause;
         m_pauseObject.SetActive(true);
@@ -404,7 +401,7 @@ public class GameManager : MonoBehaviour
         }
 
         //選択アイテムの変更
-        if ((Input.GetKeyDown("joystick button 4") || Input.GetAxis("Mouse ScrollWheel") < 0))
+        if ((Input.GetKeyDown("joystick button 5") || Input.GetAxis("Mouse ScrollWheel") < 0))
         {
             SelectItemNo++;
             if (SelectItemNo > ItemID.Length - 1)
@@ -416,7 +413,7 @@ public class GameManager : MonoBehaviour
             //効果音再生
             PlaySE(SelectSE, 0.3f);
         }
-        if ((Input.GetKeyDown("joystick button 5") || Input.GetAxis("Mouse ScrollWheel") > 0))
+        if ((Input.GetKeyDown("joystick button 4") || Input.GetAxis("Mouse ScrollWheel") > 0))
         {
             SelectItemNo--;
             if (SelectItemNo < 0)
