@@ -142,9 +142,11 @@ public class Golem : EnemyBase
             //ダメージ。
             case EnemyState.enEnemyState_Damage:
                 m_animator.SetTrigger("Damage");
+                DamageAnimation();
                 break;
             //気絶。
             case EnemyState.enEnemyState_Stun:
+                DamageAnimation();
                 break;
             //眠る。
             case EnemyState.enEnemyState_Sleep:

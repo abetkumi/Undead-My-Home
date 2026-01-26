@@ -137,9 +137,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefabs:
-  - {fileID: 7562261219708830678, guid: b9a3b73fc1972e84e8f5216feaf11419, type: 3}
-  - {fileID: 1375093070866817993, guid: 3e73b9f16c4a1614c8fb248e6403dabb, type: 3}
-  - {fileID: 5016570633953228790, guid: 754b89c5467a88240ab708f17485bac5, type: 3}
+  - {fileID: 4121853783109987665, guid: 7fe9edb4b687f1348b4aca27386f31b7, type: 3}
+  - {fileID: 1583416951756472871, guid: 474372c67fc64a34e970aca16ab7203b, type: 3}
+  - {fileID: 4437828038566941855, guid: 3922fa7c1abeba345b5438d888b83f2a, type: 3}
 --- !u!114 &4647590244196374385
 MonoBehaviour:
   m_ObjectHideFlags: 0

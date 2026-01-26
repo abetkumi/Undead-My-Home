@@ -110,10 +110,12 @@ public class Ghoul : EnemyBase
             //ダメージ。
             case EnemyState.enEnemyState_Damage:
                 m_animator.SetTrigger("Damage");
+                DamageAnimation();
                 break;
             //気絶。
             case EnemyState.enEnemyState_Stun:
                 m_animator.SetTrigger("Knockback");
+                DamageAnimation();
                 break;
             //死。
             case EnemyState.enEnemyState_Death:
