@@ -65,8 +65,12 @@ public class Golem : EnemyBase
             m_dashTime = 0.0f;
             m_dashActiv = true;
 
-            if (SoundTimer(10.0f))
+            if (SoundTimer(m_enemyVoice))
+            {
                 PlaySound((int)GolemSound.enGolemSound_voice);
+                SetRandamTimer();
+            }
+                
 
             UpdateState();
             return;

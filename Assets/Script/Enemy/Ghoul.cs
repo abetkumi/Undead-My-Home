@@ -53,8 +53,12 @@ public class Ghoul : EnemyBase
             else if ((transform.position - m_NextMovePos).sqrMagnitude <= CHASE_RANGE)
                 m_enemyState = EnemyState.enEnemyState_Chase;
 
-            if (SoundTimer(10.0f))
+            if (SoundTimer(m_enemyVoice))
+            {
                 PlaySound((int)GhoulSound.enGhoulSound_voice);
+                SetRandamTimer();
+            }
+                
 
                 UpdateState();
             return;
