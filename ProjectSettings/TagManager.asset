@@ -18,6 +18,7 @@ TagManager:
   - ItemUI
   - ItemStorage
   - Caution
+  - Warp
   layers:
   - Default
   - TransparentFX

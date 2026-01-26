@@ -21,6 +21,11 @@ public class FadeScene : MonoBehaviour
     //falseならマテリアルを使用trueならImageを使用
     bool m_mode = false;
 
+    bool m_sceneChange = false;
+
+    GameObject m_playerObject;
+    Vector3 m_warppositon;
+
     //フェード開始
     public void FadeStart(string sceneName, Color color, bool mode)
     {
@@ -45,11 +50,38 @@ public class FadeScene : MonoBehaviour
             //自身のRenderCameraにメインカメラを設定する
             GetComponent<Canvas>().worldCamera = Camera.main;
         }
-
+        m_sceneChange = true;
         //自身はシーンをまたいでも削除されないようにする
         DontDestroyOnLoad(gameObject);
     }
+    public void FadeStart(Vector3 position,Color color, bool mode)
+    {
+        //フェード開始の準備をする
+        m_fadeStart = true;
+        m_mode = mode;
+        m_warppositon = position;
 
+        //自分の子オブジェクトにアタッチされているImageを取得する
+        m_image = transform.GetChild(0).GetComponent<Image>();
+        if (m_mode)
+        {
+            //通常フェード
+            m_image.material = null;
+            m_image.color = color;
+        }
+        else
+        {
+            //マテリアルを初期化
+            m_image.material.SetFloat("_Border", 0.0f);
+            m_image.material.SetColor("_Color", color);
+            //自身のRenderCameraにメインカメラを設定する
+            GetComponent<Canvas>().worldCamera = Camera.main;
+        }
+
+        m_sceneChange = false;
+        //自身はシーンをまたいでも削除されないようにする
+        DontDestroyOnLoad(gameObject);
+    }
     void Fade()
     {
         //フェードが開始していないため中断
@@ -113,9 +145,70 @@ public class FadeScene : MonoBehaviour
         }
     }
 
+    void FadeNoScene(Vector3 position)
+    {
+        //フェードが開始していないため中断
+        if (m_fadeStart == false)
+        {
+            return;
+        }
+
+        m_playerObject = GameObject.FindWithTag("Player");
+        //自身のRenderCameraにメインカメラを設定する
+        if (GetComponent<Canvas>().worldCamera == null &&
+            m_mode == false)
+        {
+            GetComponent<Canvas>().worldCamera = Camera.main;
+        }
+
+        //フェード処理
+        if (m_fadeMode == false)
+        {
+            //画面を暗くする
+            m_alpha += FadeSpeed * Time.deltaTime;
+            //完全に暗くなったのでシーンを変更する
+            if (m_alpha >= 1.0f)
+            {
+                m_playerObject.transform.position = position;
+                //明るくするモードに変更
+                m_fadeMode = true;
+            }
+        }
+        else
+        {
+            //画面を明るくする
+            m_alpha -= FadeSpeed * Time.deltaTime;
+            //完全に明るくなったので自身を削除する
+            if (m_alpha <= 0.0f)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        //最後に不透明度を設定する
+        if (m_mode)
+        {
+            Color nowColor = m_image.color;
+            nowColor.a = m_alpha;
+            m_image.color = nowColor;
+        }
+        else
+        {
+            m_image.material.SetFloat("_Border", m_alpha);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        Fade();
+        if(m_sceneChange)
+        {
+            Fade();
+        }
+        else
+        {
+            FadeNoScene(m_warppositon);
+        }
+        
     }
 }
