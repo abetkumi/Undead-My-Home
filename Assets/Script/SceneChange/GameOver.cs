@@ -35,23 +35,15 @@ public class GameOver : MonoBehaviour
             GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameOver);
 
-        GameObject machete = GameObject.FindWithTag("Weapon");
-        if (machete != null)
-        {
-            machete.transform.localScale = Vector3.one;
-        }
-
         //プレイヤーをカメラに映るようにする
         m_cameraCulling = Camera.main.GetComponent<CameraCulling>();
         m_cameraCulling.ShowPlayerBody();
 
         //武器の縮尺をもとに戻す
-
-        GameObject m_attackObject = GameObject.FindWithTag("Weapon");
-        if(m_attackObject != null)
+        GameObject machete = GameObject.FindWithTag("Weapon");
+        if (machete != null)
         {
-            m_playerAttack = m_attackObject.GetComponent<PlayerAttack>();
-            m_playerAttack.NormalScale();
+            machete.transform.localScale = Vector3.one;
         }
 
         GameObject m_timerObject = GameObject.FindWithTag("Timer");

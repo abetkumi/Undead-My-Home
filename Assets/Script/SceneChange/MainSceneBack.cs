@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -9,6 +10,7 @@ public class MainSceneBack : MonoBehaviour
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] GameObject m_gameClearObject;
     [SerializeField] GameObject m_gameOverObject;
+    UI_Caution m_cautionUI;
     GameManager m_gameManager;
 
     bool m_isInArea = false;
@@ -25,7 +27,7 @@ public class MainSceneBack : MonoBehaviour
         m_clearCount = m_gameManager.GetClearCount();
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -56,6 +58,18 @@ public class MainSceneBack : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    async void Caution()
+    {
+        m_gameManager.SetGameState(GameManager.GameState.enGameState_Pause);
+        m_cautionUI = GameObject.FindWithTag("Caution").GetComponent<UI_Caution>();
+        m_cautionUI.SetActiveCautionUI(true);
+
+        await UniTask.Delay(100);
+        m_cautionUI.m_yesButton.Select();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        Time.timeScale = 0.0f;
+    }
     private void Update()
     {
         if (!m_isInArea)
@@ -85,8 +99,8 @@ public class MainSceneBack : MonoBehaviour
             //ノルマ未達成のためゲームオーバー
             else
             {
-                Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
-                player.SetPlayerState(Player.PlayerState.Dead);
+                Caution();
+                m_isInArea = false;
             }
         }
     }

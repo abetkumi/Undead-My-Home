@@ -17,6 +17,7 @@ TagManager:
   - GamaManager
   - ItemUI
   - ItemStorage
+  - Caution
   layers:
   - Default
   - TransparentFX

@@ -9,7 +9,7 @@ public class GameClear : MonoBehaviour
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] ItemData Item_Data;
     GameManager m_gameManager;
-    LightONOFF m_lightScript;
+    UI_Timer m_timer;
 
     bool m_isArea = false;
 
@@ -18,7 +18,7 @@ public class GameClear : MonoBehaviour
         //ゲームマネージャーを取得
         m_gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         //ライトスクリプトを取得
-        m_lightScript = GameObject.FindWithTag("Player").GetComponent<LightONOFF>();
+        m_timer = GameObject.FindWithTag("Timer").GetComponent<UI_Timer>();
     }
     private void OnTriggerStay(Collider other)
     {
@@ -45,7 +45,7 @@ public class GameClear : MonoBehaviour
         GameObject fadeObject = Instantiate(m_fadeCanvas);
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("StoreScene", Color.black, true);
-
+        m_timer.ResetTimer();
         //自身はシーンをまたいでも削除されないようにする
         DontDestroyOnLoad(fadeObject);
     }

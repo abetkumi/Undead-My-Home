@@ -35,7 +35,7 @@ public class Store : MonoBehaviour
         m_gameManager.SetItemDrop(true);
         //ストレージをアイテムとして配置する
         Vector3 itemPos = m_spawnPoint.transform.position;
-        itemPos.z -= 3.0f;
+        itemPos.z -= 10.0f;
         GameObject dropItem = Instantiate(m_gameManager.GetItemData().Items[10].ItemPrefab,
             itemPos, Camera.main.transform.rotation);
     }
@@ -46,7 +46,7 @@ public class Store : MonoBehaviour
                 "話す", true);
         if (other.CompareTag("Player") && m_storeNow == false)
         {
-            if (Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
+            if (Input.GetButton("Action") || Input.GetMouseButton(0))
             {
                 await UniTask.Delay(10);
                 m_storeNow = true;
@@ -60,6 +60,8 @@ public class Store : MonoBehaviour
 
                 m_focusButton_ShoppingOpen = m_focusButton_ShoppingOpen.GetComponent<Button>();
                 m_focusButton_ShoppingOpen.Select();
+
+                ShoppingLook();
 
                 Debug.Log("買い物開始");
             }
@@ -77,9 +79,8 @@ public class Store : MonoBehaviour
  
     }
 
-    public void CloseStore()
+    async public void CloseStore()
     {
-        m_storeNow = false;
         m_UICanvas.SetActive(true);
         m_storeCanvas.SetActive(false);
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
@@ -87,9 +88,11 @@ public class Store : MonoBehaviour
         Cursor.visible = false;  
         Cursor.lockState = CursorLockMode.Confined;
         GameManager.PlaySE(m_byeSE);
+        await UniTask.Delay(100);
+        m_storeNow = false;
     }
 
-    void Shopping()
+    void ShoppingLook()
     {
         Vector3 dir = m_storeNPC.transform.position - rb.position;
         dir.y = 0f;
@@ -110,6 +113,5 @@ public class Store : MonoBehaviour
         Cursor.visible = true;  
         Cursor.lockState = CursorLockMode.None; 
 
-        Shopping();
     }
 }
