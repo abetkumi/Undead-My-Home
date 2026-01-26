@@ -56,7 +56,8 @@ public class EnemyBase : MonoBehaviour
     //死亡時に全ての処理を停止させる
     protected bool DebugStop = false;
 
-    private float soundTimer = 100.0f;
+    protected float soundTimer = 100.0f;
+    protected float m_enemyVoice = 5.0f;
     // Start is called before the first frame update
     public virtual void Start()
     {
@@ -328,6 +329,8 @@ public class EnemyBase : MonoBehaviour
 
     protected bool SoundTimer(float soundTime)
     {
+        soundTimer += Time.deltaTime;
+
         if (soundTimer >= soundTime)
         {
             soundTimer = 0.0f;
@@ -335,6 +338,10 @@ public class EnemyBase : MonoBehaviour
         }
         return false;
     }
+
+    //ランダムにボイスタイマーをセットする。
+    protected void SetRandamTimer() =>
+        m_enemyVoice = Random.Range(4.0f, 15.0f);
     //-------------------------------------------------------------------------------//
 
     //固有処理。

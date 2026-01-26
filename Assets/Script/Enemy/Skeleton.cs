@@ -42,6 +42,15 @@ public class Skeleton : EnemyBase
             return;
         }
 
+        if (SoundTimer(m_enemyVoice))
+        {
+            if (Random.value < 0.5f)
+                PlaySound((int)SkeletonSound.enSkeletonSound_voice1);
+            else PlaySound((int)SkeletonSound.enSkeletonSound_voice2);
+
+            SetRandamTimer();
+        }
+
         if (PlayerSearch(m_searchRayRange))
         {
             m_NextMovePos = m_targetPlayer.transform.position;
@@ -52,13 +61,7 @@ public class Skeleton : EnemyBase
                 m_enemyState = EnemyState.enEnemyState_Lost;
             else if ((transform.position - m_NextMovePos).sqrMagnitude <= CHASE_RANGE)
                 m_enemyState = EnemyState.enEnemyState_Chase;
-
-            if (SoundTimer(10.0f)){
-                if (Random.value < 0.5f)
-                    PlaySound((int)SkeletonSound.enSkeletonSound_voice1);
-                else PlaySound((int)SkeletonSound.enSkeletonSound_voice2);
-            }
-                
+    
             UpdateState();
             return;
         }
