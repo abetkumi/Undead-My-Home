@@ -90,6 +90,8 @@ public class Store : MonoBehaviour
         GameManager.PlaySE(m_byeSE);
         await UniTask.Delay(100);
         m_storeNow = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void ShoppingLook()
