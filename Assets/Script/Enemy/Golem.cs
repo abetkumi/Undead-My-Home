@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class Golem : EnemyBase
@@ -25,11 +26,19 @@ public class Golem : EnemyBase
         enGolemSound_Num,
     }
 
+    EnemyState m_prevState;
+
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
         m_animator.applyRootMotion = false;
+
+        m_prevState = m_enemyState;
+        m_animator.Update(0f);
+        m_animator.SetFloat("Walk", 0.0f);
+
+        m_animator.updateMode = AnimatorUpdateMode.Normal;
     }
 
     // Update is called once per frame
@@ -106,7 +115,10 @@ public class Golem : EnemyBase
 
     public override void UpdateState()
     {
-        ResetAllAnimatorParameters();
+        if (m_prevState != m_enemyState) { 
+            ResetAllAnimatorParameters(); 
+            m_prevState = m_enemyState; 
+        }
 
         switch (m_enemyState)
         {
@@ -126,7 +138,7 @@ public class Golem : EnemyBase
             case EnemyState.enEnemyState_Lost:
                 m_speed = 1.0f;
                 m_animator.SetFloat("Walk", 0.0f);
-                m_animator.SetTrigger("IdelAction");
+                m_animator.SetTrigger("IdleAction");
                 m_agent.speed = m_speed;
                 LostKeepTime(3.0f);
                 break;

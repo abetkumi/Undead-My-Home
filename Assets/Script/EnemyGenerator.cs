@@ -16,6 +16,8 @@ public class EnemyGenerator : MonoBehaviour
     void Start()
     {
         SetPoint();
+
+        SpawnEnemy();
     }
 
     // Update is called once per frame
