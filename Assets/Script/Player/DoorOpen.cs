@@ -10,7 +10,7 @@ public class DoorOpen : MonoBehaviour
     UI_Item ItemUI;
     Animator m_animator;
     GameManager m_gameManager;
-    [SerializeField] AudioClip m_openSE, m_closeSE;
+    [SerializeField] AudioClip m_openSE;
     int m_itemIDLength = 4;
 
     bool m_open = false;
@@ -19,6 +19,7 @@ public class DoorOpen : MonoBehaviour
     void Start()
     {
         m_gameManager = GameObject.FindWithTag("GameController").GetComponent<GameManager>();
+        ItemUI = GameObject.FindWithTag("ItemUI").GetComponent<UI_Item>();
         m_animator = GetComponent<Animator>();
     }
 
@@ -39,11 +40,6 @@ public class DoorOpen : MonoBehaviour
             m_open = false;
             m_animator.SetBool("Open",false);
         }  
-    }
-
-    void CloseDoorSE()
-    {
-        GameManager.PlaySE(m_closeSE);
     }
 
     private bool KeyCheck()
