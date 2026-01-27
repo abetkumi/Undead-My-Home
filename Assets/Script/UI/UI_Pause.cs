@@ -9,6 +9,7 @@ using static GameManager;
 
 public class UI_Pause : MonoBehaviour
 {
+    [SerializeField] GameObject m_playerParentObject;
     [SerializeField] GameObject m_pauseObject;
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] GameObject m_gameManagerObject;
@@ -39,7 +40,7 @@ public class UI_Pause : MonoBehaviour
         m_pauseObject.SetActive(false);
         //プレイヤーとゲームマネージャーをシーン切り替えで消えるように切り替える
         Scene activeScene = SceneManager.GetActiveScene();
-        SceneManager.MoveGameObjectToScene(gameObject, activeScene);
+        SceneManager.MoveGameObjectToScene(m_playerParentObject, activeScene);
      
         await UniTask.Delay(1000);
         //メインゲームシーンに移動する

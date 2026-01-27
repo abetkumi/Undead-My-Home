@@ -37,6 +37,8 @@ public class UI_Caution : MonoBehaviour
     {
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
         SetActiveCautionUI(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 1.0f;
     }
 }

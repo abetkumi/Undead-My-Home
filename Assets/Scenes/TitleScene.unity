@@ -35655,7 +35655,6 @@ MonoBehaviour:
   m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
     type: 3}
   m_focusButton_Start: {fileID: 1577759388}
-  m_focusButton_End: {fileID: 755344723}
 --- !u!4 &929350267
 Transform:
   m_ObjectHideFlags: 0
@@ -59909,7 +59908,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0

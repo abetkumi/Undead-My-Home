@@ -19,6 +19,7 @@ TagManager:
   - ItemStorage
   - Caution
   - Warp
+  - PlayerParent
   layers:
   - Default
   - TransparentFX

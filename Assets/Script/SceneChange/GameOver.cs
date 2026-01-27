@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
@@ -46,8 +47,9 @@ public class GameOver : MonoBehaviour
             machete.transform.localScale = Vector3.one;
         }
 
-        GameObject m_timerObject = GameObject.FindWithTag("Timer");
-        Destroy(m_timerObject);
+        GameObject m_playerParentObject = GameObject.FindWithTag("PlayerParent");
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.MoveGameObjectToScene(m_playerParentObject, activeScene);
 
         GameObject m_playerObject = GameObject.FindWithTag("Player");
         Vector3 m_camaraPos = m_playerObject.transform.position;
