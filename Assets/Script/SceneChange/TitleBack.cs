@@ -8,6 +8,7 @@ public class TitleBack : MonoBehaviour
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] GameObject m_gameOverLightObject;
     [SerializeField] AudioClip m_lightSE;
+    bool m_titleBack = false;
 
     async void TitleBackSence()
     {
@@ -18,11 +19,11 @@ public class TitleBack : MonoBehaviour
             GameManager.PlaySE(m_lightSE);
         }
 
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && m_titleBack == false)
         {
+            m_titleBack = true;
             GameObject fadeObject = Instantiate(m_fadeCanvas);
             fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
-            Destroy(gameObject);
         }
     }
 

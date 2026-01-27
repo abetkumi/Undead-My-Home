@@ -10,6 +10,7 @@ public class ItemStorage : MonoBehaviour
     GameManager m_gameManager;
     Player m_player;
     [SerializeField] int[] m_itemStorageID;
+    [SerializeField] AudioClip m_putInSE;
     public int[] GetItemStorageID()
     {
         return m_itemStorageID;
