@@ -25,6 +25,9 @@ public class EnemyBase : MonoBehaviour
     int m_currentTarget = -1;
     protected bool m_navActive = false;
 
+    private int m_usePointListNum = 0;      //使用可能なナビメッシュ用ポイントリストの個数。
+    private int[] m_setUsePointNum;         //解放回数に応じたポイントリストの個数。 
+
     [SerializeField] protected Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
 
     protected enum EnemyState
@@ -89,6 +92,9 @@ public class EnemyBase : MonoBehaviour
 
         m_agent.updateRotation = true;
 
+        SetNavMeshPointNumSet(new int[] { 12, 14, 15 });
+        SetNavMeshPointNum();
+
         // Rigidbody を無効化（NavMeshAgent に任せる）
         if (rb != null)
         {
@@ -118,6 +124,17 @@ public class EnemyBase : MonoBehaviour
     //-------------------------------------------------------------------------------//
     //汎用処理。
     //基本的にいじらないでください、不備があったら河田まで。
+
+    //使用可能なナビメッシュポイントリストを設定。
+    int UsePointSet = 0;
+    private void SetNavMeshPointNumSet(int[] num)
+    {
+        for (int i = 0; i < num.Length; i++) {
+            m_setUsePointNum[i] = num[i];
+        }
+    }
+    public void SetNavMeshPointNum() =>
+        m_usePointListNum = m_setUsePointNum[UsePointSet++];
 
     //プレイヤーを見つける。
     protected bool PlayerSearch(float rayRange)
