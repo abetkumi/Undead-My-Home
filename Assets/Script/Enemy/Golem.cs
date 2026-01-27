@@ -38,6 +38,8 @@ public class Golem : EnemyBase
         m_animator.Update(0f);
         m_animator.SetFloat("Walk", 0.0f);
 
+
+
         m_animator.updateMode = AnimatorUpdateMode.Normal;
     }
 
@@ -48,6 +50,9 @@ public class Golem : EnemyBase
         {
             return;
         }
+
+        var state = m_animator.GetCurrentAnimatorStateInfo(0); 
+        Debug.Log("Current State: " + state.IsName("Idle") + " / " + state.normalizedTime);
 
         if (m_stateLook == true)
         {
@@ -115,10 +120,6 @@ public class Golem : EnemyBase
 
     public override void UpdateState()
     {
-        if (m_prevState != m_enemyState) { 
-            ResetAllAnimatorParameters(); 
-            m_prevState = m_enemyState; 
-        }
 
         switch (m_enemyState)
         {
