@@ -110,7 +110,6 @@ public class Player : MonoBehaviour
         m_hpGauge = m_maxHPGauge;
         m_staminaGauge = m_maxStaminaGauge;
         m_uIGauge = m_BarObject.GetComponent<UI_Gauge>();
-        //m_uIGauge.UpdateStaminaGauge();
     }
 
     void PlayerStatus()

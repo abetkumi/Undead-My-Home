@@ -6,6 +6,7 @@ public class Warp : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
     [SerializeField] GameObject m_warpPosition;
+    [SerializeField] AudioClip m_warpSE;
     bool m_inArea = false;
     public bool m_fade = false;
 

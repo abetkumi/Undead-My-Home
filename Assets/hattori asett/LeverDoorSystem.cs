@@ -55,6 +55,8 @@ public class LeverDoorSystem : MonoBehaviour
     private Renderer[] leverRenderers;
     private Material[][] originalMaterials;
 
+    [SerializeField] AudioClip m_leverSE;
+
     void Start()
     {
         if (showDebugLog)
