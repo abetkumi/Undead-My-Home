@@ -54,6 +54,7 @@ MonoBehaviour:
   m_gameManager: {fileID: 6515971339019788461}
   m_player: {fileID: 7710057761488050385}
   m_yesButton: {fileID: 5047164385642070034}
+  m_buttonSE: {fileID: 0}
 --- !u!1 &4125449002276755494
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,19 +176,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1674294838680952645}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7851415074370600759}
-        m_TargetAssemblyTypeName: UI_Caution, Assembly-CSharp
-        m_MethodName: YesButtonMainScene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!95 &9121435949293990341
 Animator:
   serializedVersion: 5

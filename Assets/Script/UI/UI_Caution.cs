@@ -70,6 +70,7 @@ public class UI_Caution : MonoBehaviour
     {
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
         GameClear m_clear = GameObject.FindWithTag("GameClear").GetComponent<GameClear>();
+        SetActiveCautionUI(false);
         m_clear.SetStoreScene();
         m_clear.m_iswait = false;
         Cursor.visible = false;
