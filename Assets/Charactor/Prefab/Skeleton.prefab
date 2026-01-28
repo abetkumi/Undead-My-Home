@@ -666,8 +666,8 @@ MonoBehaviour:
   m_stateLook: 0
   m_hp: 100
   m_attackCoolTime: 0.01
-  m_searchRayRange: 25
-  m_chaseRayRange: 30
+  m_searchRayRange: 15
+  m_chaseRayRange: 25
 --- !u!195 &6224398206109361178
 NavMeshAgent:
   m_ObjectHideFlags: 0
