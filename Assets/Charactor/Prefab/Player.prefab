@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cautionUI: {fileID: 6922821912993268419}
+  m_cautionText: {fileID: 517378197479618289}
   m_gameManager: {fileID: 6515971339019788461}
   m_player: {fileID: 7710057761488050385}
   m_yesButton: {fileID: 5047164385642070034}
@@ -177,7 +178,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7851415074370600759}
         m_TargetAssemblyTypeName: UI_Caution, Assembly-CSharp
-        m_MethodName: YesButton
+        m_MethodName: YesButtonMainScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1829,8 +1830,7 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0.12732162
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1225786754732440400, guid: 7927b704fded6204cbba9ae3ad9e909c, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 8921506829071876587, guid: 7927b704fded6204cbba9ae3ad9e909c,
@@ -2009,15 +2009,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7429254755221084357, guid: c1f1afd86b07b6b46979142cf6a1e834, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 5382832184217399020, guid: c1f1afd86b07b6b46979142cf6a1e834,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7026703416029461358}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1f1afd86b07b6b46979142cf6a1e834, type: 3}
 --- !u!4 &2356356256267440922 stripped
 Transform:
@@ -2031,18 +2026,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9159400278136707462}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7026703416029461358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3868331891264501610}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 85425a6abb7446b4b9ac534cf0add381, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5104528248641233214 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4164236890650114232, guid: c1f1afd86b07b6b46979142cf6a1e834,

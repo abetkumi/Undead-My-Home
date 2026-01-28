@@ -242,6 +242,7 @@ MonoBehaviour:
   m_itemData: {fileID: 11400000, guid: 58a89a36e579d9344acf50d0e43ceb2d, type: 2}
   m_itemUI: {fileID: 0}
   m_itemStorageID: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+  m_putInSE: {fileID: 8300000, guid: 696c5d4df3907d4459d5cbf8b47df4f4, type: 3}
 --- !u!114 &6627926228500437737
 MonoBehaviour:
   m_ObjectHideFlags: 0
