@@ -64,8 +64,9 @@ public class MainSceneBack : MonoBehaviour
         m_cautionUI = GameObject.FindWithTag("Caution").GetComponent<UI_Caution>();
         m_cautionUI.SetActiveCautionUI(true);
         m_cautionUI.SetCautionText("ノルマ未達成です。\n本当に１日を終了しますか？");
-        m_cautionUI.SetYesButton(1);
+        
         await UniTask.Delay(100);
+        m_cautionUI.SetYesButton(1);
         m_cautionUI.m_yesButton.Select();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
