@@ -12,6 +12,7 @@ public class GameClear : MonoBehaviour
     UI_Timer m_timer;
 
     bool m_isArea = false;
+    public bool m_iswait = false;
 
     private void Awake()
     {
@@ -19,7 +20,10 @@ public class GameClear : MonoBehaviour
         m_gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         //ライトスクリプトを取得
         m_timer = GameObject.FindWithTag("Timer").GetComponent<UI_Timer>();
+        m_isArea = false;
+        m_iswait = false;
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -27,6 +31,11 @@ public class GameClear : MonoBehaviour
             m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "探索を終了する", true);
             m_isArea = true;
+            
+            if (m_iswait == false)
+            {
+                return;
+            }
         }
     }
 
@@ -38,7 +47,7 @@ public class GameClear : MonoBehaviour
         }
     }
 
-    void SetStoreScene()
+    public void SetStoreScene()
     {
         // シーン切替
         // フェード演出用オブジェクトを生成
@@ -67,18 +76,47 @@ public class GameClear : MonoBehaviour
         }
     }
 
+    void WaitStoreScene()
+    {
+        UI_Caution cautionUI = GameObject.FindWithTag("Caution").GetComponent<UI_Caution>();
+        if (cautionUI != null)
+        {
+            GameManager gameManager = GameObject.FindWithTag("GameController").GetComponentInParent<GameManager>();
+            gameManager.SetGameState(GameManager.GameState.enGameState_Pause);
+            cautionUI = GameObject.FindWithTag("Caution").GetComponent<UI_Caution>();
+            cautionUI.SetActiveCautionUI(true);
+            cautionUI.SetCautionText("探索を終了しますか？");
+            cautionUI.SetYesButton(0);
+            cautionUI.m_yesButton.Select();
+            Time.timeScale = 0.0f;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if(m_isArea == false)
+        CursorDisplay();
+        if (m_isArea == false)
         {
             return;
         }
         if (Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
         {
-            SetStoreScene();
+            WaitStoreScene();
             m_isArea = false;
+            m_iswait = true;
             Debug.Log("ショップへ");
         }
+    }
+
+    private void CursorDisplay()
+    {
+        if(m_iswait == false)
+        {
+            return;
+        }
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 }

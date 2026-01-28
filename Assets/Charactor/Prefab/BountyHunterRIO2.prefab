@@ -4162,7 +4162,6 @@ GameObject:
   - component: {fileID: 1421674383378433001}
   - component: {fileID: 2739423279827018207}
   - component: {fileID: 2799246234603161118}
-  - component: {fileID: 1225786754732440400}
   - component: {fileID: 8224599917675837512}
   m_Layer: 0
   m_Name: BountyHunterRIO2
@@ -4308,6 +4307,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_searchCollider: {fileID: 7715036562026249611}
   m_searchImageObject: {fileID: 3647839180629993362}
+  m_gameManager: {fileID: 0}
 --- !u!114 &2799246234603161118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4325,18 +4325,6 @@ MonoBehaviour:
   m_avoidDuration: 0.2
   m_avoidCooldown: 3
   m_invincibleTime: 1
---- !u!114 &1225786754732440400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6626516066391618883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231aa2bd17393224495d11318f62460c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8224599917675837512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4349,6 +4337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf8822a55f76e8c449267ac6281456d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_playerParentObject: {fileID: 0}
   m_pauseObject: {fileID: 3332522434400967420}
   m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
     type: 3}
