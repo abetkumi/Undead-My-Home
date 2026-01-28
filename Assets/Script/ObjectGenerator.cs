@@ -28,7 +28,7 @@ public class ObjectGenerator : MonoBehaviour
         SetObjectsPrice();
         SetPoint();
 
-        AllSet(10, 15, 250.0f, 0.1f);
+        AllSet(20, 25, 500.0f, 0.1f);
 
         GenerateObjects();
     }
