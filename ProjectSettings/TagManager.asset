@@ -20,6 +20,7 @@ TagManager:
   - Caution
   - Warp
   - PlayerParent
+  - GameClear
   layers:
   - Default
   - TransparentFX
