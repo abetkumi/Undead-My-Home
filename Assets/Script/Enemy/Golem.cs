@@ -51,8 +51,11 @@ public class Golem : EnemyBase
             return;
         }
 
-        var state = m_animator.GetCurrentAnimatorStateInfo(0); 
-        Debug.Log("Current State: " + state.IsName("Idle") + " / " + state.normalizedTime);
+        if (m_Stan)
+        {
+            UpdateState();
+            return;
+        }
 
         if (m_stateLook == true)
         {
@@ -159,7 +162,8 @@ public class Golem : EnemyBase
                 break;
             //ãCê‚ÅB
             case EnemyState.enEnemyState_Stun:
-                DamageAnimation();
+                m_animator.SetTrigger("IdleAction");
+                StunTimer(m_damageStanTime);
                 break;
             //ñ∞ÇÈÅB
             case EnemyState.enEnemyState_Sleep:

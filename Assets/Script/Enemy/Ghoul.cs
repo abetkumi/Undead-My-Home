@@ -34,6 +34,12 @@ public class Ghoul : EnemyBase
             return;
         }
 
+        if (m_Stan)
+        {
+            UpdateState();
+            return;
+        }
+
         if (m_stateLook == true)
         {
             UpdateState();
@@ -59,8 +65,7 @@ public class Ghoul : EnemyBase
                 SetRandamTimer();
             }
                 
-
-                UpdateState();
+            UpdateState();
             return;
         }
 
@@ -114,8 +119,8 @@ public class Ghoul : EnemyBase
                 break;
             //ãCê‚ÅB
             case EnemyState.enEnemyState_Stun:
-                m_animator.SetTrigger("Knockback");
-                DamageAnimation();
+                m_animator.SetTrigger("Lost");
+                StunTimer(m_damageStanTime);
                 break;
             //éÄÅB
             case EnemyState.enEnemyState_Death:
