@@ -1719,6 +1719,11 @@ PrefabInstance:
       propertyPath: m_gameManagerObject
       value: 
       objectReference: {fileID: 7863866187679621059}
+    - target: {fileID: 8224599917675837512, guid: 7927b704fded6204cbba9ae3ad9e909c,
+        type: 3}
+      propertyPath: m_playerParentObject
+      value: 
+      objectReference: {fileID: 9019253059504657577}
     - target: {fileID: 8291564015864534120, guid: 7927b704fded6204cbba9ae3ad9e909c,
         type: 3}
       propertyPath: m_LocalRotation.w

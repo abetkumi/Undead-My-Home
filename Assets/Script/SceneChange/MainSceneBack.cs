@@ -53,8 +53,6 @@ public class MainSceneBack : MonoBehaviour
         fadeObject.GetComponent<FadeScene>().FadeStart("MainGameScene", Color.black, true);
         UI_Timer m_timer = GameObject.FindWithTag("Timer").GetComponent<UI_Timer>();
         m_timer.ResetTimer();
-        
-        //©g‚ÍƒV[ƒ“‚ğ‚Ü‚½‚¢‚Å‚àíœ‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚é
         DontDestroyOnLoad(fadeObject);
     }
 
