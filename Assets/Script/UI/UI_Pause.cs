@@ -26,6 +26,7 @@ public class UI_Pause : MonoBehaviour
         m_pauseObject.SetActive(false);
     }
 
+    //Yesボタンが押されたのでタイトルに戻る
     public async void TitleBackButton()
     {
         if (m_startLoading)
@@ -33,7 +34,9 @@ public class UI_Pause : MonoBehaviour
             return;
         }
 
+        //ボタンのselectedを初期化
         EventSystem.current.SetSelectedGameObject(null);
+        //タイトルボタンをセレクトアニメーションさせる
         m_focusButton_Title.Select();
         m_startLoading = true;
         Time.timeScale = 1.0f;
@@ -47,14 +50,11 @@ public class UI_Pause : MonoBehaviour
         GameObject fadeObject = Instantiate(m_fadeCanvas);
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
-        Destroy(m_gameManagerObject);
-
-        //自身はシーンをまたいでも削除されないようにする
-        DontDestroyOnLoad(fadeObject);
         Debug.Log("タイトルに戻る");
         
     }
 
+    //Noボタンが押されたのでゲームに戻る
     public void GameBackButton()
     {
         EventSystem.current.SetSelectedGameObject(null);

@@ -10,8 +10,18 @@ public class TitleBack : MonoBehaviour
     [SerializeField] AudioClip m_lightSE;
     bool m_titleBack = false;
 
+    //ƒ^ƒCƒgƒ‹‚É–ß‚é
     async void TitleBackSence()
     {
+        if (m_titleBack)
+        {
+            return;
+        }
+        if (Input.anyKeyDown)
+        {
+            m_titleBack = true;
+        }
+
         await UniTask.Delay(2000);
         if(m_gameOverLightObject != null)
         {
@@ -19,12 +29,8 @@ public class TitleBack : MonoBehaviour
             GameManager.PlaySE(m_lightSE);
         }
 
-        if (Input.anyKeyDown && m_titleBack == false)
-        {
-            m_titleBack = true;
-            GameObject fadeObject = Instantiate(m_fadeCanvas);
-            fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
-        }
+        GameObject fadeObject = Instantiate(m_fadeCanvas);
+        fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
     }
 
     // Update is called once per frame

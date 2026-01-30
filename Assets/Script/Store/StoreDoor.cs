@@ -35,6 +35,8 @@ public class StoreDoor : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+                "", true);
             m_open = false;
             m_animator.SetBool("Open", false);
         }

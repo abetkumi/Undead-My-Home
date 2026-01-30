@@ -18,6 +18,7 @@ public class Title : MonoBehaviour
     {
         m_focusButton_Start = m_focusButton_Start.GetComponent<Button>();
         m_focusButton_Start.Select();
+        m_sceneChange = false;
     }
 
     public void OnClickStartButton()

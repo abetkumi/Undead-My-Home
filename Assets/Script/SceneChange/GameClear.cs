@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameClear : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class GameClear : MonoBehaviour
     UI_Timer m_timer;
 
     bool m_isArea = false;
-    public bool m_iswait = false;
+    public bool m_isWait = false;
 
     private void Awake()
     {
@@ -21,9 +22,10 @@ public class GameClear : MonoBehaviour
         //ライトスクリプトを取得
         m_timer = GameObject.FindWithTag("Timer").GetComponent<UI_Timer>();
         m_isArea = false;
-        m_iswait = false;
+        m_isWait = false;
     }
 
+    //プレイヤーが出口判定に入った時
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -31,19 +33,18 @@ public class GameClear : MonoBehaviour
             m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "探索を終了する", true);
             m_isArea = true;
-            
-            if (m_iswait == false)
-            {
-                return;
-            }
         }
     }
 
+    //プレイヤーが出口判定から出た時
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+                "", true);
             m_isArea = false;
+            m_isWait = false;
         }
     }
 
@@ -63,6 +64,12 @@ public class GameClear : MonoBehaviour
     {
         m_gameManager.SetGameState(GameManager.GameState.enGameState_GameClear);
 
+
+        //シーン移行時にプレイヤーを削除できるように変更
+        GameObject m_playerParentObject = GameObject.FindWithTag("PlayerParent");
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.MoveGameObjectToScene(m_playerParentObject, activeScene);
+
         await UniTask.Delay(1000);
         // シーン切替
         // フェード演出用オブジェクトを生成
@@ -76,6 +83,7 @@ public class GameClear : MonoBehaviour
         }
     }
 
+    //メインシーンから移動するかのUIを表示
     void WaitStoreScene()
     {
         UI_Caution cautionUI = GameObject.FindWithTag("Caution").GetComponent<UI_Caution>();
@@ -104,14 +112,15 @@ public class GameClear : MonoBehaviour
         {
             WaitStoreScene();
             m_isArea = false;
-            m_iswait = true;
+            m_isWait = true;
             Debug.Log("ショップへ");
         }
     }
 
+    //ディスプレイにカーソルを表示する
     private void CursorDisplay()
     {
-        if(m_iswait == false)
+        if(m_isWait == false)
         {
             return;
         }
