@@ -12,12 +12,16 @@ public class EnemyGenerator : MonoBehaviour
     Transform parent;
     private List<GameObject> activeEnemies = new List<GameObject>();
 
+    [SerializeField] private string m_pointListName;
+    [SerializeField] private int m_enemyNum;
+
     // Start is called before the first frame update
     void Start()
     {
         SetPoint();
 
-        SpawnEnemy();
+        for(int i = 0; i < m_enemyNum; i++)
+            SpawnEnemy();
     }
 
     // Update is called once per frame
@@ -43,7 +47,7 @@ public class EnemyGenerator : MonoBehaviour
         // SpawnPoint001 ` SpawnPointXXX ‚ð‡”Ô‚É’T‚µ‚ÄŠi”[
         for (int i = 0; i < childCount; i++)
         {
-            string name = "SpawnPoint" + (i + 1).ToString("D3"); // 001Œ`Ž®
+            string name = m_pointListName + (i + 1).ToString("D3"); // 001Œ`Ž®
             Transform obj = parent.Find(name);
 
             if (obj != null)

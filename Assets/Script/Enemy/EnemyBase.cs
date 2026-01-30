@@ -9,6 +9,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected AttackCollider m_attackCollider;
     [SerializeField] protected Animator m_animator;
 
+    private bool m_active = false;           //エネミーが動くかどうかを決定。
+
     protected GameObject m_targetPlayer;
 
     [SerializeField] protected AudioClip[] m_soundClip;
@@ -24,9 +26,6 @@ public class EnemyBase : MonoBehaviour
     NavPointList m_navPoint;
     int m_currentTarget = -1;
     protected bool m_navActive = false;
-
-    private int m_usePointListNum = 0;      //使用可能なナビメッシュ用ポイントリストの個数。
-    private int[] m_setUsePointNum;         //解放回数に応じたポイントリストの個数。 
 
     [SerializeField] protected Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
 
@@ -54,6 +53,10 @@ public class EnemyBase : MonoBehaviour
 
     float m_attackCooldown = 100.0f;
     [SerializeField] protected float m_attackCoolTime;
+
+    protected bool m_Stan = false;
+    private float m_stunTimer = 0.0f;
+    protected float m_damageStanTime = 3.0f;
 
     //デバック用変数。
     //死亡時に全ての処理を停止させる
@@ -92,9 +95,6 @@ public class EnemyBase : MonoBehaviour
 
         m_agent.updateRotation = true;
 
-        //SetNavMeshPointNumSet(new int[] { 12, 14, 15 });
-        //SetNavMeshPointNum();
-
         // Rigidbody を無効化（NavMeshAgent に任せる）
         if (rb != null)
         {
@@ -124,17 +124,6 @@ public class EnemyBase : MonoBehaviour
     //-------------------------------------------------------------------------------//
     //汎用処理。
     //基本的にいじらないでください、不備があったら河田まで。
-
-    //使用可能なナビメッシュポイントリストを設定。
-    //int UsePointSet = 0;
-    //private void SetNavMeshPointNumSet(int[] num)
-    //{
-    //    for (int i = 0; i < num.Length; i++) {
-    //        m_setUsePointNum[i] = num[i];
-    //    }
-    //}
-    //public void SetNavMeshPointNum() =>
-    //    m_usePointListNum = m_setUsePointNum[UsePointSet++];
 
     //プレイヤーを見つける。
     protected bool PlayerSearch(float rayRange)
@@ -174,14 +163,16 @@ public class EnemyBase : MonoBehaviour
     //ノックバックアニメーションが修正不可能なため、damageLevelに0以外の数字を入れないでください。
     public void TakeDamage(float damage, int damageLevel)
     {
+        AttackColliderFalse();
         m_hp -= damage;
+
         if (damageLevel == 0)
         {
             m_enemyState = EnemyState.enEnemyState_Damage;
         }
         else if (damageLevel == 1)
         {
-            m_enemyState = EnemyState.enEnemyState_Stun;
+            //m_enemyState = EnemyState.enEnemyState_Stun;
         }
 
         if (m_hp <= 0)
@@ -264,7 +255,23 @@ public class EnemyBase : MonoBehaviour
                 m_agent.updateRotation = true;
             }
 
+            m_enemyState = EnemyState.enEnemyState_Stun;
+            m_stateLook = true;
+            m_Stan = true;
+        }
+    }
+
+    //スタンするとIdleステートで待機状態にする。
+    protected void StunTimer(float time)
+    {
+        m_stunTimer += Time.deltaTime;
+        if (m_stunTimer > time)
+        {
+            m_stunTimer = 0;
+            m_Stan = false;
+            m_stateLook = false;
             m_enemyState = EnemyState.enEnemyState_Search;
+            SetNavMovePos();
         }
     }
 
