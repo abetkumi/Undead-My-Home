@@ -277,6 +277,8 @@ public class LeverDoorSystem : MonoBehaviour
         isAnimating = true;
         animationStartTime = Time.time;
 
+        GameManager.PlaySE(m_leverSE);
+
         if (showDebugLog)
         {
             Debug.Log($"=== ToggleDoors é¿çs isDoorOpen={isDoorOpen} ===");

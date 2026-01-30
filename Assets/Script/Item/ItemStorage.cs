@@ -76,7 +76,7 @@ public class ItemStorage : MonoBehaviour
 
                 m_itemData.Items[10].value += m_itemData.Items[itemID].value;
                 ////効果音再生
-                //GameManager.PlaySE(ItemGetSE);
+                GameManager.PlaySE(m_putInSE);
                 //アイテムを納品する場合、そのアイテムの重量分減算する。
                 m_player.ItemWeightAdd(m_itemData.Items[m_gameManager.GetItemID(m_gameManager.GetSelectItemNo())].weight, false);
 
