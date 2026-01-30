@@ -112,6 +112,7 @@ public class Player : MonoBehaviour
         m_uIGauge = m_BarObject.GetComponent<UI_Gauge>();
     }
 
+    //プレイヤーの状態
     void PlayerStatus()
     {
         switch (m_playerState)
@@ -133,6 +134,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //プレイヤー入力受付待機
     void Idle()
     {
         if (m_playerState == PlayerState.Dead)
@@ -168,6 +170,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    //プレイヤー移動時の処理
     void Move()
     {
         if (m_playerState == PlayerState.Dead)
@@ -179,6 +182,7 @@ public class Player : MonoBehaviour
         Vector3 PlayerMove = Vector3.zero;
         stickL = Vector3.zero;
 
+        //移動入力受付
         if(Input.GetAxis("Vertical")!=0.0f || Input.GetAxis("Horizontal") != 0.0f)
         {
             stickL.z = Input.GetAxis("Vertical");
@@ -190,6 +194,7 @@ public class Player : MonoBehaviour
             stickL.x = Input.GetAxis("Horizontal_Pad");
         }
 
+        //入力なしなら待機
         if (stickL.magnitude <= 0.1f)
         {
             m_playerState = PlayerState.Idle;
@@ -271,10 +276,10 @@ public class Player : MonoBehaviour
         PlayerMove = (PlayerMove * m_moveSpeed);
         PlayerMove.y = m_rigidBody.velocity.y;
         m_rigidBody.velocity = PlayerMove;
-        
+
+        //足音のSE
         if (stickL != Vector3.zero && m_isGround == true)
         {
-            //足音用
             t += Time.deltaTime;
             if (t > m_stepSEInterval)
             {

@@ -68,6 +68,15 @@ public class Store : MonoBehaviour
         }
     }
 
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+                "", true);
+        }
+    }
+
     async public void OpenStore()
     {
         m_storeShoppingPanel.SetActive(true);

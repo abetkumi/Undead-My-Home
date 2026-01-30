@@ -39,6 +39,8 @@ public class MainSceneBack : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+                "", true);
             m_isInArea = false;
         }
     }
@@ -53,7 +55,6 @@ public class MainSceneBack : MonoBehaviour
         fadeObject.GetComponent<FadeScene>().FadeStart("MainGameScene", Color.black, true);
         UI_Timer m_timer = GameObject.FindWithTag("Timer").GetComponent<UI_Timer>();
         m_timer.ResetTimer();
-        DontDestroyOnLoad(fadeObject);
     }
 
     async void Caution()

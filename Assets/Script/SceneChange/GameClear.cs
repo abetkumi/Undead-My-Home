@@ -13,7 +13,7 @@ public class GameClear : MonoBehaviour
     UI_Timer m_timer;
 
     bool m_isArea = false;
-    public bool m_iswait = false;
+    public bool m_isWait = false;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class GameClear : MonoBehaviour
         //ライトスクリプトを取得
         m_timer = GameObject.FindWithTag("Timer").GetComponent<UI_Timer>();
         m_isArea = false;
-        m_iswait = false;
+        m_isWait = false;
     }
 
     //プレイヤーが出口判定に入った時
@@ -33,11 +33,6 @@ public class GameClear : MonoBehaviour
             m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "探索を終了する", true);
             m_isArea = true;
-            
-            if (m_iswait == false)
-            {
-                return;
-            }
         }
     }
 
@@ -46,7 +41,10 @@ public class GameClear : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+                "", true);
             m_isArea = false;
+            m_isWait = false;
         }
     }
 
@@ -114,7 +112,7 @@ public class GameClear : MonoBehaviour
         {
             WaitStoreScene();
             m_isArea = false;
-            m_iswait = true;
+            m_isWait = true;
             Debug.Log("ショップへ");
         }
     }
@@ -122,7 +120,7 @@ public class GameClear : MonoBehaviour
     //ディスプレイにカーソルを表示する
     private void CursorDisplay()
     {
-        if(m_iswait == false)
+        if(m_isWait == false)
         {
             return;
         }

@@ -72,7 +72,7 @@ public class UI_Caution : MonoBehaviour
         GameClear m_clear = GameObject.FindWithTag("GameClear").GetComponent<GameClear>();
         SetActiveCautionUI(false);
         m_clear.SetStoreScene();
-        m_clear.m_iswait = false;
+        m_clear.m_isWait = false;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
         Time.timeScale = 1.0f;
