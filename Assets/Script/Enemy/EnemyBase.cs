@@ -9,6 +9,8 @@ public class EnemyBase : MonoBehaviour
     [SerializeField] protected AttackCollider m_attackCollider;
     [SerializeField] protected Animator m_animator;
 
+    private bool m_active = false;           //エネミーが動くかどうかを決定。
+
     protected GameObject m_targetPlayer;
 
     [SerializeField] protected AudioClip[] m_soundClip;

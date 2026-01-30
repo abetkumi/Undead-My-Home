@@ -15,10 +15,10 @@ public class ObjectGenerator : MonoBehaviour
     Transform parent;
 
     //オブジェクトの最小個数、最大個数、オブジェクトを置けるポイントの数。。
-    private int
+    [SerializeField] private int
         m_minObjCount, m_maxObjCount, m_basePoint;
     //、合計金額の目安、許容誤差範囲。
-    private float m_targetPrice, m_toleranceRate;
+    [SerializeField] private float m_targetPrice, m_toleranceRate;
 
     private List<float> prices = new List<float>();
 
@@ -27,8 +27,6 @@ public class ObjectGenerator : MonoBehaviour
     {
         SetObjectsPrice();
         SetPoint();
-
-        AllSet(20, 25, 500.0f, 0.1f);
 
         GenerateObjects();
     }
