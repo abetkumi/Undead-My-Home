@@ -3,45 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ƒŒƒo[‚ğƒNƒŠƒbƒN‚µ‚Ä•¡”‚Ì“SŸB‚Ì”à‚ğŠJ•Â‚·‚éƒVƒXƒeƒ€
+/// ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½Ä•ï¿½ï¿½ï¿½ï¿½Ì“Sï¿½Bï¿½Ì”ï¿½ï¿½Jï¿½Â‚ï¿½ï¿½ï¿½Vï¿½Xï¿½eï¿½ï¿½
 /// </summary>
 public class LeverDoorSystem : MonoBehaviour
 {
-    [Header("”à‚Ìİ’è")]
-    [Tooltip("ŠJ•Â‚·‚é”à‚ÌTransform”z—ñ")]
+    [Header("ï¿½ï¿½Ìİ’ï¿½")]
+    [Tooltip("ï¿½Jï¿½Â‚ï¿½ï¿½ï¿½ï¿½ï¿½Transformï¿½zï¿½ï¿½")]
     public Transform[] doors;
 
-    [Tooltip("”à‚ªŠJ‚¢‚½‚Ì‚‚³")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½")]
     public float openHeight = 3.5f;
 
-    [Tooltip("”à‚ÌŠJ•Â‘¬“x")]
+    [Tooltip("ï¿½ï¿½ÌŠJï¿½Â‘ï¿½ï¿½x")]
     public float doorSpeed = 2f;
 
-    [Tooltip("”à‚ğ‡”Ô‚ÉŠJ‚­’x‰„ŠÔi0‚Å“¯j")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ÉŠJï¿½ï¿½ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Ôi0ï¿½Å“ï¿½ï¿½ï¿½ï¿½j")]
     public float doorDelay = 0.2f;
 
-    [Header("ƒŒƒo[‚Ìİ’è")]
-    [Tooltip("ƒŒƒo[‚ÌTransformi‰ñ“]‚·‚é•”•ªj")]
+    [Header("ï¿½ï¿½ï¿½oï¿½[ï¿½Ìİ’ï¿½")]
+    [Tooltip("ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½Transformï¿½iï¿½ï¿½]ï¿½ï¿½ï¿½é•”ï¿½ï¿½ï¿½j")]
     public Transform lever;
 
-    [Tooltip("ƒŒƒo[‚ğ‰º‚°‚½‚ÌŠp“x")]
+    [Tooltip("ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÌŠpï¿½x")]
     public float leverDownAngle = 60f;
 
-    [Tooltip("ƒŒƒo[‚Ì‰ñ“]‘¬“x")]
+    [Tooltip("ï¿½ï¿½ï¿½oï¿½[ï¿½Ì‰ï¿½]ï¿½ï¿½ï¿½x")]
     public float leverSpeed = 3f;
 
-    [Header("ó‘Ô")]
+    [Header("ï¿½ï¿½ï¿½")]
     public bool isDoorOpen = false;
 
-    [Header("ƒfƒoƒbƒO")]
-    [Tooltip("ƒfƒoƒbƒOƒƒO‚ğ•\¦")]
+    [Header("ï¿½fï¿½oï¿½bï¿½O")]
+    [Tooltip("ï¿½fï¿½oï¿½bï¿½Oï¿½ï¿½ï¿½Oï¿½ï¿½\ï¿½ï¿½")]
     public bool showDebugLog = true;
 
-    [Header("ƒnƒCƒ‰ƒCƒgİ’è")]
-    [Tooltip("ƒzƒo[‚ÌƒnƒCƒ‰ƒCƒgƒJƒ‰[")]
+    [Header("ï¿½nï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½İ’ï¿½")]
+    [Tooltip("ï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½Ìƒnï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½Jï¿½ï¿½ï¿½[")]
     public Color highlightColor = Color.red;
 
-    [Tooltip("ƒnƒCƒ‰ƒCƒg‚Ì‘¾‚³")]
+    [Tooltip("ï¿½nï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½Ì‘ï¿½ï¿½ï¿½")]
     public float outlineWidth = 0.05f;
 
     private Vector3[] doorClosedPositions;
@@ -56,15 +56,16 @@ public class LeverDoorSystem : MonoBehaviour
     private Material[][] originalMaterials;
 
     [SerializeField] AudioClip m_leverSE;
+    [SerializeField] private EnemyGenerator generator;
 
     void Start()
     {
         if (showDebugLog)
         {
-            Debug.Log("=== LeverDoorSystem ‰Šú‰»ŠJn ===");
+            Debug.Log("=== LeverDoorSystem ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½n ===");
         }
 
-        // Še”à‚Ì‰ŠúˆÊ’u‚ğ•Û‘¶
+        // ï¿½eï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½Ê’uï¿½ï¿½Û‘ï¿½
         if (doors != null && doors.Length > 0)
         {
             doorClosedPositions = new Vector3[doors.Length];
@@ -80,21 +81,21 @@ public class LeverDoorSystem : MonoBehaviour
 
                     if (showDebugLog)
                     {
-                        Debug.Log($"”à {i}: •Â‚¶‚½ˆÊ’u = {doorClosedPositions[i]}, ŠJ‚¢‚½ˆÊ’u = {doorOpenPositions[i]}");
+                        Debug.Log($"ï¿½ï¿½ {i}: ï¿½Â‚ï¿½ï¿½ï¿½ï¿½Ê’u = {doorClosedPositions[i]}, ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½Ê’u = {doorOpenPositions[i]}");
                     }
                 }
                 else
                 {
-                    Debug.LogWarning($"”à {i} ‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñI");
+                    Debug.LogWarning($"ï¿½ï¿½ {i} ï¿½ï¿½ï¿½İ’è‚³ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½I");
                 }
             }
         }
         else
         {
-            Debug.LogError("”à‚ª1‚Â‚àİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñIInspector‚Å”à‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢B");
+            Debug.LogError("ï¿½ï¿½ï¿½1ï¿½Â‚ï¿½İ’è‚³ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½IInspectorï¿½Å”ï¿½ï¿½İ’è‚µï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B");
         }
 
-        // ƒŒƒo[‚Ì‰Šú‰ñ“]‚ğ•Û‘¶
+        // ï¿½ï¿½ï¿½oï¿½[ï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½]ï¿½ï¿½Û‘ï¿½
         if (lever != null)
         {
             leverUpRotation = lever.localRotation;
@@ -102,10 +103,10 @@ public class LeverDoorSystem : MonoBehaviour
 
             if (showDebugLog)
             {
-                Debug.Log($"ƒŒƒo[İ’èŠ®—¹: ã={leverUpRotation.eulerAngles}, ‰º={leverDownRotation.eulerAngles}");
+                Debug.Log($"ï¿½ï¿½ï¿½oï¿½[ï¿½İ’èŠ®ï¿½ï¿½: ï¿½ï¿½={leverUpRotation.eulerAngles}, ï¿½ï¿½={leverDownRotation.eulerAngles}");
             }
 
-            // ƒŒƒo[‚ÌRenderer‚ğæ“¾‚µ‚Äƒ}ƒeƒŠƒAƒ‹‚ğ•Û‘¶
+            // ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½Rendererï¿½ï¿½æ“¾ï¿½ï¿½ï¿½Äƒ}ï¿½eï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½ï¿½Û‘ï¿½
             leverRenderers = lever.GetComponentsInChildren<Renderer>();
             if (leverRenderers.Length > 0)
             {
@@ -118,21 +119,21 @@ public class LeverDoorSystem : MonoBehaviour
         }
         else
         {
-            Debug.LogError("ƒŒƒo[‚ªİ’è‚³‚ê‚Ä‚¢‚Ü‚¹‚ñIInspector‚ÅƒŒƒo[‚ğİ’è‚µ‚Ä‚­‚¾‚³‚¢B");
+            Debug.LogError("ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½ï¿½İ’è‚³ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½IInspectorï¿½Åƒï¿½ï¿½oï¿½[ï¿½ï¿½İ’è‚µï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B");
         }
 
         if (showDebugLog)
         {
-            Debug.Log("=== LeverDoorSystem ‰Šú‰»Š®—¹ ===");
+            Debug.Log("=== LeverDoorSystem ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ===");
         }
     }
 
     void Update()
     {
-        // ƒ}ƒEƒXƒzƒo[ŒŸo
+        // ï¿½}ï¿½Eï¿½Xï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½o
         CheckLeverHover();
 
-        // ƒŒƒo[‚ÌƒNƒŠƒbƒNŒŸoi¶ƒNƒŠƒbƒN‚Ì‚İj
+        // ï¿½ï¿½ï¿½oï¿½[ï¿½ÌƒNï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½oï¿½iï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½Ì‚İj
         if (Input.GetMouseButtonDown(0) || Input.GetButtonDown("Action"))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -140,38 +141,39 @@ public class LeverDoorSystem : MonoBehaviour
 
             if (showDebugLog)
             {
-                Debug.Log("¶ƒNƒŠƒbƒN‚ªŒŸo‚³‚ê‚Ü‚µ‚½");
+                Debug.Log("ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
             }
 
             if (Physics.Raycast(ray, out hit))
             {
                 if (showDebugLog)
                 {
-                    Debug.Log($"ƒqƒbƒg: {hit.transform.name}");
+                    Debug.Log($"ï¿½qï¿½bï¿½g: {hit.transform.name}");
                 }
 
-                // ƒŒƒo[‚Ü‚½‚Í‚»‚ÌqƒIƒuƒWƒFƒNƒg‚ğƒNƒŠƒbƒN‚µ‚½ê‡
+                // ï¿½ï¿½ï¿½oï¿½[ï¿½Ü‚ï¿½ï¿½Í‚ï¿½ï¿½Ìqï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½ï¿½ê‡
                 if (hit.transform == lever || hit.transform.IsChildOf(lever))
                 {
                     if (showDebugLog)
                     {
-                        Debug.Log("ƒŒƒo[‚ªƒNƒŠƒbƒN‚³‚ê‚Ü‚µ‚½I");
+                        Debug.Log("ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½I");
                     }
 
-                    // ƒŒƒo[‚ªã‚Ìó‘Ô‚Ì‚Ì‚İ‰º‚°‚ç‚ê‚é
+                    // ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½ï¿½ï¿½Ìï¿½Ô‚Ìï¿½ï¿½Ì‚İ‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     if (!isDoorOpen)
                     {
                         if (showDebugLog)
                         {
-                            Debug.Log("”à‚ğŠJ‚«‚Ü‚·");
+                            Debug.Log("ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½Ü‚ï¿½");
                         }
                         ToggleDoors();
+                        PullLever();
                     }
                     else
                     {
                         if (showDebugLog)
                         {
-                            Debug.Log("”à‚ÍŠù‚ÉŠJ‚¢‚Ä‚¢‚Ü‚·");
+                            Debug.Log("ï¿½ï¿½ÍŠï¿½ï¿½ÉŠJï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½");
                         }
                     }
                 }
@@ -180,12 +182,12 @@ public class LeverDoorSystem : MonoBehaviour
             {
                 if (showDebugLog)
                 {
-                    Debug.Log("‰½‚àƒqƒbƒg‚µ‚Ü‚¹‚ñ‚Å‚µ‚½");
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½qï¿½bï¿½gï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½");
                 }
             }
         }
 
-        // ”à‚ÆƒŒƒo[‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+        // ï¿½ï¿½Æƒï¿½ï¿½oï¿½[ï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
         if (isAnimating)
         {
             AnimateDoorsAndLever();
@@ -193,7 +195,7 @@ public class LeverDoorSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒ}ƒEƒXƒzƒo[‚ÌƒŒƒo[ƒnƒCƒ‰ƒCƒgˆ—
+    /// ï¿½}ï¿½Eï¿½Xï¿½zï¿½oï¿½[ï¿½ï¿½ï¿½Ìƒï¿½ï¿½oï¿½[ï¿½nï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½
     /// </summary>
     private void CheckLeverHover()
     {
@@ -212,7 +214,7 @@ public class LeverDoorSystem : MonoBehaviour
             }
         }
 
-        // ƒzƒo[ó‘Ô‚ª•Ï‰»‚µ‚½ê‡
+        // ï¿½zï¿½oï¿½[ï¿½ï¿½Ô‚ï¿½ï¿½Ï‰ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡
         if (isHovering != isHoveringLever)
         {
             isHoveringLever = isHovering;
@@ -229,7 +231,7 @@ public class LeverDoorSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ƒŒƒo[‚ÉƒnƒCƒ‰ƒCƒg‚ğ“K—p
+    /// ï¿½ï¿½ï¿½oï¿½[ï¿½Éƒnï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½Kï¿½p
     /// </summary>
     private void ApplyHighlight()
     {
@@ -245,12 +247,12 @@ public class LeverDoorSystem : MonoBehaviour
             }
         }
 
-        // ƒJ[ƒ\ƒ‹‚ğ•ÏX
+        // ï¿½Jï¿½[ï¿½\ï¿½ï¿½ï¿½ï¿½ÏX
         Cursor.SetCursor(null, Vector2.zero, CursorMode.Auto);
     }
 
     /// <summary>
-    /// ƒŒƒo[‚©‚çƒnƒCƒ‰ƒCƒg‚ğœ‹
+    /// ï¿½ï¿½ï¿½oï¿½[ï¿½ï¿½ï¿½ï¿½nï¿½Cï¿½ï¿½ï¿½Cï¿½gï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     private void RemoveHighlight()
     {
@@ -269,7 +271,7 @@ public class LeverDoorSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ‚·‚×‚Ä‚Ì”à‚ÌŠJ•Â‚ğØ‚è‘Ö‚¦‚é
+    /// ï¿½ï¿½ï¿½×‚Ä‚Ì”ï¿½ÌŠJï¿½Â‚ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½ï¿½
     /// </summary>
     public void ToggleDoors()
     {
@@ -277,48 +279,50 @@ public class LeverDoorSystem : MonoBehaviour
         isAnimating = true;
         animationStartTime = Time.time;
 
+        GameManager.PlaySE(m_leverSE);
+
         if (showDebugLog)
         {
-            Debug.Log($"=== ToggleDoors Às isDoorOpen={isDoorOpen} ===");
+            Debug.Log($"=== ToggleDoors ï¿½ï¿½ï¿½s isDoorOpen={isDoorOpen} ===");
         }
 
-        // Še”à‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ‚ğİ’è
+        // ï¿½eï¿½ï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½Ô‚ï¿½İ’ï¿½
         for (int i = 0; i < doorAnimationStartTimes.Length; i++)
         {
             doorAnimationStartTimes[i] = animationStartTime + (i * doorDelay);
 
             if (showDebugLog)
             {
-                Debug.Log($"”à {i} ƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ: {doorAnimationStartTimes[i]}");
+                Debug.Log($"ï¿½ï¿½ {i} ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½ï¿½: {doorAnimationStartTimes[i]}");
             }
         }
     }
 
     /// <summary>
-    /// ”à‚ÆƒŒƒo[‚ğƒAƒjƒ[ƒVƒ‡ƒ“‚³‚¹‚é
+    /// ï¿½ï¿½Æƒï¿½ï¿½oï¿½[ï¿½ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     private void AnimateDoorsAndLever()
     {
         bool allDoorsReached = true;
         bool leverReached = true;
 
-        // Še”à‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+        // ï¿½eï¿½ï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
         if (doors != null)
         {
             for (int i = 0; i < doors.Length; i++)
             {
                 if (doors[i] == null) continue;
 
-                // ”à‚ÌƒAƒjƒ[ƒVƒ‡ƒ“ŠJnŠÔ‚É’B‚µ‚Ä‚¢‚é‚©Šm”F
+                // ï¿½ï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½Ô‚É’Bï¿½ï¿½ï¿½Ä‚ï¿½ï¿½é‚©ï¿½mï¿½F
                 if (Time.time >= doorAnimationStartTimes[i])
                 {
                     Vector3 targetPosition = isDoorOpen ? doorOpenPositions[i] : doorClosedPositions[i];
                     Vector3 oldPosition = doors[i].localPosition;
                     doors[i].localPosition = Vector3.Lerp(doors[i].localPosition, targetPosition, Time.deltaTime * doorSpeed);
 
-                    if (showDebugLog && i == 0) // Å‰‚Ì”à‚Ì‚İƒƒOo—Í
+                    if (showDebugLog && i == 0) // ï¿½Åï¿½ï¿½Ì”ï¿½Ì‚İƒï¿½ï¿½Oï¿½oï¿½ï¿½
                     {
-                        Debug.Log($"”à {i}: Œ»İˆÊ’u={doors[i].localPosition}, –Ú•WˆÊ’u={targetPosition}, ‹——£={Vector3.Distance(doors[i].localPosition, targetPosition)}");
+                        Debug.Log($"ï¿½ï¿½ {i}: ï¿½ï¿½ï¿½İˆÊ’u={doors[i].localPosition}, ï¿½Ú•Wï¿½Ê’u={targetPosition}, ï¿½ï¿½ï¿½ï¿½={Vector3.Distance(doors[i].localPosition, targetPosition)}");
                     }
 
                     if (Vector3.Distance(doors[i].localPosition, targetPosition) > 0.01f)
@@ -331,7 +335,7 @@ public class LeverDoorSystem : MonoBehaviour
 
                         if (showDebugLog && oldPosition != targetPosition)
                         {
-                            Debug.Log($"”à {i} ‚ª–Ú•WˆÊ’u‚É“’B‚µ‚Ü‚µ‚½: {targetPosition}");
+                            Debug.Log($"ï¿½ï¿½ {i} ï¿½ï¿½ï¿½Ú•Wï¿½Ê’uï¿½É“ï¿½ï¿½Bï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½: {targetPosition}");
                         }
                     }
                 }
@@ -342,7 +346,7 @@ public class LeverDoorSystem : MonoBehaviour
             }
         }
 
-        // ƒŒƒo[‚ÌƒAƒjƒ[ƒVƒ‡ƒ“
+        // ï¿½ï¿½ï¿½oï¿½[ï¿½ÌƒAï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½
         if (lever != null)
         {
             Quaternion targetRotation = isDoorOpen ? leverDownRotation : leverUpRotation;
@@ -358,20 +362,20 @@ public class LeverDoorSystem : MonoBehaviour
             }
         }
 
-        // ƒAƒjƒ[ƒVƒ‡ƒ“Š®—¹ƒ`ƒFƒbƒN
+        // ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½Fï¿½bï¿½N
         if (allDoorsReached && leverReached)
         {
             isAnimating = false;
 
             if (showDebugLog)
             {
-                Debug.Log("=== ƒAƒjƒ[ƒVƒ‡ƒ“Š®—¹ ===");
+                Debug.Log("=== ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ===");
             }
         }
     }
 
     /// <summary>
-    /// ‚·‚×‚Ä‚Ì”à‚ğŠJ‚­iŠO•”‚©‚çŒÄ‚Ño‚µ‰Â”\j
+    /// ï¿½ï¿½ï¿½×‚Ä‚Ì”ï¿½ï¿½Jï¿½ï¿½ï¿½iï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Â”\ï¿½j
     /// </summary>
     public void OpenDoors()
     {
@@ -382,7 +386,7 @@ public class LeverDoorSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ‚·‚×‚Ä‚Ì”à‚ğ•Â‚¶‚éiŠO•”‚©‚çŒÄ‚Ño‚µ‰Â”\j
+    /// ï¿½ï¿½ï¿½×‚Ä‚Ì”ï¿½ï¿½Â‚ï¿½ï¿½ï¿½iï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½Â”\ï¿½j
     /// </summary>
     public void CloseDoors()
     {
@@ -393,14 +397,16 @@ public class LeverDoorSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// “Á’è‚Ì”à‚Ì‚İ‚ğŠJ•ÂiƒCƒ“ƒfƒbƒNƒXw’èj
+    /// ï¿½ï¿½ï¿½ï¿½Ì”ï¿½Ì‚İ‚ï¿½Jï¿½Âiï¿½Cï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½Xï¿½wï¿½ï¿½j
     /// </summary>
     public void ToggleSpecificDoor(int doorIndex)
     {
         if (doors != null && doorIndex >= 0 && doorIndex < doors.Length && doors[doorIndex] != null)
         {
-            // ŒÂ•Ê”à§Œä‚ÌÀ‘•i•K—v‚É‰‚¶‚ÄŠg’£j
-            Debug.Log($"”à {doorIndex} ‚ğØ‚è‘Ö‚¦‚Ü‚µ‚½");
+            // ï¿½Â•Ê”ï¿½ï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½ï¿½iï¿½Kï¿½vï¿½É‰ï¿½ï¿½ï¿½ï¿½ÄŠgï¿½ï¿½ï¿½j
+            Debug.Log($"ï¿½ï¿½ {doorIndex} ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
         }
     }
+
+    public void PullLever() { generator.SpawnEnemyStart(); }
 }
