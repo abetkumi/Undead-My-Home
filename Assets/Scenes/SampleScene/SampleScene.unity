@@ -1061,6 +1061,7 @@ MonoBehaviour:
   m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
     type: 3}
   m_warpPosition: {fileID: 1877112606}
+  m_warpSE: {fileID: 0}
   m_fade: 0
 --- !u!65 &748479881
 BoxCollider:
@@ -3377,6 +3378,7 @@ MonoBehaviour:
   m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
     type: 3}
   m_warpPosition: {fileID: 1738948422}
+  m_warpSE: {fileID: 0}
   m_fade: 0
 --- !u!65 &1886063188
 BoxCollider:
@@ -3684,6 +3686,7 @@ MonoBehaviour:
   m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
     type: 3}
   Item_Data: {fileID: 11400000, guid: 58a89a36e579d9344acf50d0e43ceb2d, type: 2}
+  m_isWait: 0
 --- !u!1 &1972820066 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5382832184217399020, guid: c1f1afd86b07b6b46979142cf6a1e834,

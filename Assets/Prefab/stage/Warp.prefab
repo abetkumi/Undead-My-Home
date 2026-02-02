@@ -40,8 +40,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6081910704830704572}
-  - component: {fileID: 5177529420811932905}
   - component: {fileID: 4716347033313076927}
+  - component: {fileID: 9183251578604123096}
   m_Layer: 0
   m_Name: WarpObject (1)
   m_TagString: Untagged
@@ -62,27 +62,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8367417473964543827}
   - {fileID: 4068273757018237639}
+  - {fileID: 8367417473964543827}
   m_Father: {fileID: 6433758078470418205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5177529420811932905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1913260866228695188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af0f05c7555a0f4b808e76e58221474, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
-    type: 3}
-  m_warpPosition: {fileID: 1131953257849315650}
-  m_warpSE: {fileID: 8300000, guid: aa669bef2e8eb684ea25a710aecdf71c, type: 3}
-  m_fade: 0
 --- !u!65 &4716347033313076927
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -104,6 +87,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 30, y: 30, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &9183251578604123096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913260866228695188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f05c7555a0f4b808e76e58221474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
+    type: 3}
+  m_warpPosition: {fileID: 1131953257849315650}
+  m_warpSE: {fileID: 8300000, guid: aa669bef2e8eb684ea25a710aecdf71c, type: 3}
+  m_fade: 0
 --- !u!1 &6229133435163271286
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,7 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4068273757018237639}
   m_Layer: 0
-  m_Name: WarpPoint
+  m_Name: WarpPoint (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -177,8 +177,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5249511000977681902}
-  - component: {fileID: 6961643919046125837}
   - component: {fileID: 3262518873238885183}
+  - component: {fileID: 7198093518190603247}
   m_Layer: 0
   m_Name: WarpObject
   m_TagString: Untagged
@@ -203,23 +203,6 @@ Transform:
   - {fileID: 8243970202667268100}
   m_Father: {fileID: 6433758078470418205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6961643919046125837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8129683130792519367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4af0f05c7555a0f4b808e76e58221474, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
-    type: 3}
-  m_warpPosition: {fileID: 6481772324653320216}
-  m_warpSE: {fileID: 8300000, guid: aa669bef2e8eb684ea25a710aecdf71c, type: 3}
-  m_fade: 0
 --- !u!65 &3262518873238885183
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -241,6 +224,23 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 20, y: 20, z: 20}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7198093518190603247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8129683130792519367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af0f05c7555a0f4b808e76e58221474, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
+    type: 3}
+  m_warpPosition: {fileID: 6481772324653320216}
+  m_warpSE: {fileID: 8300000, guid: aa669bef2e8eb684ea25a710aecdf71c, type: 3}
+  m_fade: 0
 --- !u!1001 &8243970202667388792
 PrefabInstance:
   m_ObjectHideFlags: 0
