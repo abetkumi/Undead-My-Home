@@ -31,54 +31,6 @@ public class ObjectGenerator : MonoBehaviour
         GenerateObjects();
     }
 
-    //void GenerateObjects()
-    //{
-    //    List<float> generated = new List<float>();
-    //    float totalPrice = 0;
-
-    //    //個数をランダムに設定。
-    //    int count = Random.Range(m_minObjCount, m_maxObjCount + 1);
-    //    m_objects =new GameObject[count];
-
-    //    if (count > m_basePoint)
-    //    {
-    //        Debug.LogWarning($"⚠ 警告: 土台容量({m_basePoint})を超えています！");
-    //        return;
-    //    }
-
-    //    // 許容範囲計算
-    //    int minAcceptable = Mathf.RoundToInt(m_targetPrice * (1f - m_toleranceRate));
-    //    int maxAcceptable = Mathf.RoundToInt(m_targetPrice * (1f + m_toleranceRate));
-
-    //    // 目安金額に近づけるように生成
-    //    while (generated.Count < count)
-    //    {
-    //        float price = prices[Random.Range(0, objPrefabs.Count)];
-    //        GameObject prefab = objPrefabs[(int)price];
-    //        if (totalPrice + price <= maxAcceptable)
-    //        {
-    //            SetPrefab(generated.Count, (int)price);
-    //            PointSelect(point.Length);
-
-    //            // 仮生成
-    //            GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-    //            obj.transform.localScale = new Vector3(20f, 20f, 20f);
-    //            m_objects[generated.Count] = obj;
-
-    //            // ポイントに配置
-    //            PointSelect(count);
-
-    //            generated.Add(price);
-    //            totalPrice += price;
-    //        }
-    //        else
-    //        {
-    //            // 追加すると上限を超える場合はスキップ
-    //            break;
-    //        }
-    //    }
-    //}
-
     public void GenerateObjects()
     {
         List<float> generated = new List<float>();

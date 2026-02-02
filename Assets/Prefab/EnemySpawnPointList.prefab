@@ -140,6 +140,10 @@ MonoBehaviour:
   - {fileID: 4121853783109987665, guid: 7fe9edb4b687f1348b4aca27386f31b7, type: 3}
   - {fileID: 1583416951756472871, guid: 474372c67fc64a34e970aca16ab7203b, type: 3}
   - {fileID: 4437828038566941855, guid: 3922fa7c1abeba345b5438d888b83f2a, type: 3}
+  GatePrefabs: {fileID: 1630944186039448, guid: a09e9266ce245c341a6148f173dc9cc0,
+    type: 3}
+  m_pointListName: 
+  m_enemyNum: 0
 --- !u!114 &4647590244196374385
 MonoBehaviour:
   m_ObjectHideFlags: 0

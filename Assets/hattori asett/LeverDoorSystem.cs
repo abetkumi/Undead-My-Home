@@ -55,6 +55,9 @@ public class LeverDoorSystem : MonoBehaviour
     private Renderer[] leverRenderers;
     private Material[][] originalMaterials;
 
+    [SerializeField] AudioClip m_leverSE;
+    [SerializeField] private EnemyGenerator generator;
+
     void Start()
     {
         if (showDebugLog)
@@ -164,6 +167,7 @@ public class LeverDoorSystem : MonoBehaviour
                             Debug.Log("î‡ÇäJÇ´Ç‹Ç∑");
                         }
                         ToggleDoors();
+                        PullLever();
                     }
                     else
                     {
@@ -274,6 +278,8 @@ public class LeverDoorSystem : MonoBehaviour
         isDoorOpen = !isDoorOpen;
         isAnimating = true;
         animationStartTime = Time.time;
+
+        GameManager.PlaySE(m_leverSE);
 
         if (showDebugLog)
         {
@@ -401,4 +407,6 @@ public class LeverDoorSystem : MonoBehaviour
             Debug.Log($"î‡ {doorIndex} ÇêÿÇËë÷Ç¶Ç‹ÇµÇΩ");
         }
     }
+
+    public void PullLever() { generator.SpawnEnemyStart(); }
 }
