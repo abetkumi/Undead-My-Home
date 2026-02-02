@@ -62,7 +62,7 @@ public class UI_Caution : MonoBehaviour
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
         m_player.SetPlayerState(Player.PlayerState.Dead);
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1.0f;
     }
 
@@ -74,7 +74,7 @@ public class UI_Caution : MonoBehaviour
         m_clear.SetStoreScene();
         m_clear.m_isWait = false;
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1.0f;
     }
 
@@ -83,7 +83,7 @@ public class UI_Caution : MonoBehaviour
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
         SetActiveCautionUI(false);
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1.0f;
     }
 }

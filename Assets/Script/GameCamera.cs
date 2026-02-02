@@ -28,8 +28,32 @@ public class GameCamera : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    private bool CheckKeyboardMouseInput()
+    {
+        // キーボードまたはマウスが押されたら true
+        return Input.GetAxis("Horizontal") != 0 ||
+               Input.GetAxis("Vertical") != 0 ||
+               Input.GetMouseButtonDown(0) ||
+               Input.GetMouseButtonDown(1);
+    }
+    private bool CheckGamepadInput()
+    {
+        // 代表的なゲームパッドの入力を検出
+        return Input.GetAxis("Horizontal_Pad") != 0 ||
+               Input.GetAxis("Vertical_Pad") != 0;
+    }
+
     void Update()
     {
+        if (CheckKeyboardMouseInput() == true)
+        {
+            mouseSensitivity = 100.0f;
+        }
+        else if(CheckGamepadInput() == true)
+        {
+            mouseSensitivity = 150.0f;
+        }
+
         // フォーカス処理
         if (m_isFocus == false)
         {

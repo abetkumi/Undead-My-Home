@@ -39,7 +39,7 @@ public class Warp : MonoBehaviour
         GameObject fadeObject = Instantiate(m_fadeCanvas);
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart(m_warpPosition.transform.position,Color.black, true);
-
+        GameManager.PlaySE(m_warpSE);
         //自身はシーンをまたいでも削除されないようにする
         DontDestroyOnLoad(fadeObject);
     }

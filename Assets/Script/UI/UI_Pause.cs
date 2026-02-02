@@ -63,6 +63,6 @@ public class UI_Pause : MonoBehaviour
         m_pauseObject.SetActive(false);
         Time.timeScale = 1.0f;
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

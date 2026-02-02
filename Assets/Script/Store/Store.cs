@@ -94,13 +94,13 @@ public class Store : MonoBehaviour
         m_storeCanvas.SetActive(false);
         m_gameManager.SetGameState(GameManager.GameState.enGameState_Play);
         m_shopNPCAnimatior.SetBool("Shop", false);
-        Cursor.visible = false;  
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         GameManager.PlaySE(m_byeSE);
         await UniTask.Delay(100);
         m_storeNow = false;
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void ShoppingLook()
