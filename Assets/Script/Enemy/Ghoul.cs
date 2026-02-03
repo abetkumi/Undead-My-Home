@@ -106,6 +106,8 @@ public class Ghoul : EnemyBase
                 break;
             //çUåÇÅB
             case EnemyState.enEnemyState_Attack:
+                if (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                    m_animator.SetTrigger("Attack");
                 m_animator.SetTrigger("Attack");
                 StartAttack();
                 break;
