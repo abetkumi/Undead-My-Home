@@ -70,7 +70,7 @@ public class PayNorma : MonoBehaviour
             return;
         }
 
-        if(Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+        if(Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
         {
             NormaPay();
         }
