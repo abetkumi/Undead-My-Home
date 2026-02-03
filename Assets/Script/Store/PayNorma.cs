@@ -58,7 +58,7 @@ public class PayNorma : MonoBehaviour
 
             if(clearCount < m_gameManager.GetClearCondition())
             {
-                m_gameManager.SetNorma(norma + 100.0f);
+                m_gameManager.SetNorma(norma + 200.0f);
             }
         }
     }
