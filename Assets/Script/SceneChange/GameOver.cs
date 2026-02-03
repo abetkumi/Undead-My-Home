@@ -9,7 +9,6 @@ public class GameOver : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
     CameraCulling m_cameraCulling;
-    PlayerAttack m_playerAttack;
 
     // Start is called before the first frame update
 
@@ -68,11 +67,12 @@ public class GameOver : MonoBehaviour
             Destroy(m_itemObject);
         }
 
-        await UniTask.Delay(1000);
         // シーン切替
+        await UniTask.Delay(1000);
         // フェード演出用オブジェクトを生成
         GameObject fadeObject = Instantiate(m_fadeCanvas);
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("GameOverScene", Color.black, true);
+        
     }
 }

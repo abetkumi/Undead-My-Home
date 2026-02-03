@@ -13,13 +13,14 @@ public class TitleBack : MonoBehaviour
     //ƒ^ƒCƒgƒ‹‚É–ß‚é
     async void TitleBackSence()
     {
-        if (m_titleBack)
-        {
-            return;
-        }
         if (Input.anyKeyDown)
         {
             m_titleBack = true;
+        }
+
+        if (!m_titleBack)
+        {
+            return;
         }
 
         await UniTask.Delay(2000);
