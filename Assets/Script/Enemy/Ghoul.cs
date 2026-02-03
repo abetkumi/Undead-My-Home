@@ -29,7 +29,7 @@ public class Ghoul : EnemyBase
     // Update is called once per frame
     new void Update()
     {
-        if (DebugStop == true)
+        if (DebugStop)
         {
             return;
         }
@@ -40,7 +40,7 @@ public class Ghoul : EnemyBase
             return;
         }
 
-        if (m_stateLook == true)
+        if (m_stateLook)
         {
             UpdateState();
 

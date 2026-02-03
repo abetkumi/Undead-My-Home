@@ -34,7 +34,7 @@ public class LeverDoorSystem : MonoBehaviour
     public bool isDoorOpen = false;
 
     [Header("�f�o�b�O")]
-    [Tooltip("�f�o�b�O���O��\��")]
+    [Tooltip("�f�o�b�O���O���")]
     public bool showDebugLog = true;
 
     [Header("�n�C���C�g�ݒ�")]
