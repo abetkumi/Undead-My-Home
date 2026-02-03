@@ -190,6 +190,15 @@ public class EnemyBase : MonoBehaviour
         if (direction.sqrMagnitude > 1.0f)
         {
             m_agent.SetDestination(m_NextMovePos);
+
+            // ★ 到達不可能チェック
+            if (!CheckPathReachable())
+            {
+                m_enemyState = EnemyState.enEnemyState_Lost;
+                m_agent.isStopped = true;
+                return;
+            }
+
             m_agent.isStopped = false;
         }
         else
@@ -197,6 +206,20 @@ public class EnemyBase : MonoBehaviour
             m_agent.isStopped = true;
         }
     }
+
+
+    //ナビメッシュが目標地点へ到達できるかチェック。
+    protected bool CheckPathReachable()
+    {
+        if (m_agent.pathStatus == NavMeshPathStatus.PathInvalid ||
+            m_agent.pathStatus == NavMeshPathStatus.PathPartial)
+        {
+            // 到達不可能
+            return false;
+        }
+        return true;
+    }
+
 
 
     //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
