@@ -264,7 +264,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //初期ノルマ
-        m_norma = 100.0f;
+        m_norma = 300.0f;
         //UIを更新
         ItemUI.UpdateUI();
         //ステートの更新（初期化）
