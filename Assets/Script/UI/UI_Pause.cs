@@ -15,12 +15,10 @@ public class UI_Pause : MonoBehaviour
     [SerializeField] GameObject m_gameManagerObject;
     [SerializeField] public Button m_focusButton_Title;
     [SerializeField] Button m_focusButton_GameBack;
-    bool m_startLoading = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_startLoading = false;
         m_focusButton_Title = m_focusButton_Title.GetComponent<Button>();
         m_focusButton_GameBack = m_focusButton_GameBack.GetComponent<Button>();
         m_pauseObject.SetActive(false);
@@ -29,29 +27,24 @@ public class UI_Pause : MonoBehaviour
     //Yesボタンが押されたのでタイトルに戻る
     public async void TitleBackButton()
     {
-        if (m_startLoading)
-        {
-            return;
-        }
-
         //ボタンのselectedを初期化
         EventSystem.current.SetSelectedGameObject(null);
         //タイトルボタンをセレクトアニメーションさせる
         m_focusButton_Title.Select();
-        m_startLoading = true;
         Time.timeScale = 1.0f;
         m_pauseObject.SetActive(false);
         //プレイヤーとゲームマネージャーをシーン切り替えで消えるように切り替える
         Scene activeScene = SceneManager.GetActiveScene();
         SceneManager.MoveGameObjectToScene(m_playerParentObject, activeScene);
-     
-        await UniTask.Delay(1000);
+
+
+        await UniTask.Delay(500);
         //メインゲームシーンに移動する
         GameObject fadeObject = Instantiate(m_fadeCanvas);
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("TitleScene", Color.black, true);
         Debug.Log("タイトルに戻る");
-        
+
     }
 
     //Noボタンが押されたのでゲームに戻る

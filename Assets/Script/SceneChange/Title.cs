@@ -12,7 +12,7 @@ public class Title : MonoBehaviour
     [SerializeField] GameObject m_fadeCanvas;    //フェード演出用オブジェクト
     [SerializeField] Button m_focusButton_Start;
 
-    bool m_sceneChange = false;
+    public bool m_sceneChange = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +21,7 @@ public class Title : MonoBehaviour
         m_sceneChange = false;
     }
 
-    public void OnClickStartButton()
+    async public void OnClickStartButton()
     {
         //シーン切り替え中は何もしない
         if (m_sceneChange)
@@ -39,6 +39,9 @@ public class Title : MonoBehaviour
 
         Cursor.visible = false;  //マウスカーソルを表示
         Cursor.lockState = CursorLockMode.Locked; //マウスカーソルの移動を制限しない
+
+        await UniTask.Delay(1000);
+        m_sceneChange = false;
     }
 
     public void OnClickEndButton()
