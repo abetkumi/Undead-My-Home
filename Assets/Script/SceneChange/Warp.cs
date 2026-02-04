@@ -43,7 +43,7 @@ public class Warp : MonoBehaviour
         //©g‚ÍƒV[ƒ“‚ğ‚Ü‚½‚¢‚Å‚àíœ‚³‚ê‚È‚¢‚æ‚¤‚É‚·‚é
         DontDestroyOnLoad(fadeObject);
     }
-
+   
     // Update is called once per frame
     void Update()
     {
