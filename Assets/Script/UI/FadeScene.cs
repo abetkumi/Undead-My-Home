@@ -149,7 +149,7 @@ public class FadeScene : MonoBehaviour
     void FadeNoScene(Vector3 position)
     {
         //フェードが開始していないため中断
-        if (m_fadeStart)
+        if (!m_fadeStart)
         {
             return;
         }
