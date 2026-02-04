@@ -84,7 +84,6 @@ public class FadeScene : MonoBehaviour
     }
     void Fade()
     {
-
         //フェードが開始していないため中断
         if (!m_fadeStart)
         {
@@ -170,6 +169,7 @@ public class FadeScene : MonoBehaviour
             //完全に暗くなったのでシーンを変更する
             if (m_alpha >= 1.0f)
             {
+                PlayerRotation();
                 m_playerObject.transform.position = position;
                 //明るくするモードに変更
                 m_fadeMode = true;
@@ -197,6 +197,29 @@ public class FadeScene : MonoBehaviour
         {
             m_image.material.SetFloat("_Border", m_alpha);
         }
+    }
+
+    public void PlayerRotation()
+    {
+        Rigidbody rb = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
+        GameObject player = GameObject.FindWithTag("Player");
+        player.transform.position = gameObject.transform.position;
+        if (gameObject == null) return;
+
+        // 相手の水平角度（Y軸だけ）を取得
+        float targetY = gameObject.transform.eulerAngles.y;
+
+        // 現在のプレイヤー角度
+        Vector3 currentEuler = rb.rotation.eulerAngles;
+
+        // Y軸だけ置き換える
+        Quaternion newRot = Quaternion.Euler(
+            currentEuler.x,   // Xそのまま
+            targetY,          // Yだけ相手と同じ
+            currentEuler.z    // Zそのまま
+        );
+
+        rb.MoveRotation(newRot);
     }
 
     // Update is called once per frame

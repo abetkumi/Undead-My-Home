@@ -13,16 +13,6 @@ public class TitleBack : MonoBehaviour
     //ƒ^ƒCƒgƒ‹‚É–ß‚é
     async void TitleBackSence()
     {
-        if (Input.anyKeyDown)
-        {
-            m_titleBack = true;
-        }
-
-        if (!m_titleBack)
-        {
-            return;
-        }
-
         await UniTask.Delay(2000);
         if(m_gameOverLightObject != null)
         {
@@ -37,6 +27,14 @@ public class TitleBack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TitleBackSence();
+        if (m_titleBack)
+        {
+            return;
+        }
+        if (Input.anyKeyDown)
+        {
+            m_titleBack = true;
+            TitleBackSence();
+        }
     }
 }
