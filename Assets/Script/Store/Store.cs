@@ -39,8 +39,8 @@ public class Store : MonoBehaviour
         itemPos.z -= 10.0f;
         GameObject dropItem = Instantiate(m_gameManager.GetItemData().Items[10].ItemPrefab,
             itemPos, Camera.main.transform.rotation);
-        bool m_storeNow = false;
-        bool m_storeShopping = false;
+        m_storeNow = false;
+        m_storeShopping = false;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -99,7 +99,7 @@ public class Store : MonoBehaviour
  
     }
 
-    async public void CloseStore()
+    public void CloseStore()
     {
         m_UICanvas.SetActive(true);
         m_storeCanvas.SetActive(false);
@@ -108,10 +108,7 @@ public class Store : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         GameManager.PlaySE(m_byeSE);
-        await UniTask.Delay(100);
         m_storeNow = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void ShoppingLook()
