@@ -40,7 +40,7 @@ public class Ghoul : EnemyBase
             return;
         }
 
-        if (m_stateLook)
+        if (m_stateLook == true)
         {
             UpdateState();
 
@@ -64,7 +64,7 @@ public class Ghoul : EnemyBase
                 PlaySound((int)GhoulSound.enGhoulSound_voice);
                 SetRandamTimer();
             }
-                
+
             UpdateState();
             return;
         }
@@ -92,12 +92,14 @@ public class Ghoul : EnemyBase
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
                 Move(1.0f);
+                CheckStuck();
                 break;
             //í«ê’ÅB
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
                 m_animator.SetTrigger("ChaesStart");
                 Move(1.5f);
+                CheckStuck();
                 break;
             //å©é∏Ç§ÅB
             case EnemyState.enEnemyState_Lost:
@@ -108,7 +110,6 @@ public class Ghoul : EnemyBase
             case EnemyState.enEnemyState_Attack:
                 if (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
                     m_animator.SetTrigger("Attack");
-                m_animator.SetTrigger("Attack");
                 StartAttack();
                 break;
             //ì¶Ç∞ÇÈÅB

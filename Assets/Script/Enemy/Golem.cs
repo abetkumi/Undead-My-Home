@@ -130,11 +130,13 @@ public class Golem : EnemyBase
                 m_animator.SetFloat("Walk", m_speed);
                 Move(1.0f);
                 break;
+                CheckStuck();
             //�ǐՁB
             case EnemyState.enEnemyState_Chase:
                 ChaseSpeedSet();
                 m_animator.SetFloat("Walk", m_speed);
                 Move(m_speed);
+                CheckStuck();
                 break;
             //�������B
             case EnemyState.enEnemyState_Lost:

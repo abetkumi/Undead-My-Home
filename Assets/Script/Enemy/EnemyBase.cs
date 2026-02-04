@@ -25,6 +25,12 @@ public class EnemyBase : MonoBehaviour
     int m_currentTarget = -1;
     protected bool m_navActive = false;
 
+    private float stuckThreshold = 0.02f;            //スタック検知可能な移動距離。
+    private float stuckTimeRequired = 3.5f;         //スタック時間。
+
+    private Vector3 m_lastPos;
+    private float m_stuckTimer;
+
     [SerializeField] protected Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
 
     protected enum EnemyState
@@ -220,7 +226,29 @@ public class EnemyBase : MonoBehaviour
         return true;
     }
 
+    //スタック対策。
+    protected void CheckStuck()
+    {
+        float moved = Vector3.Distance(transform.position, m_lastPos);
 
+        if (moved < stuckThreshold)
+        {
+            m_stuckTimer += Time.deltaTime;
+
+            if (m_stuckTimer >= stuckTimeRequired)
+            {
+                m_NextMovePos = transform.position;
+                m_enemyState = EnemyState.enEnemyState_Lost;
+                m_stuckTimer = 0f;
+            }
+        }
+        else
+        {
+            m_stuckTimer = 0f;
+        }
+
+        m_lastPos = transform.position;
+    }
 
     //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
     protected void SetNavMovePos()
