@@ -104,7 +104,9 @@ public class Ghoul : EnemyBase
             //å©é∏Ç§ÅB
             case EnemyState.enEnemyState_Lost:
                 m_animator.SetTrigger("Lost");
+                m_stateLook = false;
                 LostKeepTime(3.0f);
+                CheckStuck();
                 break;
             //çUåÇÅB
             case EnemyState.enEnemyState_Attack:
