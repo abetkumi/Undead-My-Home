@@ -141,5 +141,5 @@ MonoBehaviour:
     UI_Offset: {x: 0, y: 0, z: 1.2}
     UI_Rotation: {x: -90, y: 0, z: 0}
     UI_Scale: {x: 1, y: 1, z: 1}
-    weight: 10
+    weight: 100
     value: 250
