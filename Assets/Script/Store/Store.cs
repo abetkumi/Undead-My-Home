@@ -23,6 +23,7 @@ public class Store : MonoBehaviour
     GameManager m_gameManager;
 
     bool m_storeNow = false;
+    bool m_storeShopping = false;
 
     // Start is called before the first frame update
     void Start()
@@ -38,33 +39,17 @@ public class Store : MonoBehaviour
         itemPos.z -= 10.0f;
         GameObject dropItem = Instantiate(m_gameManager.GetItemData().Items[10].ItemPrefab,
             itemPos, Camera.main.transform.rotation);
+        m_storeNow = false;
+        m_storeShopping = false;
     }
 
-    async private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "話す", true);
-        if (other.CompareTag("Player") && m_storeNow == false)
+        if (other.CompareTag("Player") && !m_storeNow)
         {
-            if (Input.GetButton("Action") || Input.GetMouseButton(0))
-            {
-                await UniTask.Delay(10);
-                m_storeNow = true;
-                m_UICanvas.SetActive(false);
-                m_storeCanvas.SetActive(true);
-                rb.transform.LookAt(m_storeNPC.transform);
-                m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
-                GameManager.PlaySE(m_welcomeSE);
-
-                m_shopNPCAnimatior.SetBool("Shop", true);
-
-                m_focusButton_ShoppingOpen = m_focusButton_ShoppingOpen.GetComponent<Button>();
-                m_focusButton_ShoppingOpen.Select();
-
-                ShoppingLook();
-
-                Debug.Log("買い物開始");
-            }
+            m_storeShopping = true;
         }
     }
 
@@ -74,6 +59,32 @@ public class Store : MonoBehaviour
         {
             m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
                 "", true);
+            m_storeShopping = false;
+        }
+    }
+
+    async void Shopping()
+    {
+        if (Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
+        {
+            m_storeShopping = false;
+            await UniTask.Delay(10);
+            m_storeNow = true;
+
+            m_UICanvas.SetActive(false);
+            m_storeCanvas.SetActive(true);
+            rb.transform.LookAt(m_storeNPC.transform);
+            m_gameManager.SetGameState(GameManager.GameState.enGameState_Shopping);
+            GameManager.PlaySE(m_welcomeSE);
+
+            m_shopNPCAnimatior.SetBool("Shop", true);
+
+            m_focusButton_ShoppingOpen = m_focusButton_ShoppingOpen.GetComponent<Button>();
+            m_focusButton_ShoppingOpen.Select();
+
+            ShoppingLook();
+
+            Debug.Log("買い物開始");
         }
     }
 
@@ -88,7 +99,7 @@ public class Store : MonoBehaviour
  
     }
 
-    async public void CloseStore()
+    public void CloseStore()
     {
         m_UICanvas.SetActive(true);
         m_storeCanvas.SetActive(false);
@@ -97,10 +108,7 @@ public class Store : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         GameManager.PlaySE(m_byeSE);
-        await UniTask.Delay(100);
         m_storeNow = false;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
     }
 
     void ShoppingLook()
@@ -113,6 +121,14 @@ public class Store : MonoBehaviour
         rb.MoveRotation(Quaternion.Slerp(rb.rotation, targetRot, 10.0f * Time.fixedDeltaTime));
     }
 
+    private void Update()
+    {
+        if (!m_storeShopping)
+        {
+            return;
+        }
+        Shopping();
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
