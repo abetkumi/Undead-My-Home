@@ -237,8 +237,9 @@ public class EnemyBase : MonoBehaviour
 
             if (m_stuckTimer >= stuckTimeRequired)
             {
-                m_NextMovePos = transform.position;
-                m_enemyState = EnemyState.enEnemyState_Lost;
+                m_navActive = true;
+                m_stateLook = false;
+                m_enemyState = EnemyState.enEnemyState_Search;
                 m_stuckTimer = 0f;
             }
         }
