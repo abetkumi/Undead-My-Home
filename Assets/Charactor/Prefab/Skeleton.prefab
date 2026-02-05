@@ -660,7 +660,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c1978557926507f41987c799deadf70a, type: 3}
   - {fileID: 8300000, guid: 0b5b4480cf2c79b4497a42bf646d1c54, type: 3}
   - {fileID: 8300000, guid: d7aca547b87e4374b9160315159b2cc0, type: 3}
-  m_searchAngle: 160
+  m_searchAngle: 60
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
   m_stateLook: 0

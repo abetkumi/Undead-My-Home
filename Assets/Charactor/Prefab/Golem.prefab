@@ -78,7 +78,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: dec1dc1fc7dc23145af876d2fb56ccf3, type: 3}
   - {fileID: 8300000, guid: 24c33a469f71f3b4991f8260ce1c2904, type: 3}
   - {fileID: 8300000, guid: 1acf1923236b902408ceb14f2140f379, type: 3}
-  m_searchAngle: 120
+  m_searchAngle: 30
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 2
   m_stateLook: 0
