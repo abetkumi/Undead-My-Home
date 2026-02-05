@@ -3164,7 +3164,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: cb78c5ef89bcf3842ac3ac961cbbcc70, type: 3}
   - {fileID: 8300000, guid: c73d61d6f61d50e4e88186267fe2c56c, type: 3}
   - {fileID: 8300000, guid: 1048fa7d84a5d9a47bbbdc982803dd04, type: 3}
-  m_searchAngle: 60
+  m_searchAngle: 45
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
   m_stateLook: 0
