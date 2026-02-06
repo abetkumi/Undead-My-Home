@@ -6,6 +6,7 @@ public class Chest : MonoBehaviour
 {
     [SerializeField] Transform lid;
     [SerializeField] float m_speed = 2f;
+    [SerializeField] AudioClip m_openSE;
     private const float m_openAngle = -100f;
 
     bool isOpening = false;
@@ -41,6 +42,7 @@ public class Chest : MonoBehaviour
                 if (hit.transform == transform || hit.transform.IsChildOf(transform))
                 {
                     isOpening = true;
+                    GameManager.PlaySE(m_openSE);
                 }
             }
         }

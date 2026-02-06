@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameOver : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
+    [SerializeField] AudioClip m_gameOverSE;
     CameraCulling m_cameraCulling;
 
     // Start is called before the first frame update
@@ -38,6 +39,9 @@ public class GameOver : MonoBehaviour
         //プレイヤーをカメラに映るようにする
         m_cameraCulling = Camera.main.GetComponent<CameraCulling>();
         m_cameraCulling.ShowPlayerBody();
+
+        //SE
+        GameManager.PlaySE(m_gameOverSE,0.6f);
 
         //武器の縮尺をもとに戻す
         GameObject machete = GameObject.FindWithTag("Weapon");

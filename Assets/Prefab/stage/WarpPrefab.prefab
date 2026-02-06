@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 9183251578604123096}
   m_Layer: 0
   m_Name: WarpObject (1)
-  m_TagString: Untagged
+  m_TagString: Warp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 7198093518190603247}
   m_Layer: 0
   m_Name: WarpObject
-  m_TagString: Untagged
+  m_TagString: Warp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
