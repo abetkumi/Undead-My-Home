@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -31,7 +32,7 @@ public class Warp : MonoBehaviour
     //    m_inArea = false;
     //}
 
-    void WarpPosition()
+    async void WarpPosition()
     {
         m_fade = false;
         // シーン切替
@@ -42,8 +43,31 @@ public class Warp : MonoBehaviour
         GameManager.PlaySE(m_warpSE);
         //自身はシーンをまたいでも削除されないようにする
         DontDestroyOnLoad(fadeObject);
+        await UniTask.Delay(1000);
+        PlayerRotation();
     }
-   
+
+    public void PlayerRotation()
+    {
+        Rigidbody rb = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
+        if (gameObject == null) return;
+
+        // 相手の水平角度（Y軸だけ）を取得
+        float targetY = m_warpPosition.transform.eulerAngles.y;
+
+        // 現在のプレイヤー角度
+        Vector3 currentEuler = rb.rotation.eulerAngles;
+
+        // Y軸だけ置き換える
+        Quaternion newRot = Quaternion.Euler(
+            currentEuler.x,   // Xそのまま
+            targetY,          // Yだけ相手と同じ
+            currentEuler.z    // Zそのまま
+        );
+
+        rb.MoveRotation(newRot);
+    }
+
     // Update is called once per frame
     void Update()
     {

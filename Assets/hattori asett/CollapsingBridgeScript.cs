@@ -12,6 +12,8 @@ public class CollapsingBridge : MonoBehaviour
     [SerializeField] private bool useGravity = true; // Rigidbodyを使うか
     [SerializeField] private float fallSpeed = 5.0f; // 落下速度（Rigidbody未使用時）
 
+    [SerializeField] AudioClip m_breakSE;
+
     private bool hasCollapsed = false;
     private bool isCollapsing = false;
     private Vector3 originalPosition;
@@ -81,10 +83,13 @@ public class CollapsingBridge : MonoBehaviour
             {
                 transform.position += Vector3.down * fallSpeed * Time.deltaTime;
                 transform.Rotate(Vector3.forward * 50f * Time.deltaTime);
-
+                
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+
+            //SE
+            GameManager.PlaySE(m_breakSE,0.6f);
 
             // 完全に崩れたら非表示または削除
             gameObject.SetActive(false);
