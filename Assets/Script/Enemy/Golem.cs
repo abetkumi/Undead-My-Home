@@ -129,8 +129,8 @@ public class Golem : EnemyBase
                 m_agent.speed = m_speed;
                 m_animator.SetFloat("Walk", m_speed);
                 Move(1.0f);
-                break;
                 CheckStuck();
+                break;
             //�ǐՁB
             case EnemyState.enEnemyState_Chase:
                 ChaseSpeedSet();
