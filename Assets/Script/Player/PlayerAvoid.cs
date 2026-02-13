@@ -37,6 +37,7 @@ public class PlayerAvoid : MonoBehaviour
                 "回避", true);
     }
 
+    //プレイヤー回避受付
     public void Avoid()
     {
         // 回避入力受付
@@ -72,6 +73,7 @@ public class PlayerAvoid : MonoBehaviour
         
     }
 
+    //プレイヤー回避アクション
     private async void Avoid(int direction)
     {
         m_canAvoid = false;
@@ -113,6 +115,7 @@ public class PlayerAvoid : MonoBehaviour
         Debug.Log("回避クールタイム終了");
     }
 
+    //回避時の無敵
     private async void Invincible()
     {
         m_isInvincible = true;

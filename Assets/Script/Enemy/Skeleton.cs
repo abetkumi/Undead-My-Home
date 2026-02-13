@@ -33,6 +33,12 @@ public class Skeleton : EnemyBase
     {
         if (DebugStop) return;
 
+        if (m_Stan)
+        {
+            UpdateState();
+            return;
+        }
+
         if (m_stateLook == true)
         {
             UpdateState();
@@ -92,12 +98,14 @@ public class Skeleton : EnemyBase
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
                 Move(1.0f);
+                CheckStuck();
                 break;
             //追跡。
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chase", true);
                 m_animator.SetTrigger("ChaesStart");
                 Move(2.0f);
+                CheckStuck();
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
@@ -121,8 +129,8 @@ public class Skeleton : EnemyBase
                 break;
             //気絶。
             case EnemyState.enEnemyState_Stun:
-                m_animator.SetTrigger("Knockback");
-                DamageAnimation();
+                m_animator.SetTrigger("Lost");
+                StunTimer(m_damageStanTime);
                 break;
             //死。
             case EnemyState.enEnemyState_Death:

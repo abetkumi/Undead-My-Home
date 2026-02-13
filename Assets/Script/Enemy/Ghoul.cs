@@ -29,8 +29,14 @@ public class Ghoul : EnemyBase
     // Update is called once per frame
     new void Update()
     {
-        if (DebugStop == true)
+        if (DebugStop)
         {
+            return;
+        }
+
+        if (m_Stan)
+        {
+            UpdateState();
             return;
         }
 
@@ -58,9 +64,8 @@ public class Ghoul : EnemyBase
                 PlaySound((int)GhoulSound.enGhoulSound_voice);
                 SetRandamTimer();
             }
-                
 
-                UpdateState();
+            UpdateState();
             return;
         }
 
@@ -87,21 +92,26 @@ public class Ghoul : EnemyBase
             case EnemyState.enEnemyState_Search:
                 m_animator.SetBool("Search", true);
                 Move(1.0f);
+                CheckStuck();
                 break;
             //追跡。
             case EnemyState.enEnemyState_Chase:
                 m_animator.SetBool("Chaes", true);
                 m_animator.SetTrigger("ChaesStart");
                 Move(1.5f);
+                CheckStuck();
                 break;
             //見失う。
             case EnemyState.enEnemyState_Lost:
                 m_animator.SetTrigger("Lost");
+                m_stateLook = false;
                 LostKeepTime(3.0f);
+                CheckStuck();
                 break;
             //攻撃。
             case EnemyState.enEnemyState_Attack:
-                m_animator.SetTrigger("Attack");
+                if (!m_animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+                    m_animator.SetTrigger("Attack");
                 StartAttack();
                 break;
             //逃げる。
@@ -114,8 +124,8 @@ public class Ghoul : EnemyBase
                 break;
             //気絶。
             case EnemyState.enEnemyState_Stun:
-                m_animator.SetTrigger("Knockback");
-                DamageAnimation();
+                m_animator.SetTrigger("Lost");
+                StunTimer(m_damageStanTime);
                 break;
             //死。
             case EnemyState.enEnemyState_Death:

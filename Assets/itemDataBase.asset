@@ -133,3 +133,13 @@ MonoBehaviour:
     UI_Scale: {x: 1, y: 1, z: 1}
     weight: 10
     value: 0
+  - ItemName: Treasure
+    ItemExplanation: "\u5B9D"
+    ItemPrefab: {fileID: 6761219006840928508, guid: 9b78d846af4c9454eaa63587a8b6b0e3,
+      type: 3}
+    ItemPivot: {x: 0, y: 0, z: 0}
+    UI_Offset: {x: 0, y: 0, z: 1.2}
+    UI_Rotation: {x: -90, y: 0, z: 0}
+    UI_Scale: {x: 1, y: 1, z: 1}
+    weight: 100
+    value: 250

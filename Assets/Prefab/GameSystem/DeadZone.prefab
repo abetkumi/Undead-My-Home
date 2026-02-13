@@ -68,6 +68,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_fadeCanvas: {fileID: 9167078499866050696, guid: b6e8850a1ec907f41a1118981d3d6fbf,
     type: 3}
-  m_playerObject: {fileID: 0}
-  m_cameraObject: {fileID: 0}
-  m_timerObject: {fileID: 0}
+  m_gameOverSE: {fileID: 8300000, guid: b7305478018223143b637f519846a153, type: 3}

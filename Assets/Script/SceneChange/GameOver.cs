@@ -3,12 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOver : MonoBehaviour
 {
     [SerializeField] GameObject m_fadeCanvas;
+    [SerializeField] AudioClip m_gameOverSE;
     CameraCulling m_cameraCulling;
-    PlayerAttack m_playerAttack;
 
     // Start is called before the first frame update
 
@@ -39,6 +40,9 @@ public class GameOver : MonoBehaviour
         m_cameraCulling = Camera.main.GetComponent<CameraCulling>();
         m_cameraCulling.ShowPlayerBody();
 
+        //SE
+        GameManager.PlaySE(m_gameOverSE,0.6f);
+
         //武器の縮尺をもとに戻す
         GameObject machete = GameObject.FindWithTag("Weapon");
         if (machete != null)
@@ -46,9 +50,12 @@ public class GameOver : MonoBehaviour
             machete.transform.localScale = Vector3.one;
         }
 
-        GameObject m_timerObject = GameObject.FindWithTag("Timer");
-        Destroy(m_timerObject);
+        //プレイヤーをシーン移行時に削除されるように変更する
+        GameObject m_playerParentObject = GameObject.FindWithTag("PlayerParent");
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.MoveGameObjectToScene(m_playerParentObject, activeScene);
 
+        //ゲームオーバーアニメーション
         GameObject m_playerObject = GameObject.FindWithTag("Player");
         Vector3 m_camaraPos = m_playerObject.transform.position;
         m_camaraPos.y += 4.0f;
@@ -57,20 +64,19 @@ public class GameOver : MonoBehaviour
         Camera.main.GetComponent<GameCamera>().FocusStart(m_playerObject.transform.position, 3.0f, 5.0f);
         m_playerObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
+        //アイテムを削除
         GameObject m_itemObject = GameObject.FindWithTag("Item");
         if(m_itemObject != null)
         {
             Destroy(m_itemObject);
         }
 
-        await UniTask.Delay(1000);
         // シーン切替
+        await UniTask.Delay(1000);
         // フェード演出用オブジェクトを生成
         GameObject fadeObject = Instantiate(m_fadeCanvas);
         // 生成したオブジェクトのFadeStart関数を呼び出す
         fadeObject.GetComponent<FadeScene>().FadeStart("GameOverScene", Color.black, true);
-
-        //自身はシーンをまたいでも削除されないようにする
-        DontDestroyOnLoad(fadeObject);
+        
     }
 }

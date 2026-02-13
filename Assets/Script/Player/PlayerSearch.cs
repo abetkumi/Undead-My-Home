@@ -12,7 +12,7 @@ public class PlayerSearch : MonoBehaviour
     [SerializeField] GameObject m_searchCollider;
     //サーチする際のエフェクト
     [SerializeField] GameObject m_searchImageObject;
-    GameManager m_gameManager;
+    [SerializeField] GameManager m_gameManager;
 
     private void Awake()
     {
@@ -49,14 +49,16 @@ public class PlayerSearch : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L3,
+        "サーチ", true);
+
         if (m_searchCollider.gameObject.activeSelf == true)
         {
             return;
         }
-        m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_L3,
-                "サーチ", true);
+
         //サーチボタンが押されると
-        if (Input.GetButtonUp("Search"))
+        if (Input.GetButtonDown("Search"))
         {
             //コリジョンをONにする
             CollisionONOFF();

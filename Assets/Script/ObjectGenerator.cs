@@ -15,10 +15,10 @@ public class ObjectGenerator : MonoBehaviour
     Transform parent;
 
     //オブジェクトの最小個数、最大個数、オブジェクトを置けるポイントの数。。
-    private int
+    [SerializeField] private int
         m_minObjCount, m_maxObjCount, m_basePoint;
     //、合計金額の目安、許容誤差範囲。
-    private float m_targetPrice, m_toleranceRate;
+    [SerializeField] private float m_targetPrice, m_toleranceRate;
 
     private List<float> prices = new List<float>();
 
@@ -28,106 +28,86 @@ public class ObjectGenerator : MonoBehaviour
         SetObjectsPrice();
         SetPoint();
 
-        AllSet(20, 30, 500.0f, 0.1f);
-
         GenerateObjects();
     }
 
-    //void GenerateObjects()
-    //{
-    //    List<float> generated = new List<float>();
-    //    float totalPrice = 0;
-
-    //    //個数をランダムに設定。
-    //    int count = Random.Range(m_minObjCount, m_maxObjCount + 1);
-    //    m_objects =new GameObject[count];
-
-    //    if (count > m_basePoint)
-    //    {
-    //        Debug.LogWarning($"⚠ 警告: 土台容量({m_basePoint})を超えています！");
-    //        return;
-    //    }
-
-    //    // 許容範囲計算
-    //    int minAcceptable = Mathf.RoundToInt(m_targetPrice * (1f - m_toleranceRate));
-    //    int maxAcceptable = Mathf.RoundToInt(m_targetPrice * (1f + m_toleranceRate));
-
-    //    // 目安金額に近づけるように生成
-    //    while (generated.Count < count)
-    //    {
-    //        float price = prices[Random.Range(0, objPrefabs.Count)];
-    //        GameObject prefab = objPrefabs[(int)price];
-    //        if (totalPrice + price <= maxAcceptable)
-    //        {
-    //            SetPrefab(generated.Count, (int)price);
-    //            PointSelect(point.Length);
-
-    //            // 仮生成
-    //            GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-    //            obj.transform.localScale = new Vector3(20f, 20f, 20f);
-    //            m_objects[generated.Count] = obj;
-
-    //            // ポイントに配置
-    //            PointSelect(count);
-
-    //            generated.Add(price);
-    //            totalPrice += price;
-    //        }
-    //        else
-    //        {
-    //            // 追加すると上限を超える場合はスキップ
-    //            break;
-    //        }
-    //    }
-    //}
-
     public void GenerateObjects()
     {
-        List<float> generated = new List<float>();
-        float totalPrice = 0;
+        const int maxRetry = 20; //無限ループ防止。
+        int retryCount = 0;
 
-        int count = Random.Range(m_minObjCount, m_maxObjCount + 1);
-        m_objects = new GameObject[count];
-
-        if (count > m_basePoint)
+        while (retryCount < maxRetry)
         {
-            Debug.LogWarning($"⚠ 警告: 土台容量({m_basePoint})を超えています！");
+            retryCount++;
+
+            List<float> generated = new List<float>();
+            float totalPrice = 0;
+
+            int count = Random.Range(m_minObjCount, m_maxObjCount + 1);
+            m_objects = new GameObject[count];
+
+            if (count > m_basePoint)
+            {
+                Debug.LogWarning($"⚠ 警告: 土台容量({m_basePoint})を超えています！");
+                return;
+            }
+
+            int minAcceptable = Mathf.RoundToInt(m_targetPrice * (1f - m_toleranceRate));
+            int maxAcceptable = Mathf.RoundToInt(m_targetPrice * (1f + m_toleranceRate));
+
+            bool objPriceOver = false;
+            int generatedObjCount = 0;
+
+            while (generated.Count < count && !objPriceOver)
+            {
+                int objNo = Random.Range(1, objPrefabs.Count + 1);
+                float price = prices[objNo];
+
+                if (totalPrice + price <= maxAcceptable)
+                {
+                    GameObject prefab = objPrefabs[objNo - 1];
+
+                    GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+                    obj.transform.localScale = new Vector3(1f, 1f, 1f);
+                    m_objects[generated.Count] = obj;
+
+                    generated.Add(price);
+                    totalPrice += price;
+                    generatedObjCount++;
+                }
+                else if (totalPrice < minAcceptable)
+                {
+                    //まだ最低金額に届いていない → 別のアイテムを試す。
+                }
+                else
+                {
+                    objPriceOver = true;
+                    continue;
+                }
+            }
+
+            // ★ ここで判定：最低金額に届いていなければやり直し。
+            if (totalPrice < minAcceptable)
+            {
+                // 生成したオブジェクトを削除。
+                foreach (var obj in m_objects)
+                {
+                    if (obj != null) Destroy(obj);
+                }
+
+                Debug.Log($"🔁 リトライ {retryCount}/{maxRetry} : 合計 {totalPrice} が最低金額 {minAcceptable} 未満のため再生成");
+                continue; // 最初からやり直す。
+            }
+
+            // ここまで来たら成功。
+            PointSelect(generatedObjCount);
+            Debug.Log("今回の合計金額は " + totalPrice + " です");
             return;
         }
 
-        int minAcceptable = Mathf.RoundToInt(m_targetPrice * (1f - m_toleranceRate));
-        int maxAcceptable = Mathf.RoundToInt(m_targetPrice * (1f + m_toleranceRate));
-
-        bool objPriceOver = false;
-        int generatedObjCount = 0;
-        while (generated.Count < count && !objPriceOver)
-        {
-            int objNo = Random.Range(1, objPrefabs.Count + 1);
-            float price = prices[objNo];
-            if (totalPrice + price <= maxAcceptable)
-            {
-                GameObject prefab = objPrefabs[objNo - 1];
-
-                // 仮生成
-                GameObject obj = Instantiate(prefab, Vector3.zero, Quaternion.identity);
-                //obj.transform.localScale = new Vector3(20f, 20f, 20f);
-                obj.transform.localScale = new Vector3(1f, 1f, 1f);
-                m_objects[generated.Count] = obj;
-
-                generated.Add(price);
-                totalPrice += price;
-                generatedObjCount++;
-            }
-            else if (totalPrice < minAcceptable)
-            {
-                
-            }
-            else { objPriceOver = true; continue; }
-        }
-        // ポイントに配置
-        PointSelect(generatedObjCount);
-        Debug.Log("今回の合計金額は" + totalPrice + "です");
+        Debug.LogError("❌ 最大リトライ回数に達しました。条件が厳しすぎる可能性があります。");
     }
+
 
     private void SetPoint()
     {

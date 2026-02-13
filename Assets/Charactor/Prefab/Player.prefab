@@ -50,9 +50,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_cautionUI: {fileID: 6922821912993268419}
+  m_cautionText: {fileID: 517378197479618289}
   m_gameManager: {fileID: 6515971339019788461}
   m_player: {fileID: 7710057761488050385}
   m_yesButton: {fileID: 5047164385642070034}
+  m_buttonSE: {fileID: 0}
 --- !u!1 &4125449002276755494
 GameObject:
   m_ObjectHideFlags: 0
@@ -174,19 +176,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1674294838680952645}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7851415074370600759}
-        m_TargetAssemblyTypeName: UI_Caution, Assembly-CSharp
-        m_MethodName: YesButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!95 &9121435949293990341
 Animator:
   serializedVersion: 5
@@ -883,9 +873,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1294380678673142130}
+  - component: {fileID: 6887883713757451317}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: PlayerParent
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -908,6 +899,18 @@ Transform:
   - {fileID: 4561398155939923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6887883713757451317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019253059504657577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231aa2bd17393224495d11318f62460c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7495381718596622057
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1506,6 +1509,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 5500460852229628806, guid: 7927b704fded6204cbba9ae3ad9e909c,
+        type: 3}
+      propertyPath: mouseSensitivity
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5704227379170578378, guid: 7927b704fded6204cbba9ae3ad9e909c,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -1716,6 +1724,11 @@ PrefabInstance:
       propertyPath: m_gameManagerObject
       value: 
       objectReference: {fileID: 7863866187679621059}
+    - target: {fileID: 8224599917675837512, guid: 7927b704fded6204cbba9ae3ad9e909c,
+        type: 3}
+      propertyPath: m_playerParentObject
+      value: 
+      objectReference: {fileID: 9019253059504657577}
     - target: {fileID: 8291564015864534120, guid: 7927b704fded6204cbba9ae3ad9e909c,
         type: 3}
       propertyPath: m_LocalRotation.w
@@ -1998,7 +2011,11 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5382832184217399020, guid: c1f1afd86b07b6b46979142cf6a1e834,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4931724861200052674}
   m_SourcePrefab: {fileID: 100100000, guid: c1f1afd86b07b6b46979142cf6a1e834, type: 3}
 --- !u!4 &2356356256267440922 stripped
 Transform:
@@ -2012,6 +2029,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9159400278136707462}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4931724861200052674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3868331891264501610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85425a6abb7446b4b9ac534cf0add381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5104528248641233214 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4164236890650114232, guid: c1f1afd86b07b6b46979142cf6a1e834,

@@ -584,7 +584,7 @@ Transform:
   m_GameObject: {fileID: 4121853783109987665}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.4066925, y: 0, z: -0.369668}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -648,7 +648,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4121853783109987665}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a00a433bca4e2ff4d988b9aa8c58494a, type: 3}
   m_Name: 
@@ -660,14 +660,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: c1978557926507f41987c799deadf70a, type: 3}
   - {fileID: 8300000, guid: 0b5b4480cf2c79b4497a42bf646d1c54, type: 3}
   - {fileID: 8300000, guid: d7aca547b87e4374b9160315159b2cc0, type: 3}
-  m_searchAngle: 160
+  m_searchAngle: 60
   m_NextMovePos: {x: 0, y: 0, z: 0}
   m_enemyState: 0
   m_stateLook: 0
   m_hp: 100
   m_attackCoolTime: 0.01
-  m_searchRayRange: 25
-  m_chaseRayRange: 30
+  m_searchRayRange: 15
+  m_chaseRayRange: 25
 --- !u!195 &6224398206109361178
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -769,7 +769,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0.3
       inSlope: 0
       outSlope: 0
       tangentMode: 0

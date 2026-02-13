@@ -36,7 +36,12 @@ public class PayNorma : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        m_isInArea = false;
+        if (other.CompareTag("Player"))
+        {
+            m_gameManager.GetOperationUI().SetOperation(UI_Operation.Button.enButton_B,
+                    "", true);
+            m_isInArea = false;
+        }
     }
 
     void NormaPay()
@@ -53,7 +58,7 @@ public class PayNorma : MonoBehaviour
 
             if(clearCount < m_gameManager.GetClearCondition())
             {
-                m_gameManager.SetNorma(norma + 50.0f);
+                m_gameManager.SetNorma(norma + 100.0f);
             }
         }
     }
@@ -65,7 +70,7 @@ public class PayNorma : MonoBehaviour
             return;
         }
 
-        if(Input.GetKeyDown("joystick button 0") || Input.GetMouseButtonDown(0))
+        if(Input.GetButtonDown("Action") || Input.GetMouseButtonDown(0))
         {
             NormaPay();
         }

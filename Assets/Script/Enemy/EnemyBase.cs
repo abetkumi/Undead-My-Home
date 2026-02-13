@@ -25,6 +25,12 @@ public class EnemyBase : MonoBehaviour
     int m_currentTarget = -1;
     protected bool m_navActive = false;
 
+    private float stuckThreshold = 0.02f;            //スタック検知可能な移動距離。
+    private float stuckTimeRequired = 3.5f;         //スタック時間。
+
+    private Vector3 m_lastPos;
+    private float m_stuckTimer;
+
     [SerializeField] protected Vector3 m_NextMovePos = Vector3.zero;             //次の移動先。
 
     protected enum EnemyState
@@ -51,6 +57,10 @@ public class EnemyBase : MonoBehaviour
 
     float m_attackCooldown = 100.0f;
     [SerializeField] protected float m_attackCoolTime;
+
+    protected bool m_Stan = false;
+    private float m_stunTimer = 0.0f;
+    protected float m_damageStanTime = 3.0f;
 
     //デバック用変数。
     //死亡時に全ての処理を停止させる
@@ -157,14 +167,16 @@ public class EnemyBase : MonoBehaviour
     //ノックバックアニメーションが修正不可能なため、damageLevelに0以外の数字を入れないでください。
     public void TakeDamage(float damage, int damageLevel)
     {
+        AttackColliderFalse();
         m_hp -= damage;
+
         if (damageLevel == 0)
         {
             m_enemyState = EnemyState.enEnemyState_Damage;
         }
         else if (damageLevel == 1)
         {
-            m_enemyState = EnemyState.enEnemyState_Stun;
+            //m_enemyState = EnemyState.enEnemyState_Stun;
         }
 
         if (m_hp <= 0)
@@ -184,6 +196,15 @@ public class EnemyBase : MonoBehaviour
         if (direction.sqrMagnitude > 1.0f)
         {
             m_agent.SetDestination(m_NextMovePos);
+
+            // ★ 到達不可能チェック
+            if (!CheckPathReachable())
+            {
+                m_enemyState = EnemyState.enEnemyState_Lost;
+                m_agent.isStopped = true;
+                return;
+            }
+
             m_agent.isStopped = false;
         }
         else
@@ -192,6 +213,43 @@ public class EnemyBase : MonoBehaviour
         }
     }
 
+
+    //ナビメッシュが目標地点へ到達できるかチェック。
+    protected bool CheckPathReachable()
+    {
+        if (m_agent.pathStatus == NavMeshPathStatus.PathInvalid ||
+            m_agent.pathStatus == NavMeshPathStatus.PathPartial)
+        {
+            // 到達不可能
+            return false;
+        }
+        return true;
+    }
+
+    //スタック対策。
+    protected void CheckStuck()
+    {
+        float moved = Vector3.Distance(transform.position, m_lastPos);
+
+        if (moved < stuckThreshold)
+        {
+            m_stuckTimer += Time.deltaTime;
+
+            if (m_stuckTimer >= stuckTimeRequired)
+            {
+                m_navActive = true;
+                m_stateLook = false;
+                m_enemyState = EnemyState.enEnemyState_Search;
+                m_stuckTimer = 0f;
+            }
+        }
+        else
+        {
+            m_stuckTimer = 0f;
+        }
+
+        m_lastPos = transform.position;
+    }
 
     //次の行き先を決定する。(m_navActiveがtrueの場合のみ実行)
     protected void SetNavMovePos()
@@ -247,7 +305,23 @@ public class EnemyBase : MonoBehaviour
                 m_agent.updateRotation = true;
             }
 
+            m_enemyState = EnemyState.enEnemyState_Stun;
+            m_stateLook = true;
+            m_Stan = true;
+        }
+    }
+
+    //スタンするとIdleステートで待機状態にする。
+    protected void StunTimer(float time)
+    {
+        m_stunTimer += Time.deltaTime;
+        if (m_stunTimer > time)
+        {
+            m_stunTimer = 0;
+            m_Stan = false;
+            m_stateLook = false;
             m_enemyState = EnemyState.enEnemyState_Search;
+            SetNavMovePos();
         }
     }
 

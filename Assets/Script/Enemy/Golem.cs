@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph;
 using UnityEngine;
 
 public class Golem : EnemyBase
@@ -25,11 +26,19 @@ public class Golem : EnemyBase
         enGolemSound_Num,
     }
 
+    EnemyState m_prevState;
+
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
         m_animator.applyRootMotion = false;
+
+        m_prevState = m_enemyState;
+        m_animator.Update(0f);
+        m_animator.SetFloat("Walk", 0.0f);
+
+        m_animator.updateMode = AnimatorUpdateMode.Normal;
     }
 
     // Update is called once per frame
@@ -37,6 +46,12 @@ public class Golem : EnemyBase
     {
         if (DebugStop == true)
         {
+            return;
+        }
+
+        if (m_Stan)
+        {
+            UpdateState();
             return;
         }
 
@@ -88,7 +103,7 @@ public class Golem : EnemyBase
             }
         }
 
-        //ƒfƒoƒbƒN—pB
+        //ï¿½fï¿½oï¿½bï¿½Nï¿½pï¿½B
         //if (Input.GetButton("testKye1"))
         //    PlaySound(0);
         //if (Input.GetButton("Jump"))
@@ -106,58 +121,60 @@ public class Golem : EnemyBase
 
     public override void UpdateState()
     {
-        ResetAllAnimatorParameters();
 
         switch (m_enemyState)
         {
-            //„‰ñB
+            //ï¿½ï¿½ï¿½ï¿½B
             case EnemyState.enEnemyState_Search:
                 m_agent.speed = m_speed;
                 m_animator.SetFloat("Walk", m_speed);
                 Move(1.0f);
+                CheckStuck();
                 break;
-            //’ÇÕB
+            //ï¿½ÇÕB
             case EnemyState.enEnemyState_Chase:
                 ChaseSpeedSet();
                 m_animator.SetFloat("Walk", m_speed);
                 Move(m_speed);
+                CheckStuck();
                 break;
-            //Œ©Ž¸‚¤B
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
             case EnemyState.enEnemyState_Lost:
                 m_speed = 1.0f;
                 m_animator.SetFloat("Walk", 0.0f);
-                m_animator.SetTrigger("IdelAction");
+                m_animator.SetTrigger("IdleAction");
                 m_agent.speed = m_speed;
                 LostKeepTime(3.0f);
                 break;
-            //UŒ‚B
+            //ï¿½Uï¿½ï¿½ï¿½B
             case EnemyState.enEnemyState_Attack:
                 m_animator.SetFloat("Walk", 0.0f);
                 m_animator.SetTrigger("Hit");
                 StartAttack();
                 break;
-            //“¦‚°‚éB
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B
             case EnemyState.enEnemyState_Escape:
                 break;
-            //ƒ_ƒ[ƒWB
+            //ï¿½_ï¿½ï¿½ï¿½[ï¿½Wï¿½B
             case EnemyState.enEnemyState_Damage:
                 m_animator.SetTrigger("Damage");
                 DamageAnimation();
                 break;
-            //‹CâB
+            //ï¿½Cï¿½ï¿½B
             case EnemyState.enEnemyState_Stun:
-                DamageAnimation();
+                m_animator.SetTrigger("IdleAction");
+                StunTimer(m_damageStanTime);
                 break;
-            //–°‚éB
+            //ï¿½ï¿½ï¿½ï¿½B
             case EnemyState.enEnemyState_Sleep:
                 Sleep();
                 break;
-            //Ž€B
+            //ï¿½ï¿½ï¿½B
             case EnemyState.enEnemyState_Death:
                 m_animator.SetTrigger("Die");
                 DebugStop = true;
                 break;
-            //‚»‚êˆÈŠOB
+            //ï¿½ï¿½ï¿½ï¿½ÈŠOï¿½B
             default:
                 break;
         }
@@ -180,7 +197,7 @@ public class Golem : EnemyBase
         }
     }
 
-    //ƒAƒjƒ[ƒVƒ‡ƒ“‚ÌƒCƒxƒ“ƒg‚É‚æ‚èŒÄ‚Ño‚µB
+    //ï¿½Aï¿½jï¿½ï¿½ï¿½[ï¿½Vï¿½ï¿½ï¿½ï¿½ï¿½ÌƒCï¿½xï¿½ï¿½ï¿½gï¿½É‚ï¿½ï¿½Ä‚Ñoï¿½ï¿½ï¿½B
     //-----------------------------------------------------------//
     void PlayFootstepsSound() =>
         PlaySound((int)GolemSound.enGolemSound_Footsteps);

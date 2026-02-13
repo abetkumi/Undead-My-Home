@@ -49,7 +49,7 @@ public class AttackCollider : MonoBehaviour
             //エネミー側の処理
             else if (other.CompareTag("Enemy"))
             {
-                Enemy enemy = other.GetComponent<Enemy>();
+                EnemyBase enemy = other.GetComponent<EnemyBase>();
                 if (enemy != null)
                 {
                     enemy.TakeDamage(damage, 1);
